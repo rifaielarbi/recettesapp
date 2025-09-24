@@ -15,6 +15,8 @@ class ListeRecettesScreen extends StatefulWidget {
   State<ListeRecettesScreen> createState() => _ListeRecettesScreenState();
 }
 
+
+
 class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   final TextEditingController _searchCtrl = TextEditingController();
   String _search = '';
@@ -65,8 +67,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
         child: ListView(
           children: [
             ListTile(
-                title:
-                Text(AppLocalizations.of(context)!.filterByCountry)),
+              title: Text(AppLocalizations.of(context)!.filterByCountry),
+            ),
             for (final c in countries)
               RadioListTile<String>(
                 value: c,
@@ -98,12 +100,13 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final localeProvider = Provider.of<LocaleProvider>(context);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white, // toujours blanc
               elevation: 0,
               titleSpacing: 16,
               title: Row(
@@ -113,12 +116,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context)!.recipes,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w700)),
-                      Text(AppLocalizations.of(context)!.world,
-                          style: const TextStyle(color: Colors.black87)),
+                      Text(
+                        AppLocalizations.of(context)!.recipes,
+                        style: const TextStyle(
+                            color: Colors.black87, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.world,
+                        style: const TextStyle(color: Colors.black87),
+                      ),
                     ],
                   ),
                 ],
@@ -158,8 +164,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     TextField(
                       controller: _searchCtrl,
                       decoration: InputDecoration(
-                        hintText:
-                        AppLocalizations.of(context)!.searchRecipe,
+                        hintText: AppLocalizations.of(context)!.searchRecipe,
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: _search.isEmpty
                             ? null
@@ -184,14 +189,14 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                             size: 16, color: Colors.black54),
                         const SizedBox(width: 6),
                         Text(
-                            '${AppLocalizations.of(context)!.country}: $_country',
-                            style: const TextStyle(color: Colors.black54)),
+                          '${AppLocalizations.of(context)!.country}: $_country',
+                          style: const TextStyle(color: Colors.black54),
+                        ),
                         const Spacer(),
                         TextButton.icon(
                           onPressed: _openCountryFilter,
                           icon: const Icon(Icons.filter_list),
-                          label:
-                          Text(AppLocalizations.of(context)!.filter),
+                          label: Text(AppLocalizations.of(context)!.filter),
                         ),
                       ],
                     ),
@@ -204,15 +209,13 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               itemBuilder: (context, index) {
                 final r = _filtered[index];
                 return Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RecetteCard(
                     recette: r,
                     onVoirDetails: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) =>
-                              DetailRecetteScreen(recette: r),
+                          builder: (_) => DetailRecetteScreen(recette: r),
                         ),
                       );
                     },
@@ -226,8 +229,9 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        selectedItemColor: AppColors.green,
-        unselectedItemColor: Colors.black45,
+        backgroundColor: Colors.white,       // toujours blanc
+        selectedItemColor: AppColors.green,  // toujours vert
+        unselectedItemColor: Colors.black45, // toujours gris foncé
         onTap: (index) {
           if (index == 2) {
             Navigator.pushNamed(context, '/settings');

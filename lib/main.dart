@@ -42,7 +42,7 @@ class RecettesApp extends StatelessWidget {
         Locale('ar'),
       ],
       localizationsDelegates: const [
-        AppLocalizations.delegate, // Notre delegate custom
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
