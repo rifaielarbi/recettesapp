@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../app_localizations.dart';
+
 import '../models/recette.dart';
 import '../utils/constants.dart';
 import '../widgets/recette_card.dart';
 import 'detail_recette.dart';
+import '../providers/locale_provider.dart'; // ✅ utile pour changer la langue
 
 class ListeRecettesScreen extends StatefulWidget {
   const ListeRecettesScreen({super.key});
@@ -17,33 +21,38 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   String _country = 'Tous';
 
   List<Recette> get _all => const [
-        Recette(
-          id: '1',
-          titre: 'Pasta Primavera',
-          pays: 'Italie',
-          image: AppAssets.pasta,
-          description:
-              "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
-          ingredients: ['200 g de pâtes', '1 brocoli', '1 carotte'],
-        ),
-        Recette(
-          id: '2',
-          titre: 'Tacos Al Pastor',
-          pays: 'Mexico',
-          image: AppAssets.tacos,
-          description: 'Tacos savoureux avec porc mariné, ananas et coriandre.',
-          ingredients: ['Tortillas', 'Porc', 'Ananas'],
-        ),
-      ];
+    Recette(
+      id: '1',
+      titre: 'Pasta Primavera',
+      pays: 'Italie',
+      image: AppAssets.pasta,
+      description:
+      "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
+      ingredients: ['200 g de pâtes', '1 brocoli', '1 carotte'],
+    ),
+    Recette(
+      id: '2',
+      titre: 'Tacos Al Pastor',
+      pays: 'Mexico',
+      image: AppAssets.tacos,
+      description: 'Tacos savoureux avec porc mariné, ananas et coriandre.',
+      ingredients: ['Tortillas', 'Porc', 'Ananas'],
+    ),
+  ];
 
   List<Recette> get _filtered {
     final byCountry = _country == 'Tous'
         ? _all
-        : _all.where((r) => r.pays.toLowerCase() == _country.toLowerCase()).toList();
+        : _all
+        .where((r) => r.pays.toLowerCase() == _country.toLowerCase())
+        .toList();
+
     if (_search.isEmpty) return byCountry;
     final q = _search.toLowerCase();
     return byCountry
-        .where((r) => r.titre.toLowerCase().contains(q) || r.description.toLowerCase().contains(q))
+        .where((r) =>
+    r.titre.toLowerCase().contains(q) ||
+        r.description.toLowerCase().contains(q))
         .toList();
   }
 
@@ -55,7 +64,9 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       builder: (context) => SafeArea(
         child: ListView(
           children: [
-            const ListTile(title: Text('Filtrer par pays')),
+            ListTile(
+                title:
+                Text(AppLocalizations.of(context)!.filterByCountry)),
             for (final c in countries)
               RadioListTile<String>(
                 value: c,
@@ -84,6 +95,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -97,17 +110,32 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 children: [
                   Image.asset(AppAssets.logo, width: 32, height: 32),
                   const SizedBox(width: 8),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Recettes', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w700)),
-                      Text('Mondiales', style: TextStyle(color: Colors.black87)),
+                      Text(AppLocalizations.of(context)!.recipes,
+                          style: const TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w700)),
+                      Text(AppLocalizations.of(context)!.world,
+                          style: const TextStyle(color: Colors.black87)),
                     ],
                   ),
                 ],
               ),
               centerTitle: false,
               actions: [
+                PopupMenuButton<String>(
+                  icon: const Icon(Icons.language, color: Colors.black87),
+                  onSelected: (lang) {
+                    localeProvider.setLocale(lang);
+                  },
+                  itemBuilder: (ctx) => const [
+                    PopupMenuItem(value: 'fr', child: Text('Français')),
+                    PopupMenuItem(value: 'en', child: Text('English')),
+                    PopupMenuItem(value: 'ar', child: Text('العربية')),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(right: 12),
                   child: IconButton(
@@ -124,22 +152,25 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Recettes', style: AppTextStyles.sectionTitle),
+                    Text(AppLocalizations.of(context)!.recipes,
+                        style: AppTextStyles.sectionTitle),
                     const SizedBox(height: 12),
                     TextField(
                       controller: _searchCtrl,
                       decoration: InputDecoration(
-                        hintText: 'Rechercher une recette...',
+                        hintText:
+                        AppLocalizations.of(context)!.searchRecipe,
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: _search.isEmpty
                             ? null
                             : IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () => _searchCtrl.clear(),
-                              ),
+                          icon: const Icon(Icons.clear),
+                          onPressed: () => _searchCtrl.clear(),
+                        ),
                         filled: true,
                         fillColor: const Color(0xFFF3F4F6),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 14),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -149,14 +180,18 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(Icons.flag, size: 16, color: Colors.black54),
+                        const Icon(Icons.flag,
+                            size: 16, color: Colors.black54),
                         const SizedBox(width: 6),
-                        Text('Pays: $_country', style: const TextStyle(color: Colors.black54)),
+                        Text(
+                            '${AppLocalizations.of(context)!.country}: $_country',
+                            style: const TextStyle(color: Colors.black54)),
                         const Spacer(),
                         TextButton.icon(
                           onPressed: _openCountryFilter,
                           icon: const Icon(Icons.filter_list),
-                          label: const Text('Filtrer'),
+                          label:
+                          Text(AppLocalizations.of(context)!.filter),
                         ),
                       ],
                     ),
@@ -169,13 +204,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               itemBuilder: (context, index) {
                 final r = _filtered[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 16),
                   child: RecetteCard(
                     recette: r,
                     onVoirDetails: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => DetailRecetteScreen(recette: r),
+                          builder: (_) =>
+                              DetailRecetteScreen(recette: r),
                         ),
                       );
                     },
@@ -191,13 +228,26 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
         currentIndex: 0,
         selectedItemColor: AppColors.green,
         unselectedItemColor: Colors.black45,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.restaurant_menu), label: 'Recettes'),
-          BottomNavigationBarItem(icon: Icon(Icons.star_border), label: 'Favoris'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Param'),
+        onTap: (index) {
+          if (index == 2) {
+            Navigator.pushNamed(context, '/settings');
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.restaurant_menu),
+            label: AppLocalizations.of(context)!.recipes,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.star_border),
+            label: AppLocalizations.of(context)!.favorites,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings),
+            label: AppLocalizations.of(context)!.settingsMenu,
+          ),
         ],
       ),
     );
   }
 }
-
