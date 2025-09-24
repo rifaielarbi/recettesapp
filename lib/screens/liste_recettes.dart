@@ -6,7 +6,7 @@ import '../models/recette.dart';
 import '../utils/constants.dart';
 import '../widgets/recette_card.dart';
 import 'detail_recette.dart';
-import '../providers/locale_provider.dart'; // ✅ utile pour changer la langue
+import '../providers/locale_provider.dart';
 
 class ListeRecettesScreen extends StatefulWidget {
   const ListeRecettesScreen({super.key});
@@ -58,26 +58,49 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
 
   void _openCountryFilter() async {
     final countries = ['Tous', ...{for (final r in _all) r.pays}];
+
     final chosen = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (context) => SafeArea(
-        child: ListView(
-          children: [
-            ListTile(
-                title:
-                Text(AppLocalizations.of(context)!.filterByCountry)),
-            for (final c in countries)
-              RadioListTile<String>(
-                value: c,
-                groupValue: _country,
-                onChanged: (v) => Navigator.pop(context, v),
-                title: Text(c),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context).filterByCountry,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
               ),
-          ],
+              const SizedBox(height: 12),
+              ...countries.map(
+                    (c) => ListTile(
+                  title: Text(
+                    c,
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                  trailing: _country == c
+                      ? Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                      : null,
+                  onTap: () => Navigator.pop(context, c),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+
     if (chosen != null && mounted) setState(() => _country = chosen);
   }
 
@@ -93,17 +116,28 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     super.dispose();
   }
 
+  Color? _withAlpha(Color? color, double opacity) {
+    if (color == null) return null;
+    return color.withAlpha((opacity * 255).round());
+  }
+
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
 
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textColor = theme.textTheme.bodyLarge?.color;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
-              backgroundColor: Colors.white,
+              backgroundColor:
+              theme.appBarTheme.backgroundColor ?? colorScheme.surface,
               elevation: 0,
               titleSpacing: 16,
               title: Row(
@@ -113,12 +147,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context)!.recipes,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w700)),
-                      Text(AppLocalizations.of(context)!.world,
-                          style: const TextStyle(color: Colors.black87)),
+                      Text(
+                        AppLocalizations.of(context).recipes,
+                        style: TextStyle(
+                            color: textColor, fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        AppLocalizations.of(context).world,
+                        style: TextStyle(color: textColor),
+                      ),
                     ],
                   ),
                 ],
@@ -126,7 +163,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               centerTitle: false,
               actions: [
                 PopupMenuButton<String>(
-                  icon: const Icon(Icons.language, color: Colors.black87),
+                  icon: Icon(Icons.language,
+                      color: theme.iconTheme.color ?? textColor),
                   onSelected: (lang) {
                     localeProvider.setLocale(lang);
                   },
@@ -140,7 +178,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   padding: const EdgeInsets.only(right: 12),
                   child: IconButton(
                     tooltip: 'Trier/Filtrer',
-                    icon: const Icon(Icons.filter_list, color: Colors.black87),
+                    icon: Icon(Icons.filter_list,
+                        color: theme.iconTheme.color ?? textColor),
                     onPressed: _openCountryFilter,
                   ),
                 ),
@@ -152,23 +191,30 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context)!.recipes,
-                        style: AppTextStyles.sectionTitle),
+                    Text(AppLocalizations.of(context).recipes,
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: textColor,
+                        )),
                     const SizedBox(height: 12),
                     TextField(
                       controller: _searchCtrl,
+                      style: TextStyle(color: textColor),
                       decoration: InputDecoration(
-                        hintText:
-                        AppLocalizations.of(context)!.searchRecipe,
-                        prefixIcon: const Icon(Icons.search),
+                        hintText: AppLocalizations.of(context).searchRecipe,
+                        hintStyle: TextStyle(
+                            color: _withAlpha(textColor, 0.6)),
+                        prefixIcon: Icon(Icons.search,
+                            color: theme.iconTheme.color ?? textColor),
                         suffixIcon: _search.isEmpty
                             ? null
                             : IconButton(
-                          icon: const Icon(Icons.clear),
+                          icon: Icon(Icons.clear,
+                              color:
+                              theme.iconTheme.color ?? textColor),
                           onPressed: () => _searchCtrl.clear(),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFFF3F4F6),
+                        fillColor: colorScheme.surface,
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 14),
                         border: OutlineInputBorder(
@@ -180,18 +226,24 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(Icons.flag,
-                            size: 16, color: Colors.black54),
+                        Icon(Icons.flag,
+                            size: 16,
+                            color: _withAlpha(
+                                theme.iconTheme.color, 0.6) ??
+                                _withAlpha(textColor, 0.6)),
                         const SizedBox(width: 6),
                         Text(
-                            '${AppLocalizations.of(context)!.country}: $_country',
-                            style: const TextStyle(color: Colors.black54)),
+                          '${AppLocalizations.of(context).country}: $_country',
+                          style: TextStyle(
+                              color: _withAlpha(textColor, 0.6)),
+                        ),
                         const Spacer(),
                         TextButton.icon(
                           onPressed: _openCountryFilter,
-                          icon: const Icon(Icons.filter_list),
-                          label:
-                          Text(AppLocalizations.of(context)!.filter),
+                          icon: Icon(Icons.filter_list,
+                              color: theme.iconTheme.color ?? textColor),
+                          label: Text(AppLocalizations.of(context).filter,
+                              style: TextStyle(color: textColor)),
                         ),
                       ],
                     ),
@@ -204,15 +256,13 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               itemBuilder: (context, index) {
                 final r = _filtered[index];
                 return Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: RecetteCard(
                     recette: r,
                     onVoirDetails: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) =>
-                              DetailRecetteScreen(recette: r),
+                          builder: (_) => DetailRecetteScreen(recette: r),
                         ),
                       );
                     },
@@ -226,8 +276,10 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        selectedItemColor: AppColors.green,
-        unselectedItemColor: Colors.black45,
+        backgroundColor:
+        theme.bottomNavigationBarTheme.backgroundColor ?? colorScheme.surface,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: theme.unselectedWidgetColor,
         onTap: (index) {
           if (index == 2) {
             Navigator.pushNamed(context, '/settings');
@@ -236,15 +288,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.restaurant_menu),
-            label: AppLocalizations.of(context)!.recipes,
+            label: AppLocalizations.of(context).recipes,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.star_border),
-            label: AppLocalizations.of(context)!.favorites,
+            label: AppLocalizations.of(context).favorites,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.settings),
-            label: AppLocalizations.of(context)!.settingsMenu,
+            label: AppLocalizations.of(context).settingsMenu,
           ),
         ],
       ),
