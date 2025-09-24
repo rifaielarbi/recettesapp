@@ -43,7 +43,9 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   List<Recette> get _filtered {
     final byCountry = _country == 'Tous'
         ? _all
-        : _all.where((r) => r.pays.toLowerCase() == _country.toLowerCase()).toList();
+        : _all
+        .where((r) => r.pays.toLowerCase() == _country.toLowerCase())
+        .toList();
 
     if (_search.isEmpty) return byCountry;
     final q = _search.toLowerCase();
@@ -60,6 +62,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final chosen = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
       builder: (context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -68,13 +71,20 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
             children: [
               Text(
                 AppLocalizations.of(context).filterByCountry,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.bodyLarge?.color),
               ),
               const SizedBox(height: 12),
               ...countries.map((c) => ListTile(
-                title: Text(c),
+                title: Text(c,
+                    style: TextStyle(
+                        color:
+                        Theme.of(context).textTheme.bodyLarge?.color)),
                 trailing: _country == c
-                    ? const Icon(Icons.check, color: AppColors.green)
+                    ? Icon(Icons.check,
+                    color: Theme.of(context).colorScheme.primary)
                     : null,
                 onTap: () => Navigator.pop(context, c),
               )),
@@ -103,14 +113,19 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
 
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textColor = theme.textTheme.bodyLarge?.color;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: colorScheme.background,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
-              backgroundColor: Colors.white,
+              backgroundColor:
+              theme.appBarTheme.backgroundColor ?? colorScheme.background,
               elevation: 0,
               titleSpacing: 16,
               title: Row(
@@ -122,12 +137,12 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     children: [
                       Text(
                         AppLocalizations.of(context).recipes,
-                        style: const TextStyle(
-                            color: Colors.black87, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                            color: textColor, fontWeight: FontWeight.w700),
                       ),
                       Text(
                         AppLocalizations.of(context).world,
-                        style: const TextStyle(color: Colors.black87),
+                        style: TextStyle(color: textColor),
                       ),
                     ],
                   ),
@@ -136,7 +151,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               centerTitle: false,
               actions: [
                 PopupMenuButton<String>(
-                  icon: const Icon(Icons.language, color: Colors.black87),
+                  icon: Icon(Icons.language,
+                      color: theme.iconTheme.color ?? textColor),
                   onSelected: (lang) {
                     localeProvider.setLocale(lang);
                   },
@@ -150,7 +166,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   padding: const EdgeInsets.only(right: 12),
                   child: IconButton(
                     tooltip: 'Trier/Filtrer',
-                    icon: const Icon(Icons.filter_list, color: Colors.black87),
+                    icon: Icon(Icons.filter_list,
+                        color: theme.iconTheme.color ?? textColor),
                     onPressed: _openCountryFilter,
                   ),
                 ),
@@ -163,21 +180,28 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(AppLocalizations.of(context).recipes,
-                        style: AppTextStyles.sectionTitle),
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: textColor,
+                        )),
                     const SizedBox(height: 12),
                     TextField(
                       controller: _searchCtrl,
+                      style: TextStyle(color: textColor),
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context).searchRecipe,
-                        prefixIcon: const Icon(Icons.search),
+                        hintStyle: TextStyle(color: textColor?.withOpacity(0.6)),
+                        prefixIcon: Icon(Icons.search,
+                            color: theme.iconTheme.color ?? textColor),
                         suffixIcon: _search.isEmpty
                             ? null
                             : IconButton(
-                          icon: const Icon(Icons.clear),
+                          icon: Icon(Icons.clear,
+                              color:
+                              theme.iconTheme.color ?? textColor),
                           onPressed: () => _searchCtrl.clear(),
                         ),
                         filled: true,
-                        fillColor: const Color(0xFFF3F4F6),
+                        fillColor: colorScheme.surface,
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 14),
                         border: OutlineInputBorder(
@@ -189,17 +213,23 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Icon(Icons.flag, size: 16, color: Colors.black54),
+                        Icon(Icons.flag,
+                            size: 16,
+                            color:
+                            theme.iconTheme.color?.withOpacity(0.6) ??
+                                textColor?.withOpacity(0.6)),
                         const SizedBox(width: 6),
                         Text(
                           '${AppLocalizations.of(context).country}: $_country',
-                          style: const TextStyle(color: Colors.black54),
+                          style: TextStyle(color: textColor?.withOpacity(0.6)),
                         ),
                         const Spacer(),
                         TextButton.icon(
                           onPressed: _openCountryFilter,
-                          icon: const Icon(Icons.filter_list),
-                          label: Text(AppLocalizations.of(context).filter),
+                          icon: Icon(Icons.filter_list,
+                              color: theme.iconTheme.color ?? textColor),
+                          label: Text(AppLocalizations.of(context).filter,
+                              style: TextStyle(color: textColor)),
                         ),
                       ],
                     ),
@@ -232,9 +262,10 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        backgroundColor: Colors.white,
-        selectedItemColor: AppColors.green,
-        unselectedItemColor: Colors.black45,
+        backgroundColor:
+        theme.bottomNavigationBarTheme.backgroundColor ?? colorScheme.background,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: theme.unselectedWidgetColor,
         onTap: (index) {
           if (index == 2) {
             Navigator.pushNamed(context, '/settings');

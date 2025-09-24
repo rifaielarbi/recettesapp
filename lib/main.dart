@@ -47,23 +47,104 @@ class RecettesApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+
+      /// 🟢 Thème clair
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFFDFDFD),
+        scaffoldBackgroundColor: const Color(0xFFFDFDFD), // fond blanc
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+        ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(color: Colors.black87),
+          bodyMedium: TextStyle(color: Colors.black54),
+        ),
+        // <-- CHANGEMENT: CardThemeData au lieu de CardTheme
+        cardTheme: CardThemeData(
+          color: Colors.white,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          margin: const EdgeInsets.all(8),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.green,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.grey[100],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+        ),
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.green,
           brightness: Brightness.light,
         ),
       ),
+
+      /// 🌙 Thème sombre élégant
       darkTheme: ThemeData(
         useMaterial3: true,
+        // Fond général gris foncé
         scaffoldBackgroundColor: const Color(0xFF121212),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.green,
-          brightness: Brightness.dark,
+        // AppBar sombre
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF1E1E1E),
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        // Textes
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(color: Color(0xFFE0E0E0)),
+          bodyMedium: TextStyle(color: Color(0xFFB0B0B0)),
+        ),
+        // <-- CHANGEMENT: CardThemeData au lieu de CardTheme
+        cardTheme: CardThemeData(
+          color: const Color(0xFF1E1E1E),
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          margin: const EdgeInsets.all(8),
+        ),
+        // Boutons
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.green,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          ),
+        ),
+        // Inputs
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xFF1E1E1E),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          hintStyle: TextStyle(color: Colors.grey[500]),
+        ),
+        // Palette sombre
+        colorScheme: ColorScheme.dark(
+          primary: AppColors.green,
+          secondary: Colors.grey[300]!,
+          surface: const Color(0xFF1E1E1E),
         ),
       ),
+
+      /// 🔄 Changement clair / sombre via ton provider
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
+
       home: const ListeRecettesScreen(),
       routes: {
         '/settings': (_) => const SettingsScreen(),
