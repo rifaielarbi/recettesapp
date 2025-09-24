@@ -62,7 +62,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final chosen = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       builder: (context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -72,22 +72,29 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               Text(
                 AppLocalizations.of(context).filterByCountry,
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.bodyLarge?.color),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
+                ),
               ),
               const SizedBox(height: 12),
-              ...countries.map((c) => ListTile(
-                title: Text(c,
+              ...countries.map(
+                    (c) => ListTile(
+                  title: Text(
+                    c,
                     style: TextStyle(
-                        color:
-                        Theme.of(context).textTheme.bodyLarge?.color)),
-                trailing: _country == c
-                    ? Icon(Icons.check,
-                    color: Theme.of(context).colorScheme.primary)
-                    : null,
-                onTap: () => Navigator.pop(context, c),
-              )),
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                  trailing: _country == c
+                      ? Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                      : null,
+                  onTap: () => Navigator.pop(context, c),
+                ),
+              ),
             ],
           ),
         ),
@@ -109,6 +116,11 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     super.dispose();
   }
 
+  Color? _withAlpha(Color? color, double opacity) {
+    if (color == null) return null;
+    return color.withAlpha((opacity * 255).round());
+  }
+
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
@@ -118,14 +130,14 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final textColor = theme.textTheme.bodyLarge?.color;
 
     return Scaffold(
-      backgroundColor: colorScheme.background,
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
               backgroundColor:
-              theme.appBarTheme.backgroundColor ?? colorScheme.background,
+              theme.appBarTheme.backgroundColor ?? colorScheme.surface,
               elevation: 0,
               titleSpacing: 16,
               title: Row(
@@ -189,7 +201,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                       style: TextStyle(color: textColor),
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context).searchRecipe,
-                        hintStyle: TextStyle(color: textColor?.withOpacity(0.6)),
+                        hintStyle: TextStyle(
+                            color: _withAlpha(textColor, 0.6)),
                         prefixIcon: Icon(Icons.search,
                             color: theme.iconTheme.color ?? textColor),
                         suffixIcon: _search.isEmpty
@@ -215,13 +228,14 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                       children: [
                         Icon(Icons.flag,
                             size: 16,
-                            color:
-                            theme.iconTheme.color?.withOpacity(0.6) ??
-                                textColor?.withOpacity(0.6)),
+                            color: _withAlpha(
+                                theme.iconTheme.color, 0.6) ??
+                                _withAlpha(textColor, 0.6)),
                         const SizedBox(width: 6),
                         Text(
                           '${AppLocalizations.of(context).country}: $_country',
-                          style: TextStyle(color: textColor?.withOpacity(0.6)),
+                          style: TextStyle(
+                              color: _withAlpha(textColor, 0.6)),
                         ),
                         const Spacer(),
                         TextButton.icon(
@@ -263,7 +277,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         backgroundColor:
-        theme.bottomNavigationBarTheme.backgroundColor ?? colorScheme.background,
+        theme.bottomNavigationBarTheme.backgroundColor ?? colorScheme.surface,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: theme.unselectedWidgetColor,
         onTap: (index) {
