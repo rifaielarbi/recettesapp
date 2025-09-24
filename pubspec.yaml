@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: recettes_app
 description: "A new Flutter project."
 publish_to: 'none'
@@ -5,10 +6,21 @@ version: 0.1.0
 
 environment:
   sdk: ">=3.7.2 <4.0.0"
+=======
+name: recettes_mondiales
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+ 79ee234 (first commit)
 
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_native_splash: ^2.4.6
 
 
@@ -17,9 +29,24 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.1.1
 
+  cupertino_icons: ^1.0.8
+  cached_network_image: ^3.3.0
+  http: ^1.1.2
+  shared_preferences: ^2.2.2
+  characters: ^1.4.0
+  firebase_core: ^2.32.0
+  cloud_firestore: ^4.17.5
+  provider: ^6.1.1
+  meta: ^1.16.0
+  test_api: ^0.7.6
+  material_color_utilities: ^0.11.1
+  flutter_svg: ^2.0.9
+ 79ee234 (first commit)
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
   flutter_lints: ^5.0.0
 
 flutter_native_splash:
@@ -34,9 +61,13 @@ flutter_native_splash:
   android: true
 
 
+  flutter_lints: ^6.0.0
+ 79ee234 (first commit)
+
 flutter:
   uses-material-design: true
   assets:
+
     - assets/lang/fr.json
     - assets/lang/ar.json
     - assets/lang/en.json
@@ -44,3 +75,14 @@ flutter:
     - assets/images/pasta.png
     - assets/images/tacos.png
     - assets/images/soup.png
+ 79ee234 (first commit)
+  -  assets/images/logo.PNG
+  -  assets/images/pasta.PNG
+  -  assets/images/tacos.PNG
+  -  assets/images/soup.PNG
+
+
+
+
+
+>>>>>>> 79ee234 (first commit)

@@ -49,7 +49,7 @@ class RecettesApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
 
-      /// 🟢 Thème clair
+
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFFDFDFD), // fond blanc
@@ -63,7 +63,7 @@ class RecettesApp extends StatelessWidget {
           bodyLarge: TextStyle(color: Colors.black87),
           bodyMedium: TextStyle(color: Colors.black54),
         ),
-        // <-- CHANGEMENT: CardThemeData au lieu de CardTheme
+
         cardTheme: CardThemeData(
           color: Colors.white,
           elevation: 2,
@@ -92,12 +92,12 @@ class RecettesApp extends StatelessWidget {
         ),
       ),
 
-      /// 🌙 Thème sombre élégant
+
       darkTheme: ThemeData(
         useMaterial3: true,
-        // Fond général gris foncé
+
         scaffoldBackgroundColor: const Color(0xFF121212),
-        // AppBar sombre
+
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF1E1E1E),
           foregroundColor: Colors.white,
@@ -109,14 +109,14 @@ class RecettesApp extends StatelessWidget {
           bodyLarge: TextStyle(color: Color(0xFFE0E0E0)),
           bodyMedium: TextStyle(color: Color(0xFFB0B0B0)),
         ),
-        // <-- CHANGEMENT: CardThemeData au lieu de CardTheme
+
         cardTheme: CardThemeData(
           color: const Color(0xFF1E1E1E),
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           margin: const EdgeInsets.all(8),
         ),
-        // Boutons
+
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.green,
@@ -125,7 +125,7 @@ class RecettesApp extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ),
-        // Inputs
+
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFF1E1E1E),
@@ -135,7 +135,7 @@ class RecettesApp extends StatelessWidget {
           ),
           hintStyle: TextStyle(color: Colors.grey[500]),
         ),
-        // Palette sombre
+
         colorScheme: ColorScheme.dark(
           primary: AppColors.green,
           secondary: Colors.grey[300]!,
@@ -143,7 +143,7 @@ class RecettesApp extends StatelessWidget {
         ),
       ),
 
-      /// 🔄 Changement clair / sombre via ton provider
+
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
 
       home: const ListeRecettesScreen(),
@@ -153,3 +153,34 @@ class RecettesApp extends StatelessWidget {
     );
   }
 }
+
+import 'package:recettes_mondiales/screens/liste_recettes.dart';
+import 'package:recettes_mondiales/utils/constant.dart';
+import 'package:recettes_mondiales/models/recette.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Recettes Mondiales',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        useMaterial3: true,
+        scaffoldBackgroundColor:  const Color(0xFFFDFDFD),
+
+      ),
+      home: const ListeRecettesScreen(),
+    );
+  }
+}
+
+
+ 79ee234 (first commit)
