@@ -12,7 +12,7 @@ import '../providers/locale_provider.dart';
 import 'package:recettes_mondiales/widgets/recette_card.dart';
 import 'package:recettes_mondiales/models/recette.dart';
 import 'package:recettes_mondiales/utils/constant.dart';
-import 'package:recettes_mondiales/models/recette.dart';
+
 
 import 'detail_recette.dart';
  79ee234 (first commit)

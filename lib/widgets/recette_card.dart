@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
+
 import '../models/recette.dart';
 import '../utils/constants.dart';
 
 class RecetteCard extends StatelessWidget {
 
-import 'package:recettes_mondiales/models/recette.dart';
-import 'package:recettes_mondiales/utils/constant.dart';
+import; 'package:recettes_mondiales/models/recette.dart';
+import; 'package:recettes_mondiales/utils/constant.dart';
 
 
 class RecetteCard extends StatefulWidget {
- 79ee234 (first commit)
+
   final Recette recette;
   final VoidCallback? onVoirDetails;
 
@@ -27,7 +27,7 @@ class _RecetteCardState extends State<RecetteCard> {
   bool isFavorite = false;
 
   @override
- 79ee234 (first commit)
+
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
@@ -56,7 +56,7 @@ class _RecetteCardState extends State<RecetteCard> {
                 child: Image.asset(recette.image, fit: BoxFit.cover),
 
                 child: Image.asset(widget.recette.image, fit: BoxFit.cover),
- 79ee234 (first commit)
+
               ),
             ),
             Padding(
@@ -114,7 +114,7 @@ class _RecetteCardState extends State<RecetteCard> {
                       ),
                     ],
                   )
- 79ee234 (first commit)
+
                 ],
               ),
             ),
@@ -129,4 +129,4 @@ class _RecetteCardState extends State<RecetteCard> {
 
 
 }
- 79ee234 (first commit)
+
