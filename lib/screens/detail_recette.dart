@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import '../models/recette.dart';
 import '../utils/constants.dart';
 
 class DetailRecetteScreen extends StatelessWidget {
   final Recette recette;
   const DetailRecetteScreen({super.key, required this.recette});
+=======
+import 'package:recettes_mondiales/models/recette.dart';
+import 'package:recettes_mondiales/utils/constant.dart';
+import 'package:recettes_mondiales/widgets/FavoritesButton.dart';
+
+import '../models/recette.dart';
+
+class DetailRecetteScreen extends StatelessWidget {
+  final Recette recette;
+  final String recetteId;
+  final String recetteTitre;
+  final String recettePays;
+  final String recetteImage;
+  final String recetteDescription;
+  final List<String> recetteIngredients;
+
+  const DetailRecetteScreen({
+    super.key,
+    required this.recette,
+    required this.recetteId,
+    required this.recetteTitre,
+    required this.recettePays,
+    required this.recetteImage,
+    required this.recetteDescription,
+    required this.recetteIngredients,
+  });
+ 79ee234 (first commit)
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +44,10 @@ class DetailRecetteScreen extends StatelessWidget {
         foregroundColor: Colors.black87,
       ),
       body: ListView(
+
         padding: const EdgeInsets.all(16),
+
+ 79ee234 (first commit)
         children: [
           Text(recette.titre, style: AppTextStyles.titleXL),
           const SizedBox(height: 12),
@@ -47,6 +78,7 @@ class DetailRecetteScreen extends StatelessWidget {
           Text('Ingrédients', style: AppTextStyles.sectionTitle),
           const SizedBox(height: 8),
           ...recette.ingredients.map((e) => Row(
+
                 children: [
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 6),
@@ -56,6 +88,17 @@ class DetailRecetteScreen extends StatelessWidget {
                   Expanded(child: Text(e, style: const TextStyle(fontSize: 16))),
                 ],
               )),
+
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 6),
+                child: Icon(Icons.circle, size: 8, color: Colors.black54),
+              ),
+              const SizedBox(width: 8),
+              Expanded(child: Text(e, style: const TextStyle(fontSize: 16))),
+            ],
+          )),
+ 79ee234 (first commit)
           const SizedBox(height: 24),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -74,3 +117,5 @@ class DetailRecetteScreen extends StatelessWidget {
 }
 
 
+
+ 79ee234 (first commit)

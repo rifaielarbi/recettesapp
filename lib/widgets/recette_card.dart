@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+
 import '../models/recette.dart';
 import '../utils/constants.dart';
 
 class RecetteCard extends StatelessWidget {
+
+import; 'package:recettes_mondiales/models/recette.dart';
+import; 'package:recettes_mondiales/utils/constant.dart';
+
+
+class RecetteCard extends StatefulWidget {
+
   final Recette recette;
   final VoidCallback? onVoirDetails;
 
   const RecetteCard({super.key, required this.recette, this.onVoirDetails});
 
   @override
+
+
+  _RecetteCardState createState() => _RecetteCardState();
+}
+
+
+class _RecetteCardState extends State<RecetteCard> {
+  bool isFavorite = false;
+
+  @override
+
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
@@ -33,7 +52,11 @@ class RecetteCard extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
               child: AspectRatio(
                 aspectRatio: 16 / 9,
+
                 child: Image.asset(recette.image, fit: BoxFit.cover),
+
+                child: Image.asset(widget.recette.image, fit: BoxFit.cover),
+
               ),
             ),
             Padding(
@@ -41,6 +64,7 @@ class RecetteCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   Text(recette.titre, style: AppTextStyles.subtitle.copyWith(fontSize: 22, fontWeight: FontWeight.w700)),
                   const SizedBox(height: 8),
                   Row(
@@ -61,6 +85,36 @@ class RecetteCard extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  Text(
+                    widget.recette.titre,
+                    style: AppTextStyles.subtitle.copyWith(fontSize: 22, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          widget.recette.titre,
+                          style: AppTextStyles.titleXL,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isFavorite = !isFavorite;
+                          });
+                        },
+                      ),
+                    ],
+                  )
+
                 ],
               ),
             ),
@@ -69,6 +123,10 @@ class RecetteCard extends StatelessWidget {
       ),
     );
   }
+
 }
 
+
+
+}
 
