@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # State management
+  provider: ^6.1.5+1
+
   # Firebase
   firebase_core: ^4.1.1
   firebase_auth: ^6.1.0
@@ -29,9 +32,8 @@ dependencies:
   sign_in_with_apple: ^7.0.1
   local_auth: ^2.2.1
 
-  # Local storage & state management
+  # Local storage
   shared_preferences: ^2.5.3
-  provider: ^6.1.5+1
   characters: ^1.4.0
   http: ^1.5.0
   meta: ^1.16.0
