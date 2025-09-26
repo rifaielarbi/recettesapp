@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "339043473822",
+    "project_id": "recettes-mondiales-app",
+    "storage_bucket": "recettes-mondiales-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339043473822:android:37fd97708bbac43f285e8f",
+        "android_client_info": {
+          "package_name": "com.example.recettes_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANsND6CcAMH9WS_Rk3gjK2jAvEgV5n4Jw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
