@@ -23,5 +23,21 @@
   "all": "All",
   "viewDetails": "View details",
   "filter": "Filter",
-  "searchRecipe": "Search a recipe"
+  "searchRecipe": "Search a recipe",
+  "welcome": "Welcome!",
+  "no_account": "Don't have an account?",
+  "create_account": "Create account",
+  "sign_in": "Sign In",
+  "change_account": "Change account",
+  "or": "OR",
+  "sign_in_apple": "Sign in with Apple",
+  "sign_in_google": "Sign in with Google",
+  "sign_in_facebook": "Sign in with Facebook",
+  "agree_terms": "By clicking Continue, you acknowledge that you have read and accepted our Terms of Service and Privacy Policy",
+  "darkMode": "Dark Mode",
+  "logout": "Log Out",
+  "shareApp": "Share App",
+  "clearCache": "Clear Cache"
 }
+
+

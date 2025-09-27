@@ -25,5 +25,20 @@
   "filter": "Filtrer",
   "searchRecipe": "Rechercher une recette",
   "world": "Mondiales",
-  "country": "Pays"
+  "country": "Pays",
+  "welcome": "Bienvenue !", 
+  "no_account": "Vous n'avez pas de compte ?",
+  "create_account": "Créer un compte",
+  "sign_in": "S’identifier",
+  "change_account": "Changer de compte",
+  "or": "OU",
+  "sign_in_apple": "Se connecter avec Apple",
+  "sign_in_google": "Se connecter avec Google",
+  "sign_in_facebook": "Se connecter avec Facebook",
+  "agree_terms": "En cliquant sur « Continuer », vous reconnaissez avoir lu et accepté nos conditions générales et notre politique de confidentialité",
+  "darkMode": "Mode sombre",
+  "logout": "Se déconnecter",
+  "shareApp": "Partager l'application",
+  "clearCache": "Vider le cache"
+
 }

@@ -1,16 +1,13 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-
-    namespace = "com.example.recettes_app"
-
+    // Nom du package de ton application
     namespace = "com.example.recettes_mondiales"
- 79ee234 (first commit)
+
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -25,8 +22,6 @@ android {
 
     defaultConfig {
         applicationId = "com.example.recettes_app"
-        applicationId = "com.example.recettes_mondiales"
- 79ee234 (first commit)
 
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
