@@ -48,7 +48,6 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     super.dispose();
   }
 
-  // Sauvegarde le compte dans SharedPreferences
   Future<void> _saveAccount(String email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> savedAccounts = prefs.getStringList('savedAccounts') ?? [];
