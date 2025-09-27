@@ -6,7 +6,6 @@ class DetailRecetteScreen extends StatelessWidget {
   final Recette recette;
   const DetailRecetteScreen({super.key, required this.recette});
 
-  // Fonction pour récupérer le drapeau et le nom du pays en français
   String _flagForCountry(String country) {
     switch (country.toLowerCase()) {
       case 'italie':
@@ -103,7 +102,6 @@ class DetailRecetteScreen extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              // TODO: Action pour voir la recette complète ou vidéo
             },
             child: const Text('Voir la recette'),
           ),
