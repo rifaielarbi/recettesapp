@@ -64,19 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _authenticateWithFaceID() async {
     try {
-      final canCheck = await _localAuth.canCheckBiometrics;
-      if (!canCheck) {
-        debugPrint("Face ID non disponible");
-        return;
-      }
+      if (!await _localAuth.canCheckBiometrics) return;
+      final available = await _localAuth.getAvailableBiometrics();
+      if (!available.contains(BiometricType.face)) return;
 
-      final availableBiometrics = await _localAuth.getAvailableBiometrics();
-      if (!availableBiometrics.contains(BiometricType.face)) {
-        debugPrint("Face ID non détecté sur cet appareil");
-        return;
-      }
-
-      final didAuthenticate = await _localAuth.authenticate(
+      final success = await _localAuth.authenticate(
         localizedReason: 'Connectez-vous avec Face ID',
         options: const AuthenticationOptions(
           biometricOnly: true,
@@ -84,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-      if (didAuthenticate) {
+      if (success) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const ListeRecettesScreen()),
@@ -158,12 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 email,
                                 overflow: TextOverflow.ellipsis,
                               ),
+                              // subtitle supprimé pour ne rien afficher
                               trailing: IconButton(
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 ),
-                                tooltip: 'Supprimer le compte',
                                 onPressed: () async {
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
@@ -238,35 +230,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Center(
                   child: Text(
                     "Bienvenue !",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      "Vous n'avez pas de compte ? ",
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                    GestureDetector(
-                      onTap:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const RegisterScreen(),
-                            ),
+                const SizedBox(height: 12),
+                Center(
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: const TextStyle(fontSize: 16, color: Colors.grey),
+                      children: [
+                        const TextSpan(text: "Vous n'avez pas de compte ? "),
+                        TextSpan(
+                          text: "Créer un compte",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
                           ),
-                      child: const Text(
-                        "Créer un compte",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
+                          recognizer:
+                              TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const RegisterScreen(),
+                                    ),
+                                  );
+                                },
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
@@ -422,7 +421,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RichText(
                     textAlign: TextAlign.left,
                     text: TextSpan(
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ), // <-- ici on passe de 12 à 14
                       children: [
                         const TextSpan(
                           text:
@@ -433,6 +435,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
+                            fontSize:
+                                14, // <-- agrandir aussi le texte cliquable
                           ),
                           recognizer: _termsRecognizer,
                         ),
@@ -442,6 +446,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
+                            fontSize: 14, // <-- idem
                           ),
                           recognizer: _privacyRecognizer,
                         ),

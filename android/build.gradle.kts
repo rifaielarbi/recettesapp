@@ -5,24 +5,19 @@ allprojects {
     }
 }
 
-
+// Une seule déclaration de newBuildDir
 val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
 
-val newBuildDir: Directory =
-    rootProject.layout.buildDirectory
-        .dir("../../build")
-        .get()
-
-rootProject.layout.buildDirectory.value(newBuildDir)
+// Appliquer la nouvelle build directory au projet racine
+rootProject.layout.buildDirectory.set(newBuildDir)
 
 subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
-    project.layout.buildDirectory.value(newSubprojectBuildDir)
-}
-subprojects {
+    project.layout.buildDirectory.set(newSubprojectBuildDir)
     project.evaluationDependsOn(":app")
 }
 
+// Tâche de nettoyage
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

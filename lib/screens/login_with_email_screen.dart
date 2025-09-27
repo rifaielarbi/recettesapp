@@ -330,9 +330,14 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
               const Center(
                 child: Text(
                   "Connectez-vous",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black, // texte en noir
+                  ),
                 ),
               ),
+
               const SizedBox(height: 8),
               const Center(
                 child: Text(

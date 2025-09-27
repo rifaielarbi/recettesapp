@@ -25,5 +25,19 @@
   "filter": "تصفية",
   "searchRecipe": "ابحث عن وصفة",
   "world": "العالمية",
-  "country": "البلد"
+  "country": "البلد",
+  "welcome": "مرحبا!",
+  "no_account": "ليس لديك حساب؟",
+  "create_account": "إنشاء حساب",
+  "sign_in": "تسجيل الدخول",
+  "change_account": "تغيير الحساب",
+  "or": "أو",
+  "sign_in_apple": "تسجيل الدخول عبر Apple",
+  "sign_in_google": "تسجيل الدخول عبر Google",
+  "sign_in_facebook": "تسجيل الدخول عبر Facebook",
+  "agree_terms": "بالنقر على متابعة، فإنك تقر بأنك قرأت ووافقت على شروط الخدمة وسياسة الخصوصية",
+  "darkMode": "الوضع الليلي",
+  "logout": "تسجيل الخروج",
+  "shareApp": "مشاركة التطبيق",
+  "clearCache": "مسح الذاكرة المؤقتة"
 }

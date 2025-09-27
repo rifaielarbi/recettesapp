@@ -1,4 +1,4 @@
-name: recettes_mondiales
+name: recettes_app
 description: "A Flutter project"
 publish_to: 'none'
 
@@ -63,10 +63,10 @@ flutter:
     - assets/images/soup.png
     - assets/images/logo_Aceuil.jpg
     - assets/images/google_logo.png
-    - assets/images/logo.PNG
-    - assets/images/pasta.PNG
-    - assets/images/tacos.PNG
-    - assets/images/soup.PNG
+    - assets/images/logo.png
+    - assets/images/pasta.png
+    - assets/images/tacos.png
+    - assets/images/soup.png
 
 flutter_native_splash:
   color: "#3CA26E"

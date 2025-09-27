@@ -6,15 +6,7 @@ class Recette {
   final String description;
   final List<String> ingredients;
 
-
-
   const Recette({
-
-
-
-
-  Recette({
-
     required this.id,
     required this.titre,
     required this.pays,
@@ -22,10 +14,4 @@ class Recette {
     required this.description,
     required this.ingredients,
   });
-
 }
-
-
-
-}
-

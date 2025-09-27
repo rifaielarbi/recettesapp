@@ -12,15 +12,19 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   // Charger le fichier JSON correspondant à la langue
   Future<bool> load() async {
-    final String jsonString =
-    await rootBundle.loadString('assets/lang/${locale.languageCode}.json');
+    final String jsonString = await rootBundle.loadString(
+      'assets/lang/${locale.languageCode}.json',
+    );
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
-    _localizedStrings = jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    _localizedStrings = jsonMap.map(
+      (key, value) => MapEntry(key, value.toString()),
+    );
     return true;
   }
 
@@ -28,14 +32,14 @@ class AppLocalizations {
     return _localizedStrings[key] ?? '** $key not found';
   }
 
-  // Getters pratiques
+  // --- Getters pratiques ---
   String get settings => translate('settings');
   String get profile => translate('profile');
   String get editProfile => translate('editProfile');
   String get notifications => translate('notifications');
   String get enableNotifications => translate('enableNotifications');
   String get appearance => translate('appearance');
-  String get darkMode => translate('dark_mode');
+  String get darkMode => translate('darkMode');
   String get textSize => translate('textSize');
   String get language => translate('language');
   String get security => translate('security');
@@ -54,18 +58,39 @@ class AppLocalizations {
   String get viewDetails => translate('viewDetails');
   String get filter => translate('filter');
   String get searchRecipe => translate('searchRecipe');
+  String get welcome => translate('welcome');
+  String get createAccount => translate('createAccount');
+  String get signIn => translate('signIn');
+  String get changeAccount => translate('changeAccount');
+  String get or => translate('or');
+  String get signInWithApple => translate('signInWithApple');
+  String get signInWithGoogle => translate('signInWithGoogle');
+  String get signInWithFacebook => translate('signInWithFacebook');
+  String get faceIDLogin => translate('faceIDLogin');
+  String get agreeTermsPart1 => translate('agreeTermsPart1');
+  String get terms => translate('terms');
+  String get agreeTermsPart2 => translate('agreeTermsPart2');
+  String get privacyPolicy => translate('privacyPolicy');
+  String get noAccount => translate('noAccount');
+  String get chooseAccount => translate('chooseAccount');
+  String get addAccount => translate('addAccount');
 
-
+  // --- Clés supplémentaires pour SettingsScreen ---
+  String get logout => translate('logout');
+  String get shareApp => translate('shareApp');
+  String get clearCache => translate('clearCache');
   String get filterByCountry => translate('filterByCountry');
   String get world => translate('world');
   String get country => translate('country');
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'fr', 'ar'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      ['en', 'fr', 'ar'].contains(locale.languageCode);
 
   @override
   Future<AppLocalizations> load(Locale locale) async {

@@ -188,7 +188,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const Center(
                 child: Text(
                   'Créer un compte',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
