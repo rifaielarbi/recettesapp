@@ -23,6 +23,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/data/recettes_a_to_z.json
     - assets/lang/fr.json
     - assets/lang/ar.json
     - assets/lang/en.json

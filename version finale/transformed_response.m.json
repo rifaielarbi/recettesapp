@@ -1,0 +1,423 @@
+{
+  "meals": [
+    {
+      "id": "52777",
+      "titre": "Mediterranean Pasta Salad",
+      "categorie": "Seafood",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/wvqpwt1468339226.jpg",
+      "description": "Bring a large saucepan of salted water to the boil\r\nAdd the pasta, stir once and cook for about 10 minutes or as directed on the packet.\r\nMeanwhile, wash the tomatoes and cut into quarters. Slice the olives. Wash the basil.\r\nPut the tomatoes into a salad bowl and tear the basil leaves over them. Add a tablespoon of olive oil and mix.\r\nWhen the pasta is ready, drain into a colander and run cold water over it to cool it quickly.\r\nToss the pasta into the salad bowl with the tomatoes and basil.\r\nAdd the sliced olives, drained mozzarella balls, and chunks of tuna. Mix well and let the salad rest for at least half an hour to allow the flavours to mingle.\r\nSprinkle the pasta with a generous grind of black pepper and drizzle with the remaining olive oil just before serving.",
+      "tags": [
+        "Pasta",
+        "Baking"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=e52IL8zYmaE",
+      "ingredients": [
+        "mozzarella balls - 200 g",
+        "baby plum tomatoes - 250 g",
+        "fresh basil - 1  bunch",
+        "farfalle - 350 g",
+        "extra virgin olive oil - 3  tablespoons",
+        "Green Olives - 40 g",
+        "tuna - 200 g",
+        "salt - to taste",
+        "pepper - to taste"
+      ]
+    },
+    {
+      "id": "52827",
+      "titre": "Massaman Beef curry",
+      "categorie": "Beef",
+      "pays": "Thai",
+      "image": "https://www.themealdb.com/images/media/meals/tvttqv1504640475.jpg",
+      "description": "Heat oven to 200C/180C fan/gas 6, then roast the peanuts on a baking tray for 5 mins until golden brown. When cool enough to handle, roughly chop. Reduce oven to 180C/160C fan/gas 4.\r\nHeat 2 tbsp coconut cream in a large casserole dish with a lid. Add the curry paste and fry for 1 min, then stir in the beef and fry until well coated and sealed. Stir in the rest of the coconut with half a can of water, the potatoes, onion, lime leaves, cinnamon, tamarind, sugar, fish sauce and most of the peanuts. Bring to a simmer, then cover and cook for 2 hrs in the oven until the beef is tender.\r\nSprinkle with sliced chilli and the remaining peanuts, then serve straight from the dish with jasmine rice.",
+      "tags": [
+        "Curry"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=mVxgZSCU9_g",
+      "ingredients": [
+        "Peanuts - 85g",
+        "Coconut cream - 400ml can",
+        "Massaman curry paste - 4 tbsp",
+        "Beef - 600g stewing cut into strips",
+        "Potatoes - 450g waxy",
+        "Onion - 1 cut thin wedges",
+        "Lime - 4 leaves",
+        "Cinnamon stick - 1",
+        "Tamarind paste - 1 tbsp",
+        "Brown sugar - 1 tbsp palm or soft light",
+        "Fish Sauce - 1 tbsp",
+        "chilli - 1 red deseeded and finely sliced, to serve",
+        "Jasmine Rice - to serve"
+      ]
+    },
+    {
+      "id": "52864",
+      "titre": "Mushroom & Chestnut Rotolo",
+      "categorie": "Vegetarian",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/ssyqwr1511451678.jpg",
+      "description": "Soak the dried mushrooms in 350ml boiling water and set aside until needed. Blitz ¾ of the chestnuts with 150ml water until creamy. Roughly chop the remaining chestnuts.\r\nHeat 2 tbsp olive oil in a large non-stick frying pan. Fry the shallots with a pinch of salt until softened, then add the garlic, chopped chestnuts and rosemary, and fry for 2 mins more. Add the wild mushrooms, 2 tbsp oil and some seasoning. Cook for 3 mins until they begin to soften. Drain and roughly chop the dried mushrooms (reserve the soaking liquid), then add those too, along with the soy sauce, and fry for 2 mins more.\r\nWhisk the wine, reserved mushroom liquid and chestnut cream together to create a sauce. Season, then add half to the mushroom mixture in the pan and cook for 1 min until the sauce becomes glossy. Remove and discard the rosemary sprigs, then set the mixture aside.\r\nHeat oven to 180C/160C fan/gas 4. Bring a large pan of salted water to the boil and get a large bowl of ice water ready. Drop the lasagne sheets into the boiling water for 2 mins or until pliable and a little cooked, then immediately plunge them into the cold water. Using your fingers, carefully separate the sheets and transfer to a clean tea towel. Spread a good spoonful of the sauce on the bottom two thirds of each sheet, then, rolling away from yourself, roll up the shorter ends. Cut each roll in half, then position the rolls of pasta cut-side up in a pie dish that you are happy to serve from at the table. If you have any mushroom sauce remaining after you’ve rolled up all the sheets, simply push it into some of the exposed rolls of pasta.\r\nPour the rest of the sauce over the top of the pasta, then bake for 10 mins or until the pasta no longer has any resistance when tested with a skewer.\r\nMeanwhile, put the breadcrumbs, the last 2 tbsp olive oil, sage leaves and some seasoning in a bowl, and toss everything together. Scatter the rotolo with the crumbs and sage, then bake for another 10 mins, until the top is golden and the sage leaves are crispy. Leave to cool for 10 mins to allow the pasta to absorb the sauce, then drizzle with a little truffle oil, if you like, before taking your dish to the table.",
+      "tags": [
+        "Vegetarian",
+        "Nutty"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=GNN7_ZSJ5YE",
+      "ingredients": [
+        "Mushrooms - 30g",
+        "Chestnuts - 240g",
+        "Challots - 3",
+        "Garlic - 3 cloves",
+        "Rosemary - 3 sprigs",
+        "Wild Mushrooms - 500g",
+        "Soy Sauce - 2 tblsp",
+        "White Wine - 125ml",
+        "Lasagne Sheets - 350g",
+        "Breadcrumbs - 4 tbsp",
+        "Sage - 1/2 handful",
+        "Truffle Oil - to serve"
+      ]
+    },
+    {
+      "id": "52865",
+      "titre": "Matar Paneer",
+      "categorie": "Vegetarian",
+      "pays": "Indian",
+      "image": "https://www.themealdb.com/images/media/meals/xxpqsy1511452222.jpg",
+      "description": "Heat the oil in a frying pan over high heat until it’s shimmering hot. Add the paneer, then turn the heat down a little. Fry until it starts to brown at the edges, then turn it over and brown on each side – the paneer will brown faster than you think, so don’t walk away. Remove the paneer from the pan and drain on kitchen paper.\r\nPut the ginger, cumin, turmeric, ground coriander and chilli in the pan, and fry everything for 1 min. Add the tomatoes, mashing them with the back of a spoon and simmer everything for 5 mins until the sauce smells fragrant. Add a splash of water if it’s too thick. Season well. Add the peas and simmer for a further 2 mins, then stir in the paneer and sprinkle over the garam masala. Divide between two bowls, top with coriander leaves and serve with naan bread, roti or rice.",
+      "tags": [
+        "Curry",
+        "Vegetarian"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=wlseYNqwLNs",
+      "ingredients": [
+        "Sunflower Oil - 1 tbls",
+        "Paneer - 225g",
+        "Ginger - 2",
+        "Cumin - 1 tsp",
+        "Turmeric - 1 tsp",
+        "Green Chilli - 1",
+        "Tomato - 4 large",
+        "Peas - 150g",
+        "Garam Masala - 1 tsp",
+        "Coriander - Small bunch",
+        "Naan Bread - to serve"
+      ]
+    },
+    {
+      "id": "52876",
+      "titre": "Minced Beef Pie",
+      "categorie": "Beef",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/xwutvy1511555540.jpg",
+      "description": "Preheat the oven to 200C/400F/Gas 6.\r\nHeat the oil in a deep frying pan and fry the beef mince for 4-5 minutes, breaking it up with a wooden spoon as it browns.\r\nAdd the onion and cook for 2-3 minutes, then stir in the tomato purée and cook for 2-3 more minutes. Stir in the flour and cook for a further minute, then add the chopped mushrooms, the stout or beef stock and a couple of dashes of Worcestershire sauce. Bring to the boil, then reduce the heat, cover the pan with a lid and leave to simmer for 20 minutes. Set aside and leave to cool, then turn the meat mixture into a one litre pie dish.\r\nRoll out the pastry on a floured work surface until it is slightly larger than the pie dish. Gently drape the pastry over the dish, pressing firmly onto the edges. Trim, then shape the edges into a fluted shape.\r\nCut some leaf shapes out of the pastry trimmings and decorate the top of the pie, sticking them to the pastry with the beaten egg yolk.\r\nMake three or four slits in the pastry to allow the steam to escape, then brush the pie with the rest of the beaten egg yolk and bake in the oven for 20-25 minutes, or until golden-brown.\r\nTo serve, slice into wedges.",
+      "tags": [
+        "Pie",
+        "Meat"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=QY47h-uqq5g",
+      "ingredients": [
+        "Vegetable Oil - 2 tbs",
+        "Minced Beef - 500g",
+        "Onion - 1 chopped",
+        "Tomato Puree - 1 tbls",
+        "Plain Flour - 1 ½ tbsp",
+        "Mushrooms - 75g",
+        "Beef Stock - 250ml",
+        "Worcestershire Sauce - Dash",
+        "Shortcrust Pastry - 400g",
+        "Egg Yolks - 1"
+      ]
+    },
+    {
+      "id": "52880",
+      "titre": "McSinghs Scotch pie",
+      "categorie": "Lamb",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/vssrtx1511557680.jpg",
+      "description": "Heat a large frying pan and toast the cumin seeds for a few minutes, then set aside. Heat the oil in the same pan and fry the onion, garlic, chilli, pepper and a good pinch of salt for around eight minutes, until there is no moisture left. Remove from the heat, stir in the toasted cumin seeds, ground mace (or nutmeg) and ground coriander. Leave to cool.\r\nIn a large bowl mix together the minced lamb, white pepper, fresh coriander, and the cooled spiced onion mixture until combined. Set aside, covered, in the fridge.\r\nPreheat the oven to 200C/400F/Gas 6 and generously grease a 20cm/8in diameter loose-bottomed or springform round cake tin with lard.\r\nTo make the pastry, sift the flour and salt in a large bowl and make a well in the centre.\r\nPut the milk, lard and 90ml/3fl oz of water in a saucepan and heat gently. When the lard has melted, increase the heat and bring to the boil.\r\nPour the boiling liquid into the flour, and use a wooden spoon to combine until cool enough to handle. Bring together into a ball.\r\nDust a work surface with flour and, working quickly, knead the dough briefly – it will be soft and moist. Set aside a third of the pastry and roll the rest out on a well-floured surface. Line the pie dish with the pastry, pressing it right up the sides until it pokes just over the top of the tin.\r\nAdd the filling into the pastry-lined tin bit by bit. As you reach the top, form a slight peak. Roll out the reserved pastry and top the pie with it. Pinch the edges to seal and trim the excess. Poke a hole in the top of the pie and insert a small tube made from aluminium foil to allow steam to escape.\r\nBrush the top of the pie with a little beaten egg yolk, and bake in the preheated oven for 30 minutes (put a tray on the shelf below to catch any drips). Then reduce the temperature to 160C/325F/Gas 3 and cook for a further 1¼ hours until golden-brown. Leave to cool completely before refrigerating for two hours, or overnight.\r\nRun a knife around the edge of the pie, remove from the tin and serve with chutneys, salads or pickles.",
+      "tags": [
+        "Pie"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=1nArqhRyszw",
+      "ingredients": [
+        "Cumin - 2 tsp",
+        "Rapeseed Oil - 1 tbs",
+        "Red Onions - 2 finely chopped",
+        "Garlic Clove - 6",
+        "Green Chilli - 3 finely chopped",
+        "Red Pepper - 1 finely chopped",
+        "Nutmeg - 1 tsp",
+        "Coriander - 2 tsp",
+        "Lamb Mince - 1kg",
+        "Pepper - 1 tsp",
+        "Coriander - 3 tbs",
+        "Plain Flour - 340g",
+        "Salt - ½ tsp",
+        "Milk - 90 ml",
+        "Lard - 150g",
+        "Egg Yolks - Beaten"
+      ]
+    },
+    {
+      "id": "52900",
+      "titre": "Madeira Cake",
+      "categorie": "Dessert",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/urtqut1511723591.jpg",
+      "description": "Pre-heat the oven to 180C/350F/Gas 4. Grease an 18cm/7in round cake tin, line the base with greaseproof paper and grease the paper.\r\nCream the butter and sugar together in a bowl until pale and fluffy. Beat in the eggs, one at a time, beating the mixture well between each one and adding a tablespoon of the flour with the last egg to prevent the mixture curdling.\r\nSift the flour and gently fold in, with enough milk to give a mixture that falls slowly from the spoon. Fold in the lemon zest.\r\nSpoon the mixture into the prepared tin and lightly level the top. Bake on the middle shelf of the oven for 30-40 minutes, or until golden-brown on top and a skewer inserted into the centre comes out clean.\r\nRemove from the oven and set aside to cool in the tin for 10 minutes, then turn it out on to a wire rack and leave to cool completely.\r\nTo serve, decorate the cake with the candied peel.",
+      "tags": [
+        "Cake",
+        "Light",
+        "Baking",
+        "Desert"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=-YDh4WEmK_E",
+      "ingredients": [
+        "Butter - 175g",
+        "Caster Sugar - 175g",
+        "Eggs - 3",
+        "Self-raising Flour - 250g",
+        "Milk - 3 tbs",
+        "Lemon - Zest of 1",
+        "Mixed Peel - To Glaze"
+      ]
+    },
+    {
+      "id": "52927",
+      "titre": "Montreal Smoked Meat",
+      "categorie": "Beef",
+      "pays": "Canadian",
+      "image": "https://www.themealdb.com/images/media/meals/uttupv1511815050.jpg",
+      "description": "To make the cure, in a small bowl mix together salt, pink salt, black pepper, coriander, sugar, bay leaf, and cloves. Coat entire brisket with the cure and place in an extra-large resealable plastic bag. Place in the coldest part of the refrigerator and cure for 4 days, flipping brisket twice a day.\r\nRemove brisket from bag and wash as much cure off as possible under cold running water. Place brisket in a large container and fill with water and let soak for 2 hours, replacing water every 30 minutes. Remove from water and pat dry with paper towels.\r\nTo make the rub, mix together black pepper, coriander, paprika, garlic powder, onion powder, dill weed, mustard, celery seed, and crushed red papper in a small bowl. Coat entire brisket with the rub.\r\nFire up smoker or grill to 225 degrees, adding chunks of smoking wood chunks when at temperature. When wood is ignited and producing smoke, place brisket in, fat side up, and smoke until an instant read thermometer registers 165 degrees when inserted into thickest part of the brisket, about 6 hours.\r\nTransfer brisket to large roasting pan with V-rack. Place roasting pan over two burners on stovetop and fill with 1-inch of water. Bring water to a boil over high heat, reduce heat to medium, cover roasting pan with aluminum foil, and steam brisket until an instant read thermometer registers 180 degrees when inserted into thickest part of the meat, 1 to 2 hours, adding more hot water as needed.\r\nTransfer brisket to cutting board and let cool slightly. Slice and serve, preferably on rye with mustard.",
+      "tags": [
+        "Speciality",
+        "Snack",
+        "StrongFlavor"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=g5oCDoyxbBk",
+      "ingredients": [
+        "Beef Brisket - 1",
+        "Salt - 3 tbs",
+        "Black Pepper - 3 tbs",
+        "Coriander - 1 tbs",
+        "Sugar - 1 tbs",
+        "Bay Leaf - 1 tsp",
+        "Cloves - 1 tsp",
+        "Paprika - 1 tbs",
+        "Garlic - 1 tbs",
+        "Onion - 1 tbs",
+        "Dill - 1 tbs",
+        "English Mustard - 1 tsp",
+        "Celery Salt - 1 tbs",
+        "Red Pepper Flakes - 1 tsp"
+      ]
+    },
+    {
+      "id": "52947",
+      "titre": "Ma Po Tofu",
+      "categorie": "Beef",
+      "pays": "Chinese",
+      "image": "https://www.themealdb.com/images/media/meals/1525874812.jpg",
+      "description": "Add a small pinch of salt and sesame oil to minced beef. Mix well and set aside.\r\nMix 1 tablespoon of cornstarch with 2 and ½ tablespoons of water in a small bowl to make water starch.\r\nCut tofu into square cubes (around 2cms). Bring a large amount of water to a boil and then add a pinch of salt. Slide the tofu in and cook for 1 minute. Move out and drain.\r\nGet a wok and heat up around 2 tablespoons of oil, fry the minced meat until crispy. Transfer out beef out and leave the oil in.\r\nFry doubanjiang for 1 minute over slow fire and then add garlic, scallion white, ginger and fermented black beans to cook for 30 seconds until aroma. Then mix pepper flakes in.\r\nAdd water to the seasonings and bring to boil over high fire. Gently slide the tofu cubes. Add light soy sauce and beef.Slow the heat after boiling and then simmer for 6-8 minutes. Then add chopped garlic greens.\r\nStir the water starch and then pour half of the mixture to the simmering pot. Wait for around 30 seconds and then pour the other half. You can slightly taste the tofu and add pinch of salt if not salty enough. By the way, if you feel it is too spicy, add some sugar can milder the taste. But be carefully as the broth is very hot at this point.\r\nTransfer out when almost all the seasonings stick to tofu cubes. Sprinkle Szechuan peppercorn powder (to taste)and chopped garlic greens if using.\r\nServe immediately with steamed rice.",
+      "youtube": "https://www.youtube.com/watch?v=IhwPQL9dFYc",
+      "ingredients": [
+        "Tofu - 450g",
+        "Minced Beef - 100g",
+        "Sesame Seed Oil - 1/2 tbs",
+        "Doubanjiang - 1 1/2 tsp",
+        "Fermented Black Beans - 1/2 tsp",
+        "Pepper - 1 tbs",
+        "Salt - 1/2 tsp",
+        "Sichuan pepper - 1/2 tsp",
+        "Soy Sauce - 1 tbs",
+        "Water - 400ml",
+        "Olive Oil - 2 tbs",
+        "Scallions - 2 chopped",
+        "Spring Onions - 4",
+        "Garlic - 2 cloves chopped",
+        "Ginger - 4 sliced",
+        "Cornstarch - 1 tbs"
+      ]
+    },
+    {
+      "id": "52968",
+      "titre": "Mbuzi Choma (Roasted Goat)",
+      "categorie": "Goat",
+      "pays": "Kenyan",
+      "image": "https://www.themealdb.com/images/media/meals/cuio7s1555492979.jpg",
+      "description": "1. Steps for the Meat: \r\n Roast meat over medium heat for 50 minutes and salt it as you turn it.\r\n\r\n2. Steps for Ugali:\r\nBring the water and salt to a boil in a heavy-bottomed saucepan. Stir in the cornmeal slowly, letting it fall through the fingers of your hand.\r\n\r\n3. Reduce heat to medium-low and continue stirring regularly, smashing any lumps with a spoon, until the mush pulls away from the sides of the pot and becomes very thick, about 10 minutes.\r\n\r\n4.Remove from heat and allow to cool.\r\n\r\n5. Place the ugali into a large serving bowl. Wet your hands with water, form a ball and serve.\r\n\r\n6. Steps for Kachumbari: Mix the tomatoes, onions, chili and coriander leaves in a bowl.\r\n\r\n7. Serve and enjoy!\r\n\r\n",
+      "tags": [
+        "BBQ",
+        "Meat"
+      ],
+      "ingredients": [
+        "Goat Meat - 1 kg",
+        "Corn Flour - 1 kg",
+        "Tomatoes - 2",
+        "Salt - Pinch",
+        "Onion - 1",
+        "Green Chilli - 1",
+        "Coriander Leaves - 1  bunch"
+      ]
+    },
+    {
+      "id": "52991",
+      "titre": "Mince Pies",
+      "categorie": "Dessert",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/qe8pf51576795532.jpg",
+      "description": "To make the pastry, rub 225g cold, diced butter into 350g plain flour, then mix in 100g golden caster sugar and a pinch of salt.\r\n\r\nCombine the pastry into a ball – don’t add liquid – and knead it briefly. The dough will be fairly firm, like shortbread dough. You can use the dough immediately, or chill for later.\r\n\r\nPreheat the oven to 200C/gas 6/fan 180C. Line 18 holes of two 12-hole patty tins, by pressing small walnut-sized balls of pastry into each hole.\r\n\r\nSpoon 280g mincemeat into the pies.\r\n\r\nTake slightly smaller balls of pastry than before and pat them out between your hands to make round lids, big enough to cover the pies. \r\n\r\nTop the pies with their lids, pressing the edges gently together to seal – you don’t need to seal them with milk or egg as they will stick on their own. (The pies may now be frozen for up to 1 month).\r\n\r\nBeat 1 small egg and brush the tops of the pies. Bake for 20 mins until golden. Leave to cool in the tin for 5 mins, then remove to a wire rack.\r\n\r\nTo serve, lightly dust with icing sugar.",
+      "tags": [
+        "Christmas"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=PnXft7lQNJE",
+      "ingredients": [
+        "Butter - 225g",
+        "Plain Flour - 350g",
+        "Caster Sugar - 100g",
+        "Mincemeat - 280g",
+        "Egg - 1 small",
+        "Icing Sugar - Topping"
+      ]
+    },
+    {
+      "id": "53006",
+      "titre": "Moussaka",
+      "categorie": "Beef",
+      "pays": "Greek",
+      "image": "https://www.themealdb.com/images/media/meals/ctg8jd1585563097.jpg",
+      "description": "Heat the grill to high. Brown the beef in a deep ovenproof frying pan over a high heat for 5 mins. Meanwhile, prick the aubergine with a fork, then microwave on High for 3-5 mins until soft. Mix the yogurt, egg and parmesan together, then add a little seasoning.\r\n\r\nStir the tomatoes, purée and potatoes in with the beef with some seasoning and heat through. Smooth the surface of the beef mixture with the back of a spoon, then slice the cooked aubergine and arrange on top. Pour the yogurt mixture over the aubergines, smooth out evenly, then grill until the topping has set and turned golden.",
+      "youtube": "https://www.youtube.com/watch?v=8U_29i9Qp5U",
+      "ingredients": [
+        "Beef - 500g",
+        "Aubergine - 1 large",
+        "Greek Yogurt - 150g",
+        "Egg - 1 beaten",
+        "Parmesan - 3 tbs",
+        "Tomato - 400g",
+        "Tomato Puree - 4 tbs",
+        "Potatoes - 350g"
+      ]
+    },
+    {
+      "id": "53029",
+      "titre": "Mulukhiyah",
+      "categorie": "Beef",
+      "pays": "Egyptian",
+      "image": "https://www.themealdb.com/images/media/meals/x372ug1598733932.jpg",
+      "description": "Saute the onions in the 3-4 tablespoons olive oil\r\nAdd the beef cubes or the chicken cutlets, sear for 3-4 min on each side\r\nAdd 1 liter of water or just enough to cover the meat\r\nCook over medium heat until the meat is done (I usually do this in the pressure cooker and press them for 5 min)\r\n\r\nAdd the frozen mulukhyia and stir until it thaws completely and then comes to a boil\r\n\r\nIn another pan add the 1/4 to 1/2 cup of olive oil and the cloves of garlic and cook over medium low heat until you can smell the garlic (don’t brown it, it will become bitter)\r\n\r\nAdd the oil and garlic to the mulukhyia and lower the heat and simmer for 5-10 minutes\r\nAdd salt to taste\r\n\r\nServe with a generous amount of lemon juice.\r\n\r\nYou can serve it with some short grain rice or some pita bread",
+      "youtube": "https://www.youtube.com/watch?v=vWc5JzgAkIQ",
+      "ingredients": [
+        "Mulukhiyah - 800g",
+        "Onion - 1 chopped",
+        "Beef - 300g",
+        "Salt - 1 tsp",
+        "Water - 1 Litre",
+        "Garlic Clove - 1",
+        "Olive Oil - 1/2 cup"
+      ]
+    },
+    {
+      "id": "53038",
+      "titre": "Mustard champ",
+      "categorie": "Side",
+      "pays": "Irish",
+      "image": "https://www.themealdb.com/images/media/meals/o7p9581608589317.jpg",
+      "description": "STEP 1\r\nBoil the potatoes for 15 mins or until tender. Drain, then mash.\r\n\r\nSTEP 2\r\nHeat the milk and half the butter in the corner of the pan, then beat into the mash, along with the wholegrain mustard.\r\n\r\nSTEP 3\r\nGently fry the spring onions in the remaining butter for 2 mins until just soft but still a perky green. Fold into the mash and serve. Great with gammon or to top a fish pie.",
+      "youtube": "https://www.youtube.com/watch?v=_iKllHSC978",
+      "ingredients": [
+        "Potatoes - 1kg",
+        "Milk - 200ml",
+        "Butter - 50g",
+        "Mustard - 2 tbs",
+        "Spring Onions - Bunch",
+      ]
+    },
+    {
+      "id": "53047",
+      "titre": "Moroccan Carrot Soup",
+      "categorie": "Vegetarian",
+      "pays": "Moroccan",
+      "image": "https://www.themealdb.com/images/media/meals/jcr46d1614763831.jpg",
+      "description": "Step 1\r\nPreheat oven to 180° C.\r\nStep 2\r\nCombine carrots, onion, garlic, cumin seeds, coriander seeds, salt and olive oil in a bowl and mix well. Transfer on a baking tray.\r\nStep 3\r\nPut the baking tray in preheated oven and roast for 10-12 minutes or till carrots soften. Remove from heat and cool.\r\nStep 4\r\nGrind the baked carrot mixture along with some water to make a smooth paste and strain in a bowl.\r\nStep 5\r\nHeat the carrot mixture in a non-stick pan. Add two cups of water and bring to a boil. Add garam masala powder and mix. Add salt and mix well.\r\nStep 6\r\nRemove from heat, add lemon juice and mix well.\r\nStep 7\r\nServe hot.",
+      "youtube": "https://www.youtube.com/watch?v=7tDWOpnIhok",
+      "ingredients": [
+        "Carrots - 6 chopped",
+        "Onion - 1 sliced",
+        "Garlic Clove - 4",
+        "Cumin - 1 tsp",
+        "Coriander - 1/2 tsp",
+        "Olive Oil - 1 tbs",
+        "Garam Masala - 1/4 tsp",
+        "Lemon Juice - 1 tsp"
+      ]
+    },
+    {
+      "id": "53048",
+      "titre": "Mee goreng mamak",
+      "categorie": "Seafood",
+      "pays": "Malaysian",
+      "image": "https://www.themealdb.com/images/media/meals/xquakq1619787532.jpg",
+      "description": "Heat oil in a pan at medium heat. Then, add peanuts, dried chilies, dried shrimps and dhal. Fry the aromatics until fragrant. Remove from pan and leave aside.\r\n\r\nBlend fried ingredients with tamarind paste and water until fine. Then, sauté the blended ingredients in oil heated over low heat. Continue cooking until the oil separates from the paste and turns a darker shade.\r\n\r\nSkin and cut potatoes into small chunks and boil them in a pot of water until knife-tender. Once ready, remove them from the pot and leave aside. Discard water.\r\n\r\nSlice onion and fried tofu, mince garlic, cut some cabbage and Chinese flowering cabbage (choi sam). Prepare prawn fritters and cut them. Boil noodles to soften them if bought dried. Also mix black soy sauce with water.\r\n\r\nTo fry one portion of mee goreng mamak, heat oil and add 1/4 of the following ingredients in this order: garlic, onion, paste. Sauté until fragrant. Optionally, add prawns.\r\n\r\nAdd in 1/4 amount of tofu, boiled potatoes, cabbage, Chinese flowering cabbage and prawn fritters. Sauté for another 30 seconds.\r\n\r\nAdd noodles to the wok. Add 3 tablespoons of dark soy sauce mixture. Mix evenly for the next 1 minute. Then, move the noodles to the side of the wok. Stir in an egg. Garnish with a slice of lime and slices of green chilies. To cook another plate of noodles, repeat from step 5 onwards.",
+      "youtube": "https://www.youtube.com/watch?v=pOJEmDBgtSk",
+      "ingredients": [
+        "Peanuts - 50g",
+        "Chilli - 15g",
+        "Prawns - 10g",
+        "Oil - 5 tbs",
+        "Water - 750 ml",
+        "Tamarind Paste - 1/2 tbs",
+        "Potatoes - 250g",
+        "Red Onions - 2",
+        "Garlic Clove - 4",
+        "Cabbage - 30g",
+        "Chinese Broccoli - 30g",
+        "Tofu - 1",
+        "Soy Sauce - 1 tbs",
+        "Noodles - 4",
+        "Egg - 1"
+      ]
+    },
+    {
+      "id": "53059",
+      "titre": "Mushroom soup with buckwheat",
+      "categorie": "Side",
+      "pays": "Croatian",
+      "image": "https://www.themealdb.com/images/media/meals/1ngcbf1628770793.jpg",
+      "description": "Chop the onion and garlic, slice the mushrooms and wash the buckwheat. Heat the oil and lightly sauté the onion. Add the mushrooms and the garlic and continue to sauté. Add the salt, vegetable seasoning, buckwheat and the bay leaf and cover with water. Simmer gently and just before it is completely cooked, add pepper, sour cream mixed with flour, the chopped parsley and vinegar to taste.",
+      "tags": [
+        "Warming",
+        "Soup"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=M1ok7mG9-Qc",
+      "ingredients": [
+        "Mushrooms - 150g",
+        "Buckwheat - 50g",
+        "Vegetable Oil - 4 tbs",
+        "Onion - 40g",
+        "Garlic - 2 cloves",
+        "Bay Leaf - 1",
+        "Vegetable Stock Cube - 1tbsp",
+        "Sour Cream - 50 ml",
+        "White Wine Vinegar - Dash",
+        "Parsley - Top"
+      ]
+    },
+    {
+      "id": "53086",
+      "titre": "Migas",
+      "categorie": "Miscellaneous",
+      "pays": "Spanish",
+      "image": "https://www.themealdb.com/images/media/meals/xd9aj21740432378.jpg",
+      "description": "Crumble the bread into small pieces. Sprinkle with cold water, cover with a damp cloth and leave for 30 minutes.\r\nHeat 2 tsp of olive oil in a deep pan. Add the garlic cloves separated, skins on; just make a small cut with a knife to open them and keep frying for 5 minutes. Set the garlic aside.\r\nIn the same oil, where we fried everything, simmer the bread, stirring constantly for 15 minutes and add a grinding of black pepper.\r\nAdd the garlic, continue stirring for about 20 minutes. It will be ready when the bread is soft and golden.",
+      "youtube": "https://www.youtube.com/watch?v=GSvFVBpqMKI",
+      "ingredients": [
+        "Bread - 1 large",
+        "Olive Oil - 1 1/2 L",
+        "Garlic - Half",
+        "Pork - 1 Handfull"
+      ]
+    }
+  ]
+}

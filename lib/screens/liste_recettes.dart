@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
-import '../app_localizations.dart';
 
+import '../app_localizations.dart';
 import '../models/recette.dart';
 import '../utils/constants.dart';
 import '../widgets/recette_card.dart';
@@ -20,25 +22,48 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   String _search = '';
   String _country = 'Tous';
 
-  List<Recette> get _all => const [
-    Recette(
-      id: '1',
-      titre: 'Pasta Primavera',
-      pays: 'Italie',
-      image: AppAssets.pasta,
-      description:
-      "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
-      ingredients: ['200 g de pâtes', '1 brocoli', '1 carotte'],
-    ),
-    Recette(
-      id: '2',
-      titre: 'Tacos Al Pastor',
-      pays: 'Mexico',
-      image: AppAssets.tacos,
-      description: 'Tacos savoureux avec porc mariné, ananas et coriandre.',
-      ingredients: ['Tortillas', 'Porc', 'Ananas'],
-    ),
-  ];
+  List<Recette> _recipesFromJson = [];
+  bool _loading = true;
+  int _currentIndex = 0; // Pour BottomNavigationBar
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCtrl.addListener(() => setState(() => _search = _searchCtrl.text));
+    _loadRecipesFromJson();
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadRecipesFromJson() async {
+    final jsonStr =
+    await rootBundle.loadString('assets/data/recettes_a_to_z.json');
+    final data = jsonDecode(jsonStr) as Map<String, dynamic>;
+    final List<dynamic> meals = data['meals'] ?? [];
+
+    setState(() {
+      _recipesFromJson = meals
+          .map((m) => Recette(
+        id: m['id'] ?? '',
+        titre: m['titre'] ?? m['name'] ?? 'Sans titre',
+        pays: m['pays'] ?? 'Inconnu',
+        image: m['image'] ?? AppAssets.pasta,
+        description: m['description'] ?? '',
+        ingredients: (m['ingredients'] as List<dynamic>?)
+            ?.map((i) => i.toString())
+            .toList() ??
+            [],
+      ))
+          .toList();
+      _loading = false;
+    });
+  }
+
+  List<Recette> get _all => _loading ? [] : _recipesFromJson;
 
   List<Recette> get _filtered {
     final byCountry = _country == 'Tous'
@@ -87,10 +112,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     ),
                   ),
                   trailing: _country == c
-                      ? Icon(
-                    Icons.check,
-                    color: Theme.of(context).colorScheme.primary,
-                  )
+                      ? Icon(Icons.check,
+                      color: Theme.of(context).colorScheme.primary)
                       : null,
                   onTap: () => Navigator.pop(context, c),
                 ),
@@ -104,27 +127,31 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     if (chosen != null && mounted) setState(() => _country = chosen);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _searchCtrl.addListener(() => setState(() => _search = _searchCtrl.text));
-  }
-
-  @override
-  void dispose() {
-    _searchCtrl.dispose();
-    super.dispose();
-  }
-
   Color? _withAlpha(Color? color, double opacity) {
     if (color == null) return null;
     return color.withAlpha((opacity * 255).round());
   }
 
+  void _onBottomNavTap(int index) {
+    setState(() => _currentIndex = index);
+    switch (index) {
+      case 0:
+      // Recettes : reste sur cet écran
+        break;
+      case 1:
+      // Favoris : remplacer par ton écran favoris
+        Navigator.pushNamed(context, '/favorites');
+        break;
+      case 2:
+      // Paramètres
+        Navigator.pushNamed(context, '/settings');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localeProvider = Provider.of<LocaleProvider>(context);
-
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textColor = theme.textTheme.bodyLarge?.color;
@@ -132,7 +159,9 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: SafeArea(
-        child: CustomScrollView(
+        child: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
@@ -185,6 +214,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 ),
               ],
             ),
+
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
@@ -201,16 +231,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                       style: TextStyle(color: textColor),
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context).searchRecipe,
-                        hintStyle: TextStyle(
-                            color: _withAlpha(textColor, 0.6)),
+                        hintStyle:
+                        TextStyle(color: _withAlpha(textColor, 0.6)),
                         prefixIcon: Icon(Icons.search,
                             color: theme.iconTheme.color ?? textColor),
                         suffixIcon: _search.isEmpty
                             ? null
                             : IconButton(
                           icon: Icon(Icons.clear,
-                              color:
-                              theme.iconTheme.color ?? textColor),
+                              color: theme.iconTheme.color ?? textColor),
                           onPressed: () => _searchCtrl.clear(),
                         ),
                         filled: true,
@@ -223,34 +252,11 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.flag,
-                            size: 16,
-                            color: _withAlpha(
-                                theme.iconTheme.color, 0.6) ??
-                                _withAlpha(textColor, 0.6)),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${AppLocalizations.of(context).country}: $_country',
-                          style: TextStyle(
-                              color: _withAlpha(textColor, 0.6)),
-                        ),
-                        const Spacer(),
-                        TextButton.icon(
-                          onPressed: _openCountryFilter,
-                          icon: Icon(Icons.filter_list,
-                              color: theme.iconTheme.color ?? textColor),
-                          label: Text(AppLocalizations.of(context).filter,
-                              style: TextStyle(color: textColor)),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
             ),
+
             SliverList.builder(
               itemCount: _filtered.length,
               itemBuilder: (context, index) {
@@ -270,21 +276,18 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 );
               },
             ),
+
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: _currentIndex,
         backgroundColor:
         theme.bottomNavigationBarTheme.backgroundColor ?? colorScheme.surface,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: theme.unselectedWidgetColor,
-        onTap: (index) {
-          if (index == 2) {
-            Navigator.pushNamed(context, '/settings');
-          }
-        },
+        onTap: _onBottomNavTap,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.restaurant_menu),
