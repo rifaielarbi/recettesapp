@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "titre": "Pasta Primavera",
+    "pays": "Italie",
+    "image": "assets/images/pasta.png",
+    "description": "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
+    "ingredients": ["200 g de pâtes", "1 brocoli", "1 carotte", "huile d'olive", "parmesan"]
+  },
+  {
+    "id": "2",
+    "titre": "Tacos Al Pastor",
+    "pays": "Mexico",
+    "image": "assets/images/tacos.png",
+    "description": "Tacos savoureux avec porc mariné, ananas et coriandre.",
+    "ingredients": ["tortillas", "porc", "ananas", "coriandre", "oignon"]
+  }
+]

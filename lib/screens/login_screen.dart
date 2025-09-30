@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:local_auth/local_auth.dart';
 
 import '../services/auth_service.dart';
 import 'login_with_email_screen.dart';
@@ -18,13 +17,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
-  final LocalAuthentication _localAuth = LocalAuthentication();
   List<String> _savedAccounts = [];
 
   late TapGestureRecognizer _termsRecognizer;
   late TapGestureRecognizer _privacyRecognizer;
 
-  final String _faceIDText = "Connectez-vous avec Face ID";
+  // Face ID désactivé (plugin local_auth retiré temporairement)
 
   @override
   void initState() {
@@ -62,30 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _authenticateWithFaceID() async {
-    try {
-      if (!await _localAuth.canCheckBiometrics) return;
-      final available = await _localAuth.getAvailableBiometrics();
-      if (!available.contains(BiometricType.face)) return;
-
-      final success = await _localAuth.authenticate(
-        localizedReason: 'Connectez-vous avec Face ID',
-        options: const AuthenticationOptions(
-          biometricOnly: true,
-          stickyAuth: true,
-        ),
-      );
-
-      if (success) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const ListeRecettesScreen()),
-        );
-      }
-    } catch (e) {
-      debugPrint("Erreur Face ID : $e");
-    }
-  }
+  // _authenticateWithFaceID désactivé
 
   Widget _socialButton({
     required Widget logo,
@@ -268,20 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[800],
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  onPressed: _authenticateWithFaceID,
-                  child: Text(
-                    _faceIDText,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
+                // Bouton Face ID désactivé
                 const SizedBox(height: 12),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(

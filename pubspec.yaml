@@ -15,9 +15,9 @@ dependencies:
   provider: ^6.1.5+1
 
   # Firebase
-  firebase_core: ^3.10.0
-  firebase_auth: ^5.3.4
-  cloud_firestore: ^5.5.0
+  firebase_core: ^3.15.2
+  firebase_auth: ^5.7.0
+  cloud_firestore: ^5.6.12
 
   # UI & icons
   font_awesome_flutter: ^10.7.0
@@ -50,8 +50,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
 
-dependency_overrides:
-
 flutter:
   uses-material-design: true
   assets:
@@ -64,10 +62,7 @@ flutter:
     - assets/images/soup.png
     - assets/images/logo_Aceuil.jpg
     - assets/images/google_logo.png
-    - assets/images/logo.png
-    - assets/images/pasta.png
-    - assets/images/tacos.png
-    - assets/images/soup.png
+    - assets/recipes.json
 
 flutter_native_splash:
   color: "#3CA26E"
