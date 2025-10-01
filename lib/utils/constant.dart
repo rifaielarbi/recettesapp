@@ -7,13 +7,6 @@ class AppColors {
   static const Color card = Color(0xFFF7F7F7);
 }
 
-class AppAssets {
-  static const String logo = 'assets/images/logo.png';
-  static const String pasta = 'assets/images/pasta.png';
-  static const String tacos = 'assets/images/tacos.png';
-  static const String soup = 'assets/images/soup.png';
-}
-
 class AppTextStyles {
   static const TextStyle titleXL = TextStyle(
     fontSize: 34,

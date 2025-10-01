@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import '../models/recette.dart';
-import 'FavoritesButton.dart';
+import '../widgets/FavoritesButton.dart';
 import '../utils/constants.dart';
 
-class RecetteCard extends StatefulWidget {
+class RecetteCard extends StatelessWidget {
   final Recette recette;
   final VoidCallback? onVoirDetails;
 
   const RecetteCard({super.key, required this.recette, this.onVoirDetails});
 
-  @override
-  State<RecetteCard> createState() => _RecetteCardState();
-}
-
-class _RecetteCardState extends State<RecetteCard> {
-  // 🔹 Fonction pour récupérer le drapeau selon le pays
+  // 🔹 Retourne le drapeau selon le pays
   String _flagForCountry(String country) {
     switch (country.toLowerCase()) {
-      case 'italie':
-        return '🇮🇹';
-      case 'mexico':
-        return '🇲🇽';
-      case 'maroc':
-        return '🇲🇦';
       case 'france':
+      case 'french':
         return '🇫🇷';
+      case 'italie':
+      case 'italian':
+        return '🇮🇹';
+      case 'maroc':
+      case 'maroccan':
+        return '🇲🇦';
+      case 'mexique':
+      case 'mexican':
+        return '🇲🇽';
+      case 'espagne':
+      case 'spanish':
+        return '🇪🇸';
       default:
         return '🌍';
     }
@@ -44,19 +46,28 @@ class _RecetteCardState extends State<RecetteCard> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image.asset(widget.recette.image, fit: BoxFit.cover),
+              child: Image.asset(
+                recette.image,
+                fit: BoxFit.cover,
+                errorBuilder:
+                    (_, __, ___) => Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(Icons.image, size: 40, color: Colors.white),
+                      ),
+                    ),
+              ),
             ),
           ),
 
-          // Titre et informations
+          // Titre et infos
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Titre en haut
                 Text(
-                  widget.recette.titre,
+                  recette.titre,
                   style: AppTextStyles.subtitle.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -64,44 +75,45 @@ class _RecetteCardState extends State<RecetteCard> {
                 ),
                 const SizedBox(height: 8),
 
-                // Ligne drapeau + nom pays + bouton détails
+                // Ligne drapeau + pays + bouton détails
                 Row(
                   children: [
                     Text(
-                      _flagForCountry(widget.recette.pays),
+                      _flagForCountry(recette.pays),
                       style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      widget.recette.pays,
+                      recette.pays,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black54,
                       ),
                     ),
                     const Spacer(),
-                    TextButton(
-                      onPressed: widget.onVoirDetails,
-                      style: TextButton.styleFrom(
-                        backgroundColor: AppColors.green,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
+                    if (onVoirDetails != null)
+                      TextButton(
+                        onPressed: onVoirDetails,
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColors.green,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        child: const Text('Voir détails'),
                       ),
-                      child: const Text('Voir détails'),
-                    ),
                   ],
                 ),
 
                 // Bouton favoris
                 Align(
                   alignment: Alignment.centerRight,
-                  child: FavoritesButton(recipeId: widget.recette.id),
+                  child: FavoritesButton(recipeId: recette.id),
                 ),
               ],
             ),

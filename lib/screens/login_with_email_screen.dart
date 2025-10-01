@@ -57,13 +57,11 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     }
   }
 
-  // Détecte si c'est un numéro de téléphone
   bool isPhoneNumber(String input) {
-    final phoneRegex = RegExp(r'^\+?\d{8,15}$'); // indicatif + 8-15 chiffres
+    final phoneRegex = RegExp(r'^\+?\d{8,15}$');
     return phoneRegex.hasMatch(input);
   }
 
-  // Connexion par numéro de téléphone
   Future<void> loginWithPhone(String phoneNumber) async {
     String verificationIdGlobal = "";
 
@@ -102,7 +100,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                 TextButton(
                   onPressed:
                       () => Navigator.of(context).pop(_codeCtrl.text.trim()),
-                  child: const Text("Valider"),
+                  child: const Text("Valider", style: TextStyle(fontSize: 14)),
                 ),
               ],
             );
@@ -125,7 +123,6 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     );
   }
 
-  // Connexion par email ou numéro
   Future<void> _submit() async {
     setState(() {
       _emailError = null;
@@ -170,7 +167,6 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     }
   }
 
-  // Réinitialisation du mot de passe
   Future<void> _resetPassword() async {
     final email = _emailCtrl.text.trim();
     if (email.isEmpty) {
@@ -194,7 +190,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
               "Si un compte existe, un e-mail de réinitialisation a été envoyé.",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
@@ -217,7 +213,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
               "Erreur lors de l'envoi : ${e.toString()}",
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
@@ -264,7 +260,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     required Widget logo,
     required String text,
     required VoidCallback onPressed,
-    TextStyle? textStyle, // <-- ajouter ceci
+    TextStyle? textStyle,
   }) {
     return SizedBox(
       width: double.infinity,
@@ -321,7 +317,11 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                       ),
                   child: const Text(
                     "Annuler",
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
@@ -332,11 +332,10 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black, // texte en noir
+                    color: Colors.black,
                   ),
                 ),
               ),
-
               const SizedBox(height: 8),
               const Center(
                 child: Text(
@@ -393,7 +392,11 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                         onPressed: _resetPassword,
                         child: const Text(
                           "Mot de passe oublié ?",
-                          style: TextStyle(color: Colors.blue),
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),
@@ -457,8 +460,8 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                   }
                 },
                 textStyle: const TextStyle(
-                  fontSize: 16, // texte un peu plus grand
-                  fontWeight: FontWeight.w500, // légèrement plus gras
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 8),
@@ -507,7 +510,6 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-
               const SizedBox(height: 24),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
