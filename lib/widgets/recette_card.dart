@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/recette.dart';
+import 'FavoritesButton.dart';
 import '../utils/constants.dart';
 
 class RecetteCard extends StatefulWidget {
@@ -13,8 +14,6 @@ class RecetteCard extends StatefulWidget {
 }
 
 class _RecetteCardState extends State<RecetteCard> {
-  bool isFavorite = false;
-
   // 🔹 Fonction pour récupérer le drapeau selon le pays
   String _flagForCountry(String country) {
     switch (country.toLowerCase()) {
@@ -102,17 +101,7 @@ class _RecetteCardState extends State<RecetteCard> {
                 // Bouton favoris
                 Align(
                   alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-                      });
-                    },
-                  ),
+                  child: FavoritesButton(recipeId: widget.recette.id),
                 ),
               ],
             ),

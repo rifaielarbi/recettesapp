@@ -8,10 +8,12 @@ import 'providers/auth_provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/locale_provider.dart';
 import 'providers/notification_provider.dart';
+import 'providers/favorites_provider.dart';
 import 'utils/constants.dart';
 import 'screens/liste_recettes.dart';
 import 'screens/login_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/chat_screen.dart';
 import 'app_localizations.dart';
 
 Future<void> main() async {
@@ -25,6 +27,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ],
       child: const RecettesApp(),
     ),
@@ -73,7 +76,10 @@ class RecettesApp extends StatelessWidget {
               : const LoginScreen(),
 
       // 🔹 Routes supplémentaires
-      routes: {'/settings': (_) => const SettingsScreen()},
+      routes: {
+        '/settings': (_) => const SettingsScreen(),
+        '/chat': (_) => const ChatScreen(),
+      },
     );
   }
 }

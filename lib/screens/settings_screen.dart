@@ -10,6 +10,7 @@ import '../providers/auth_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/theme_provider.dart';
 import '../providers/notification_provider.dart';
+import '../utils/constants.dart';
 import 'login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -19,125 +20,245 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
     final localeProvider = context.watch<LocaleProvider>();
-    final authProvider = context.watch<AuthProvider>();
     final notifProvider = context.watch<NotificationProvider>();
     final loc = AppLocalizations.of(context);
 
     final fb_auth.User? currentUser = fb_auth.FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.settings), centerTitle: true),
-      body: ListView(
-        children: [
-          _buildSectionTitle(loc.profile),
-          ListTile(
-            leading: const Icon(Icons.person, color: Colors.blue),
-            title: Text(loc.editProfile),
-            subtitle: Text(
-              '${currentUser?.displayName ?? loc.name}, ${currentUser?.email ?? loc.email}',
+      backgroundColor: const Color(0xFFF8F9FA),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            // Header avec photo de profil
+            SliverToBoxAdapter(
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [AppColors.green, AppColors.green.withOpacity(0.8)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white, width: 4),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: currentUser?.photoURL != null
+                            ? Image.network(
+                                currentUser!.photoURL!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : const Icon(Icons.person, size: 50, color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      currentUser?.displayName ?? 'Arabi',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      currentUser?.email ?? 'email@example.com',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white.withOpacity(0.9),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // Bouton Éditer profil
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.edit, size: 18),
+                      label: const Text('Modifier le profil'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: AppColors.green,
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const EditProfileScreen()),
-              );
-            },
-          ),
-          const Divider(),
 
-          _buildSectionTitle(loc.notifications),
-          SwitchListTile(
-            title: Text(loc.enableNotifications),
-            value: notifProvider.enabled,
-            onChanged: notifProvider.toggle,
-          ),
-          const Divider(),
+            // Contenu des paramètres
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  const SizedBox(height: 8),
+                  
+                  // Section Notifications
+                  _ModernSettingsCard(
+                    icon: Icons.notifications_rounded,
+                    iconColor: Colors.orange,
+                    title: loc.notifications,
+                    children: [
+                      _ModernSwitchTile(
+                        title: loc.enableNotifications,
+                        subtitle: 'Recevoir les alertes',
+                        value: notifProvider.enabled,
+                        onChanged: notifProvider.toggle,
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Section Apparence
+                  _ModernSettingsCard(
+                    icon: Icons.palette_rounded,
+                    iconColor: Colors.purple,
+                    title: loc.appearance,
+                    children: [
+                      _ModernSwitchTile(
+                        title: loc.darkMode,
+                        subtitle: 'Mode sombre',
+                        value: themeProvider.isDark,
+                        onChanged: (_) => themeProvider.toggle(),
+                      ),
+                      _ModernListTile(
+                        icon: Icons.language_rounded,
+                        title: loc.language,
+                        subtitle: _getLocaleName(localeProvider.locale.languageCode),
+                        onTap: () => _showLanguageDialog(context, localeProvider, loc),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Section Sécurité
+                  _ModernSettingsCard(
+                    icon: Icons.security_rounded,
+                    iconColor: Colors.red,
+                    title: loc.security,
+                    children: [
+                      _ModernListTile(
+                        icon: Icons.lock_rounded,
+                        title: loc.changePassword,
+                        subtitle: 'Modifier votre mot de passe',
+                        onTap: () {
+                          // TODO: Ajouter logique
+                        },
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Section À propos
+                  _ModernSettingsCard(
+                    icon: Icons.info_rounded,
+                    iconColor: Colors.blue,
+                    title: loc.about,
+                    children: [
+                      _ModernListTile(
+                        icon: Icons.verified_rounded,
+                        title: loc.version,
+                        subtitle: '1.0.0',
+                        onTap: null,
+                      ),
+                      _ModernListTile(
+                        icon: Icons.help_rounded,
+                        title: loc.helpSupport,
+                        subtitle: 'Centre d\'aide',
+                        onTap: () {},
+                      ),
+                      _ModernListTile(
+                        icon: Icons.share_rounded,
+                        title: loc.shareApp,
+                        subtitle: 'Partager avec vos amis',
+                        onTap: () {},
+                      ),
+                      _ModernListTile(
+                        icon: Icons.cleaning_services_rounded,
+                        title: loc.clearCache,
+                        subtitle: 'Libérer de l\'espace',
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 24),
+                  
+                  // Bouton Déconnexion
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        try {
+                          await fb_auth.FirebaseAuth.instance.signOut();
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.remove('currentUser');
 
-          _buildSectionTitle(loc.appearance),
-          SwitchListTile(
-            title: Text(loc.darkMode),
-            value: themeProvider.isDark,
-            onChanged: (_) => themeProvider.toggle(),
-          ),
-          ListTile(
-            leading: const Icon(Icons.language, color: Colors.orange),
-            title: Text(loc.language),
-            subtitle: Text(_getLocaleName(localeProvider.locale.languageCode)),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => _showLanguageDialog(context, localeProvider, loc),
-          ),
-          const Divider(),
-
-          _buildSectionTitle(loc.security),
-          ListTile(
-            leading: const Icon(Icons.lock, color: Colors.red),
-            title: Text(loc.changePassword),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              // TODO: Ajouter logique de changement de mot de passe
-            },
-          ),
-          const Divider(),
-
-          ListTile(
-            leading: const Icon(Icons.logout, color: Colors.redAccent),
-            title: Text(loc.logout),
-            onTap: () async {
-              try {
-                await fb_auth.FirebaseAuth.instance.signOut();
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.remove('currentUser');
-
-                if (context.mounted) {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    (route) => false,
-                  );
-                }
-              } catch (e) {
-                debugPrint("Erreur lors de la déconnexion : $e");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Impossible de se déconnecter")),
-                );
-              }
-            },
-          ),
-          const Divider(),
-
-          _buildSectionTitle(loc.about),
-          ListTile(
-            leading: const Icon(Icons.info, color: Colors.green),
-            title: Text(loc.version),
-            subtitle: const Text('1.0.0'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.help_outline, color: Colors.purple),
-            title: Text(loc.helpSupport),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.share, color: Colors.teal),
-            title: Text(loc.shareApp),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.cleaning_services, color: Colors.brown),
-            title: Text(loc.clearCache),
-            onTap: () {},
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          if (context.mounted) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (_) => const LoginScreen()),
+                              (route) => false,
+                            );
+                          }
+                        } catch (e) {
+                          debugPrint("Erreur lors de la déconnexion : $e");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Impossible de se déconnecter")),
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.logout_rounded),
+                      label: Text(loc.logout),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red.shade50,
+                        foregroundColor: Colors.red,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 0,
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 80),
+                ]),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -160,38 +281,239 @@ class SettingsScreen extends StatelessWidget {
     LocaleProvider localeProvider,
     AppLocalizations loc,
   ) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder:
-          (ctx) => AlertDialog(
-            title: Text(loc.language),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Container(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              loc.language,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            _LanguageOption(
+              flag: '🇫🇷',
+              language: 'Français',
+              selected: localeProvider.locale.languageCode == 'fr',
+              onTap: () {
+                localeProvider.setLocale('fr');
+                Navigator.pop(ctx);
+              },
+            ),
+            _LanguageOption(
+              flag: '🇬🇧',
+              language: 'English',
+              selected: localeProvider.locale.languageCode == 'en',
+              onTap: () {
+                localeProvider.setLocale('en');
+                Navigator.pop(ctx);
+              },
+            ),
+            _LanguageOption(
+              flag: '🇸🇦',
+              language: 'العربية',
+              selected: localeProvider.locale.languageCode == 'ar',
+              onTap: () {
+                localeProvider.setLocale('ar');
+                Navigator.pop(ctx);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Widget Carte de paramètres moderne
+class _ModernSettingsCard extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final List<Widget> children;
+
+  const _ModernSettingsCard({
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
               children: [
-                ListTile(
-                  title: const Text('Français'),
-                  onTap: () {
-                    localeProvider.setLocale('fr');
-                    Navigator.pop(ctx);
-                  },
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: iconColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: iconColor, size: 20),
                 ),
-                ListTile(
-                  title: const Text('English'),
-                  onTap: () {
-                    localeProvider.setLocale('en');
-                    Navigator.pop(ctx);
-                  },
-                ),
-                ListTile(
-                  title: const Text('العربية'),
-                  onTap: () {
-                    localeProvider.setLocale('ar');
-                    Navigator.pop(ctx);
-                  },
+                const SizedBox(width: 12),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
           ),
+          const Divider(height: 1),
+          ...children,
+        ],
+      ),
+    );
+  }
+}
+
+// Widget ListTile moderne
+class _ModernListTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback? onTap;
+
+  const _ModernListTile({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.grey.shade700, size: 24),
+      title: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.w500),
+      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+            )
+          : null,
+      trailing: onTap != null
+          ? Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400)
+          : null,
+      onTap: onTap,
+    );
+  }
+}
+
+// Widget Switch moderne
+class _ModernSwitchTile extends StatelessWidget {
+  final String title;
+  final String? subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  const _ModernSwitchTile({
+    required this.title,
+    this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      title: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.w500),
+      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+            )
+          : null,
+      value: value,
+      onChanged: onChanged,
+      activeColor: AppColors.green,
+    );
+  }
+}
+
+// Widget Option de langue
+class _LanguageOption extends StatelessWidget {
+  final String flag;
+  final String language;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _LanguageOption({
+    required this.flag,
+    required this.language,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        margin: const EdgeInsets.only(bottom: 8),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.green.withOpacity(0.1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: selected ? AppColors.green : Colors.grey.shade200,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          children: [
+            Text(flag, style: const TextStyle(fontSize: 28)),
+            const SizedBox(width: 16),
+            Text(
+              language,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                color: selected ? AppColors.green : Colors.black87,
+              ),
+            ),
+            const Spacer(),
+            if (selected)
+              Icon(Icons.check_circle, color: AppColors.green),
+          ],
+        ),
+      ),
     );
   }
 }

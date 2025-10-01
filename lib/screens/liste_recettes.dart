@@ -4,9 +4,13 @@ import '../app_localizations.dart';
 import '../models/recette.dart';
 import '../utils/constants.dart';
 import '../widgets/recette_card.dart';
+import '../widgets/compact_recipe_card.dart';
 import '../providers/locale_provider.dart';
 import 'detail_recette.dart';
 import 'settings_screen.dart';
+import 'chat_screen.dart';
+import '../services/recette_service.dart';
+import 'favorites_screen.dart';
 
 class ListeRecettesScreen extends StatefulWidget {
   const ListeRecettesScreen({super.key});
@@ -19,27 +23,10 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   final TextEditingController _searchCtrl = TextEditingController();
   String _search = '';
   String _country = 'Tous';
+  int _currentIndex = 0;
 
   // ----------------- Recettes -----------------
-  List<Recette> get _all => const [
-    Recette(
-      id: '1',
-      titre: 'Pasta Primavera',
-      pays: 'Italie',
-      image: AppAssets.pasta,
-      description:
-          "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
-      ingredients: ['200 g de pâtes', '1 brocoli', '1 carotte'],
-    ),
-    Recette(
-      id: '2',
-      titre: 'Tacos Al Pastor',
-      pays: 'Mexico',
-      image: AppAssets.tacos,
-      description: 'Tacos savoureux avec porc mariné, ananas et coriandre.',
-      ingredients: ['Tortillas', 'Porc', 'Ananas'],
-    ),
-  ];
+  List<Recette> get _all => RecetteService.all;
 
   // ----------------- Filtrage -----------------
   List<Recette> get _filtered {
@@ -145,73 +132,53 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   }
 
   // ----------------- UI -----------------
-  @override
-  Widget build(BuildContext context) {
-    final localeProvider = Provider.of<LocaleProvider>(context);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textColor = theme.textTheme.bodyLarge?.color;
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // --- AppBar ---
-            SliverAppBar(
-              pinned: true,
-              elevation: 1,
-              backgroundColor: Colors.white,
-              titleSpacing: 16,
-              title: Row(
-                children: [
-                  Image.asset(AppAssets.logo, width: 32, height: 32),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).recipes,
-                        style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        AppLocalizations.of(context).world,
-                        style: TextStyle(color: textColor),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              centerTitle: false,
-              actions: [
-                PopupMenuButton<String>(
-                  icon: Icon(Icons.language, color: textColor),
-                  onSelected: localeProvider.setLocale,
-                  itemBuilder:
-                      (ctx) => const [
-                        PopupMenuItem(value: 'fr', child: Text('Français')),
-                        PopupMenuItem(value: 'en', child: Text('English')),
-                        PopupMenuItem(value: 'ar', child: Text('العربية')),
-                      ],
-                ),
-                IconButton(
-                  icon: Icon(Icons.filter_list, color: textColor),
-                  tooltip: 'Trier/Filtrer',
-                  onPressed: _openCountryFilter,
-                ),
-              ],
-            ),
-
-            // --- Recherche + Filtre ---
+  // Méthode pour construire l'écran Recettes
+  Widget _buildRecettesScreen(BuildContext context, Color? textColor) {
+    return CustomScrollView(
+      slivers: [
+            // --- Carte Bonjour + Recherche + Catégories ---
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Carte Bonjour
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F6EE),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Bonjour Arabi',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  'Que Préparez-Vous Aujourd\'hui ?',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(Icons.notifications_none, color: Colors.black87),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Barre de recherche
                     TextField(
                       controller: _searchCtrl,
                       style: TextStyle(color: textColor),
@@ -234,21 +201,86 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
+
+                    // Ligne Catégorie + Filtrer
                     Row(
                       children: [
-                        Text(
-                          "${AppLocalizations.of(context).country}: $_country ${_flagForCountry(_country)}",
-                          style: TextStyle(color: _withAlpha(textColor, 0.7)),
+                        const Text(
+                          'Catégorie',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
                         ),
                         const Spacer(),
-                        TextButton.icon(
-                          onPressed: _openCountryFilter,
-                          icon: Icon(Icons.filter_list, color: textColor),
-                          label: Text(
-                            AppLocalizations.of(context).filter,
-                            style: TextStyle(color: textColor),
+                        InkWell(
+                          onTap: _openCountryFilter,
+                          child: Row(
+                            children: const [
+                              Icon(Icons.tune, size: 18, color: Colors.green),
+                              SizedBox(width: 6),
+                              Text(
+                                'Filtrer',
+                                style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600),
+                              ),
+                            ],
                           ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Chips de catégories
+                    SizedBox(
+                      height: 40,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          _CategoryChip(
+                            label: 'All',
+                            selected: _country == 'Tous',
+                            onTap: () => setState(() => _country = 'Tous'),
+                          ),
+                          _CategoryChip(
+                            label: 'Italie',
+                            selected: _country == 'Italie',
+                            onTap: () => setState(() => _country = 'Italie'),
+                          ),
+                          _CategoryChip(
+                            label: 'Mexico',
+                            selected: _country == 'Mexico',
+                            onTap: () => setState(() => _country = 'Mexico'),
+                          ),
+                          _CategoryChip(
+                            label: 'Maroc',
+                            selected: _country == 'Maroc',
+                            onTap: () => setState(() => _country = 'Maroc'),
+                          ),
+                          _CategoryChip(
+                            label: 'France',
+                            selected: _country == 'France',
+                            onTap: () => setState(() => _country = 'France'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Titre Recettes Populaires
+                    Row(
+                      children: [
+                        const Text(
+                          'Recettes Populaires',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Voir Tout'),
                         ),
                       ],
                     ),
@@ -270,57 +302,204 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     ),
                   ),
                 )
-                : SliverList.builder(
-                  itemCount: _filtered.length,
-                  itemBuilder: (context, index) {
-                    final r = _filtered[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: RecetteCard(
-                        recette: r,
-                        onVoirDetails:
-                            () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => DetailRecetteScreen(recette: r),
-                              ),
+                : SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  sliver: SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      childAspectRatio: 0.75,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final r = _filtered[index];
+                        return CompactRecipeCard(
+                          recette: r,
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => DetailRecetteScreen(recette: r),
                             ),
-                      ),
-                    );
-                  },
+                          ),
+                        );
+                      },
+                      childCount: _filtered.length,
+                    ),
+                  ),
                 ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textColor = theme.textTheme.bodyLarge?.color;
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: IndexedStack(
+          index: _currentIndex,
+          children: [
+            _buildRecettesScreen(context, textColor),
+            const FavoritesScreen(),
+            const SettingsScreen(),
           ],
         ),
       ),
 
-      // --- Bottom Navigation ---
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        backgroundColor: Colors.white,
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: theme.unselectedWidgetColor,
-        onTap: (index) {
-          if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.restaurant_menu),
-            label: AppLocalizations.of(context).recipes,
+      // --- Bouton Assistant AI flottant (seulement sur page Recettes) ---
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: _currentIndex == 0
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ChatScreen()),
+                );
+              },
+              icon: const Icon(Icons.chat_bubble_outline),
+              label: const Text('Assistant'),
+              backgroundColor: colorScheme.primaryContainer,
+              foregroundColor: colorScheme.onPrimaryContainer,
+            )
+          : null,
+
+      // --- Bottom Navigation Ultra Moderne ---
+      bottomNavigationBar: Container(
+        height: 70,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 30,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _UltraModernNavItem(
+                icon: Icons.home_rounded,
+                label: 'Accueil',
+                selected: _currentIndex == 0,
+                onTap: () => setState(() => _currentIndex = 0),
+              ),
+              _UltraModernNavItem(
+                icon: Icons.favorite_rounded,
+                label: 'Favoris',
+                selected: _currentIndex == 1,
+                onTap: () => setState(() => _currentIndex = 1),
+              ),
+              _UltraModernNavItem(
+                icon: Icons.person_rounded,
+                label: 'Profil',
+                selected: _currentIndex == 2,
+                onTap: () => setState(() => _currentIndex = 2),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.star_border),
-            label: AppLocalizations.of(context).favorites,
+        ),
+      ),
+    );
+  }
+}
+
+// Widget Chip de catégorie
+class _CategoryChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback? onTap;
+
+  const _CategoryChip({
+    required this.label,
+    this.selected = false,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.green : Colors.grey[200],
+            borderRadius: BorderRadius.circular(20),
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings),
-            label: AppLocalizations.of(context).settingsMenu,
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.white : Colors.black87,
+              fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+            ),
           ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+// Widget Navigation Item Ultra Moderne
+class _UltraModernNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _UltraModernNavItem({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: selected ? 20 : 12,
+          vertical: 8,
+        ),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.green : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: selected ? Colors.white : Colors.grey.shade600,
+              size: 24,
+            ),
+            if (selected) ...[
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

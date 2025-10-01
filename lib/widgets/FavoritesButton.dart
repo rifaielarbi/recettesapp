@@ -1,50 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import '../providers/favorites_provider.dart';
 
-class FavoritesButton extends StatefulWidget {
+class FavoritesButton extends StatelessWidget {
   final String recipeId;
 
   const FavoritesButton({super.key, required this.recipeId});
 
   @override
-  _FavoritesButtonState createState() => _FavoritesButtonState();
-  }
-
-class _FavoritesButtonState extends State<FavoritesButton> {
-  bool _isFavorite = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavoriteStatus();
-  }
-
-  void _loadFavoriteStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isFavorite = prefs.getBool('favorite_${widget.recipeId}') ?? false;
-    });
-  }
-
-
-  void _toggleFavorite() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-    // Sauvegarder le nouvel état de favori
-    prefs.setBool('favorite_${widget.recipeId}', _isFavorite);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final favoritesProvider = context.watch<FavoritesProvider>();
+    final isFavorite = favoritesProvider.isFavorite(recipeId);
+
     return IconButton(
       icon: Icon(
-        _isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-        color: _isFavorite ? Colors.red : Colors.grey,
+        isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+        color: isFavorite ? Colors.red : Colors.grey,
       ),
-      onPressed: _toggleFavorite,
+      onPressed: () {
+        favoritesProvider.toggleFavorite(recipeId);
+      },
     );
   }
 }

@@ -102,7 +102,7 @@ class AuthService {
       }
 
       final OAuthCredential credential = FacebookAuthProvider.credential(
-        result.accessToken!.tokenString, // corrige l'erreur .token
+        result.accessToken!.token, // Utilise le bon getter pour l'accessToken
       );
 
       final userCred = await _auth.signInWithCredential(credential);

@@ -28,7 +28,7 @@ dependencies:
 
   # Auth providers
   google_sign_in: ^6.2.1
-  flutter_facebook_auth: ^7.1.2
+  flutter_facebook_auth: ^6.0.3
   sign_in_with_apple: ^7.0.1
   # local_auth temporarily disabled due to Swift concurrency build error on iOS
 
