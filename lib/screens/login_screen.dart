@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../services/auth_service.dart';
 import 'login_with_email_screen.dart';
@@ -17,12 +18,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
+  final LocalAuthentication _localAuth = LocalAuthentication();
   List<String> _savedAccounts = [];
 
   late TapGestureRecognizer _termsRecognizer;
   late TapGestureRecognizer _privacyRecognizer;
 
-  // Face ID désactivé (plugin local_auth retiré temporairement)
+  final String _faceIDText = "Connectez-vous avec Face ID";
 
   @override
   void initState() {
@@ -33,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _privacyRecognizer =
         TapGestureRecognizer()
           ..onTap = () => debugPrint("Politique de confidentialité cliquée");
-
     _loadSavedAccounts();
   }
 
@@ -60,13 +61,35 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // _authenticateWithFaceID désactivé
+  Future<void> _authenticateWithFaceID() async {
+    try {
+      if (!await _localAuth.canCheckBiometrics) return;
+      final available = await _localAuth.getAvailableBiometrics();
+      if (!available.contains(BiometricType.face)) return;
+
+      final success = await _localAuth.authenticate(
+        localizedReason: _faceIDText,
+        options: const AuthenticationOptions(
+          biometricOnly: true,
+          stickyAuth: true,
+        ),
+      );
+
+      if (success) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ListeRecettesScreen()),
+        );
+      }
+    } catch (e) {
+      debugPrint("Erreur Face ID : $e");
+    }
+  }
 
   Widget _socialButton({
     required Widget logo,
     required String text,
     required VoidCallback onPressed,
-    TextStyle? textStyle,
   }) {
     return SizedBox(
       width: double.infinity,
@@ -94,7 +117,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: Text(
                 text,
-                style: textStyle ?? const TextStyle(fontSize: 14),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ],
@@ -125,7 +151,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 email,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              // subtitle supprimé pour ne rien afficher
                               trailing: IconButton(
                                 icon: const Icon(
                                   Icons.delete,
@@ -192,40 +217,49 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
+
+                // --- Logo + Bienvenue ---
                 Center(
-                  child: Image.asset(
-                    'assets/images/logo_Aceuil.jpg',
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.contain,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo_Aceuil.png',
+                        width: 220,
+                        height: 220,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 4),
+                      const Text(
+                        "Bienvenue !",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                const Center(
-                  child: Text(
-                    "Bienvenue !",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+
                 const SizedBox(height: 12),
+
+                // --- Créer un compte ---
                 Center(
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      style: const TextStyle(fontSize: 16, color: Colors.grey),
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
                       children: [
                         const TextSpan(text: "Vous n'avez pas de compte ? "),
                         TextSpan(
                           text: "Créer un compte",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Colors.blueAccent,
                             decoration: TextDecoration.underline,
+                            fontSize: 14,
                           ),
                           recognizer:
                               TapGestureRecognizer()
@@ -242,9 +276,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 24),
-                // Bouton Face ID désactivé
+
+                // --- Bouton Face ID ---
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[800],
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: _authenticateWithFaceID,
+                  child: Text(
+                    _faceIDText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 12),
+
+                // --- S’identifier ---
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
@@ -262,10 +319,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                   child: const Text(
                     "S’identifier",
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
+
                 const SizedBox(height: 12),
+
+                // --- Changer de compte ---
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
@@ -277,10 +341,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _showChangeAccountDialog,
                   child: const Text(
                     "Changer de compte",
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
+
                 const SizedBox(height: 24),
+
+                // --- OU Divider ---
                 Row(
                   children: const [
                     Expanded(
@@ -306,7 +377,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 12),
+
+                // --- Boutons sociaux ---
                 _socialButton(
                   logo: const Icon(Icons.apple, color: Colors.black, size: 24),
                   text: "Se connecter avec Apple",
@@ -322,10 +396,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }
                   },
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
                 ),
                 const SizedBox(height: 8),
                 _socialButton(
@@ -347,10 +417,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }
                   },
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
                 ),
                 const SizedBox(height: 8),
                 _socialButton(
@@ -372,21 +438,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }
                   },
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
                 ),
+
                 const SizedBox(height: 24),
+
+                // --- Conditions générales ---
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: RichText(
                     textAlign: TextAlign.left,
                     text: TextSpan(
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ), // <-- ici on passe de 12 à 14
+                      style: const TextStyle(color: Colors.grey, fontSize: 14),
                       children: [
                         const TextSpan(
                           text:
@@ -397,8 +459,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
-                            fontSize:
-                                14, // <-- agrandir aussi le texte cliquable
+                            fontSize: 14,
                           ),
                           recognizer: _termsRecognizer,
                         ),
@@ -408,7 +469,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
-                            fontSize: 14, // <-- idem
+                            fontSize: 14,
                           ),
                           recognizer: _privacyRecognizer,
                         ),

@@ -1,15 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import '../app_localizations.dart';
 import '../models/recette.dart';
 import '../utils/constants.dart';
-import '../widgets/recette_card.dart';
 import '../widgets/compact_recipe_card.dart';
-import '../providers/locale_provider.dart';
 import 'detail_recette.dart';
 import 'settings_screen.dart';
 import 'chat_screen.dart';
-import '../services/recette_service.dart';
 import 'favorites_screen.dart';
 
 class ListeRecettesScreen extends StatefulWidget {
@@ -25,8 +23,138 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   String _country = 'Tous';
   int _currentIndex = 0;
 
-  // ----------------- Recettes -----------------
-  List<Recette> get _all => RecetteService.all;
+  List<Recette> _all = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCtrl.addListener(() => setState(() => _search = _searchCtrl.text));
+    _loadRecipesFromJson();
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  // ----------------- Chargement JSON -----------------
+  Future<void> _loadRecipesFromJson() async {
+    try {
+      final jsonStr = await rootBundle.loadString(
+        'assets/data/recettes_a_to_z.json',
+      );
+      final Map<String, dynamic> jsonData = jsonDecode(jsonStr);
+      final List<dynamic> meals = jsonData['meals'] ?? [];
+
+      setState(() {
+        _all = meals.map((m) => Recette.fromJson(m)).toList();
+      });
+
+      print("Chargement terminé : ${_all.length} recettes");
+    } catch (e) {
+      debugPrint("Erreur de chargement des recettes: $e");
+    }
+  }
+
+  // ----------------- Normalisation -----------------
+  String normalizeCountry(String c) {
+    switch (c.toLowerCase().trim()) {
+      case 'maroc':
+      case 'moroccan':
+        return 'Maroc';
+      case 'france':
+      case 'french':
+        return 'France';
+      case 'italie':
+      case 'italian':
+        return 'Italie';
+      case 'mexique':
+      case 'mexican':
+        return 'Mexique';
+      case 'usa':
+      case 'us':
+      case 'american':
+        return 'États-Unis';
+      case 'thaïlande':
+      case 'thailand':
+      case 'thai':
+        return 'Thaïlande';
+      case 'tunisie':
+      case 'tunisian':
+        return 'Tunisie';
+      case 'japon':
+      case 'japanese':
+        return 'Japon';
+      case 'royaume-uni':
+      case 'british':
+        return 'Royaume-Uni';
+      case 'malaisie':
+      case 'malaysian':
+        return 'Malaisie';
+      case 'russie':
+      case 'russian':
+        return 'Russie';
+      case 'canada':
+      case 'canadian':
+        return 'Canada';
+      case 'jamaïque':
+      case 'jamaican':
+        return 'Jamaïque';
+      case 'chine':
+      case 'chinese':
+        return 'Chine';
+      case 'pays-bas':
+      case 'dutch':
+        return 'Pays-Bas';
+      case 'vietnam':
+      case 'vietnamese':
+        return 'Vietnam';
+      case 'pologne':
+      case 'polish':
+        return 'Pologne';
+      case 'irlande':
+      case 'irish':
+        return 'Irlande';
+      case 'croatie':
+      case 'croatian':
+        return 'Croatie';
+      case 'philippines':
+      case 'filipino':
+        return 'Philippines';
+      case 'ukraine':
+      case 'ukrainian':
+        return 'Ukraine';
+      case 'turquie':
+      case 'turkish':
+        return 'Turquie';
+      case 'grèce':
+      case 'greek':
+        return 'Grèce';
+      case 'uruguay':
+      case 'uruguayan':
+        return 'Uruguay';
+      case 'égypte':
+      case 'egyptian':
+        return 'Égypte';
+      case 'portugal':
+      case 'portuguese':
+        return 'Portugal';
+      case 'espagne':
+      case 'spanish':
+        return 'Espagne';
+      case 'inde':
+      case 'indian':
+        return 'Inde';
+      case 'kenya':
+      case 'kenyan':
+        return 'Kenya';
+      case 'tous':
+        return 'Tous';
+      default:
+        return c.trim();
+    }
+  }
 
   // ----------------- Filtrage -----------------
   List<Recette> get _filtered {
@@ -34,7 +162,9 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
         _country == 'Tous'
             ? _all
             : _all
-                .where((r) => r.pays.toLowerCase() == _country.toLowerCase())
+                .where(
+                  (r) => normalizeCountry(r.pays) == normalizeCountry(_country),
+                )
                 .toList();
 
     if (_search.isEmpty) return byCountry;
@@ -49,18 +179,6 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
         .toList();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _searchCtrl.addListener(() => setState(() => _search = _searchCtrl.text));
-  }
-
-  @override
-  void dispose() {
-    _searchCtrl.dispose();
-    super.dispose();
-  }
-
   // ----------------- Utils -----------------
   Color? _withAlpha(Color? color, double opacity) {
     if (color == null) return null;
@@ -69,16 +187,68 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
 
   String _flagForCountry(String country) {
     switch (country) {
-      case 'Italie':
-        return '🇮🇹';
-      case 'Mexico':
-        return '🇲🇽';
       case 'Maroc':
-        return '🇲🇦';
+        return '🇲🇦 Maroc';
       case 'France':
-        return '🇫🇷';
+        return '🇫🇷 France';
+      case 'Italie':
+        return '🇮🇹 Italie';
+      case 'Mexique':
+        return '🇲🇽 Mexique';
+      case 'États-Unis':
+        return '🇺🇸 États-Unis';
+      case 'Thaïlande':
+        return '🇹🇭 Thaïlande';
+      case 'Tunisie':
+        return '🇹🇳 Tunisie';
+      case 'Japon':
+        return '🇯🇵 Japon';
+      case 'Royaume-Uni':
+        return '🇬🇧 Royaume-Uni';
+      case 'Malaisie':
+        return '🇲🇾 Malaisie';
+      case 'Russie':
+        return '🇷🇺 Russie';
+      case 'Canada':
+        return '🇨🇦 Canada';
+      case 'Jamaïque':
+        return '🇯🇲 Jamaïque';
+      case 'Chine':
+        return '🇨🇳 Chine';
+      case 'Pays-Bas':
+        return '🇳🇱 Pays-Bas';
+      case 'Vietnam':
+        return '🇻🇳 Vietnam';
+      case 'Pologne':
+        return '🇵🇱 Pologne';
+      case 'Irlande':
+        return '🇮🇪 Irlande';
+      case 'Croatie':
+        return '🇭🇷 Croatie';
+      case 'Philippines':
+        return '🇵🇭 Philippines';
+      case 'Ukraine':
+        return '🇺🇦 Ukraine';
+      case 'Turquie':
+        return '🇹🇷 Turquie';
+      case 'Grèce':
+        return '🇬🇷 Grèce';
+      case 'Uruguay':
+        return '🇺🇾 Uruguay';
+      case 'Égypte':
+        return '🇪🇬 Égypte';
+      case 'Portugal':
+        return '🇵🇹 Portugal';
+      case 'Espagne':
+        return '🇪🇸 Espagne';
+      case 'Inde':
+        return '🇮🇳 Inde';
+      case 'Kenya':
+        return '🇰🇪 Kenya';
+      case 'Tous':
+        return '🌍 Tous';
       default:
-        return '🌍';
+        return '🌍 $country';
     }
   }
 
@@ -86,7 +256,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   void _openCountryFilter() async {
     final countries = [
       'Tous',
-      ...{for (final r in _all) r.pays},
+      ...{for (final r in _all) normalizeCountry(r.pays)},
     ];
 
     final chosen = await showModalBottomSheet<String>(
@@ -100,26 +270,41 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     'Filtrer par pays',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...countries.map(
-                    (c) => ListTile(
-                      title: Text(
-                        "$c ${_flagForCountry(c)}", // 👉 Pays + Drapeau
-                        style: const TextStyle(color: Colors.black87),
+                  // ← Wrap la liste dans Flexible + SingleChildScrollView
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children:
+                            countries
+                                .map(
+                                  (c) => ListTile(
+                                    title: Text(
+                                      _flagForCountry(c),
+                                      style: const TextStyle(
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                    trailing:
+                                        _country == c
+                                            ? const Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            )
+                                            : null,
+                                    onTap: () => Navigator.pop(context, c),
+                                  ),
+                                )
+                                .toList(),
                       ),
-                      trailing:
-                          _country == c
-                              ? const Icon(Icons.check, color: Colors.green)
-                              : null,
-                      onTap: () => Navigator.pop(context, c),
                     ),
                   ),
                 ],
@@ -132,201 +317,189 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   }
 
   // ----------------- UI -----------------
-  // Méthode pour construire l'écran Recettes
   Widget _buildRecettesScreen(BuildContext context, Color? textColor) {
     return CustomScrollView(
       slivers: [
-            // --- Carte Bonjour + Recherche + Catégories ---
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Carte Bonjour
-                    Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE8F6EE),
-                        borderRadius: BorderRadius.circular(16),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Bonjour + Recherche
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F6EE),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Bonjour Arabi',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            SizedBox(height: 6),
+                            Text(
+                              'Que Préparez-Vous Aujourd\'hui ?',
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                          ],
+                        ),
                       ),
-                      padding: const EdgeInsets.all(16),
+                      Icon(Icons.notifications_none, color: Colors.black87),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Recherche
+                TextField(
+                  controller: _searchCtrl,
+                  style: TextStyle(color: textColor),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context).searchRecipe,
+                    hintStyle: TextStyle(color: _withAlpha(textColor, 0.5)),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    prefixIcon: Icon(Icons.search, color: textColor),
+                    suffixIcon:
+                        _search.isEmpty
+                            ? null
+                            : IconButton(
+                              icon: Icon(Icons.clear, color: textColor),
+                              onPressed: () => _searchCtrl.clear(),
+                            ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Catégories + filtre
+                Row(
+                  children: [
+                    const Text(
+                      'Catégorie',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: _openCountryFilter,
                       child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Bonjour Arabi',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  'Que Préparez-Vous Aujourd\'hui ?',
-                                  style: TextStyle(color: Colors.black54),
-                                ),
-                              ],
+                        children: const [
+                          Icon(Icons.tune, size: 18, color: Colors.green),
+                          SizedBox(width: 6),
+                          Text(
+                            'Filtrer',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const Icon(Icons.notifications_none, color: Colors.black87),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Barre de recherche
-                    TextField(
-                      controller: _searchCtrl,
-                      style: TextStyle(color: textColor),
-                      decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context).searchRecipe,
-                        hintStyle: TextStyle(color: _withAlpha(textColor, 0.5)),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        prefixIcon: Icon(Icons.search, color: textColor),
-                        suffixIcon:
-                            _search.isEmpty
-                                ? null
-                                : IconButton(
-                                  icon: Icon(Icons.clear, color: textColor),
-                                  onPressed: () => _searchCtrl.clear(),
-                                ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Ligne Catégorie + Filtrer
-                    Row(
-                      children: [
-                        const Text(
-                          'Catégorie',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: _openCountryFilter,
-                          child: Row(
-                            children: const [
-                              Icon(Icons.tune, size: 18, color: Colors.green),
-                              SizedBox(width: 6),
-                              Text(
-                                'Filtrer',
-                                style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Chips de catégories
-                    SizedBox(
-                      height: 40,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          _CategoryChip(
-                            label: 'All',
-                            selected: _country == 'Tous',
-                            onTap: () => setState(() => _country = 'Tous'),
-                          ),
-                          _CategoryChip(
-                            label: 'Italie',
-                            selected: _country == 'Italie',
-                            onTap: () => setState(() => _country = 'Italie'),
-                          ),
-                          _CategoryChip(
-                            label: 'Mexico',
-                            selected: _country == 'Mexico',
-                            onTap: () => setState(() => _country = 'Mexico'),
-                          ),
-                          _CategoryChip(
-                            label: 'Maroc',
-                            selected: _country == 'Maroc',
-                            onTap: () => setState(() => _country = 'Maroc'),
-                          ),
-                          _CategoryChip(
-                            label: 'France',
-                            selected: _country == 'France',
-                            onTap: () => setState(() => _country = 'France'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Titre Recettes Populaires
-                    Row(
-                      children: [
-                        const Text(
-                          'Recettes Populaires',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text('Voir Tout'),
-                        ),
-                      ],
                     ),
                   ],
                 ),
-              ),
-            ),
+                const SizedBox(height: 12),
 
-            // --- Liste Recettes ---
-            _filtered.isEmpty
-                ? SliverFillRemaining(
-                  child: Center(
-                    child: Text(
-                      "Aucune recette trouvée",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _withAlpha(textColor, 0.7),
+                // Chips
+                SizedBox(
+                  height: 40,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      // Chip "Tous"
+                      _CategoryChip(
+                        label: _flagForCountry('Tous'),
+                        selected: _country == 'Tous',
+                        onTap: () => setState(() => _country = 'Tous'),
                       ),
-                    ),
-                  ),
-                )
-                : SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  sliver: SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: 0.75,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final r = _filtered[index];
-                        return CompactRecipeCard(
-                          recette: r,
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => DetailRecetteScreen(recette: r),
-                            ),
-                          ),
-                        );
-                      },
-                      childCount: _filtered.length,
-                    ),
+                      // Chips pour chaque pays existant dans _all
+                      ...{for (final r in _all) normalizeCountry(r.pays)}.map(
+                        (p) => _CategoryChip(
+                          label: _flagForCountry(p),
+                          selected: _country == p,
+                          onTap: () => setState(() => _country = p),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    const Text(
+                      'Recettes Populaires',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Voir Tout'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // Liste
+        _filtered.isEmpty
+            ? SliverFillRemaining(
+              child: Center(
+                child: Text(
+                  "Aucune recette trouvée",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: _withAlpha(textColor, 0.7),
+                  ),
+                ),
+              ),
+            )
+            : SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.75,
+                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final r = _filtered[index];
+                  return CompactRecipeCard(
+                    recette: r,
+                    onTap:
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => DetailRecetteScreen(recette: r),
+                          ),
+                        ),
+                  );
+                }, childCount: _filtered.length),
+              ),
+            ),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
       ],
     );
@@ -345,29 +518,27 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
           index: _currentIndex,
           children: [
             _buildRecettesScreen(context, textColor),
-            const FavoritesScreen(),
+            FavoritesScreen(allRecipes: _all),
             const SettingsScreen(),
           ],
         ),
       ),
 
-      // --- Bouton Assistant AI flottant (seulement sur page Recettes) ---
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: _currentIndex == 0
-          ? FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const ChatScreen()),
-                );
-              },
-              icon: const Icon(Icons.chat_bubble_outline),
-              label: const Text('Assistant'),
-              backgroundColor: colorScheme.primaryContainer,
-              foregroundColor: colorScheme.onPrimaryContainer,
-            )
-          : null,
+      floatingActionButton:
+          _currentIndex == 0
+              ? FloatingActionButton.extended(
+                onPressed:
+                    () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ChatScreen()),
+                    ),
+                icon: const Icon(Icons.chat_bubble_outline),
+                label: const Text('Assistant'),
+                backgroundColor: colorScheme.primaryContainer,
+                foregroundColor: colorScheme.onPrimaryContainer,
+              )
+              : null,
 
-      // --- Bottom Navigation Ultra Moderne ---
       bottomNavigationBar: Container(
         height: 70,
         decoration: BoxDecoration(
@@ -410,17 +581,13 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
   }
 }
 
-// Widget Chip de catégorie
+// ----------------- Widget Chip -----------------
 class _CategoryChip extends StatelessWidget {
   final String label;
   final bool selected;
   final VoidCallback? onTap;
 
-  const _CategoryChip({
-    required this.label,
-    this.selected = false,
-    this.onTap,
-  });
+  const _CategoryChip({required this.label, this.selected = false, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -448,7 +615,7 @@ class _CategoryChip extends StatelessWidget {
   }
 }
 
-// Widget Navigation Item Ultra Moderne
+// ----------------- Widget Nav -----------------
 class _UltraModernNavItem extends StatelessWidget {
   final IconData icon;
   final String label;

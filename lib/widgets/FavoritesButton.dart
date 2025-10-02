@@ -13,14 +13,27 @@ class FavoritesButton extends StatelessWidget {
     final favoritesProvider = context.watch<FavoritesProvider>();
     final isFavorite = favoritesProvider.isFavorite(recipeId);
 
-    return IconButton(
-      icon: Icon(
-        isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-        color: isFavorite ? Colors.red : Colors.grey,
+    return GestureDetector(
+      onTap: () => favoritesProvider.toggleFavorite(recipeId),
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(8), // espace autour du cœur
+        child: Icon(
+          isFavorite ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+          color: isFavorite ? Colors.red : Colors.grey,
+          size: 24,
+        ),
       ),
-      onPressed: () {
-        favoritesProvider.toggleFavorite(recipeId);
-      },
     );
   }
 }

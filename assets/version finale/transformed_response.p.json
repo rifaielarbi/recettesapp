@@ -1,0 +1,616 @@
+{
+  "meals": [
+    {
+      "id": "52774",
+      "titre": "Pad See Ew",
+      "categorie": "Chicken",
+      "pays": "Thai",
+      "image": "https://www.themealdb.com/images/media/meals/uuuspp1468263334.jpg",
+      "description": "Mix Sauce in small bowl.\r\nMince garlic into wok with oil. Place over high heat, when hot, add chicken and Chinese broccoli stems, cook until chicken is light golden.\r\nPush to the side of the wok, crack egg in and scramble. Don't worry if it sticks to the bottom of the wok - it will char and which adds authentic flavour.\r\nAdd noodles, Chinese broccoli leaves and sauce. Gently mix together until the noodles are stained dark and leaves are wilted. Serve immediately!",
+      "tags": [
+        "Pasta"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=Ohy1DELF4is",
+      "ingredients": [
+        "rice stick noodles - 6oz/180g",
+        "dark soy sauce - 2 tbsp",
+        "oyster sauce - 2 tbsp",
+        "soy sauce - 2 tsp",
+        "white vinegar - 2 tsp",
+        "sugar - 2 tsp",
+        "water - 2 tbsp",
+        "peanut oil - 2 tbsp",
+        "garlic - 2 cloves",
+        "Chicken - 1 cup",
+        "Egg - 1",
+        "Chinese broccoli - 4 cups"
+      ]
+    },
+    {
+      "id": "52780",
+      "titre": "Potato Gratin with Chicken",
+      "categorie": "Chicken",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/qwrtut1468418027.jpg",
+      "description": "15 minute potato gratin with chicken and bacon greens: a gratin always seems more effort and more indulgent than ordinary boiled or roasts, but it doesn't have to take 45mins, it's nice for a change and you can control the calorie content by going with full fat to low fat creme fraiche. (It's always tastes better full fat though obviously!) to serve 4: use 800g of potatoes, finely slice and boil in a pan for about 5-8 mins till firmish, not soft. Finely slice 3 onions and place in an oven dish with 2 tblsp of olive oil and 100ml of chicken stock. Cook till the onions are soft then drain the potatoes and pour onto the onions. Season and spoon over cream or creme fraiche till all is covered but not swimming. Grate Parmesan over the top then finish under the grill till nicely golden. serve with chicken and bacon, peas and spinach.",
+      "youtube": "https://www.youtube.com/watch?v=p3u8eiy3yHI",
+      "ingredients": [
+        "Potatoes - 800g",
+        "Onions - 3",
+        "Olive Oil - 2 tblsp",
+        "Chicken Stock - 100ml",
+        "Creme Fraiche - 1 pot",
+        "Parmesan - Topping",
+        "Chicken Breasts - 4",
+        "Bacon - 4",
+        "Spinach - Topping",
+        "Peas - Topping"
+      ]
+    },
+    {
+      "id": "52804",
+      "titre": "Poutine",
+      "categorie": "Miscellaneous",
+      "pays": "Canadian",
+      "image": "https://www.themealdb.com/images/media/meals/uuyrrx1487327597.jpg",
+      "description": "Heat oil in a deep fryer or deep heavy skillet to 365°F (185°C).\r\nWarm gravy in saucepan or microwave.\r\nPlace the fries into the hot oil, and cook until light brown, about 5 minutes.\r\nRemove to a paper towel lined plate to drain.\r\nPlace the fries on a serving platter, and sprinkle the cheese over them.\r\nLadle gravy over the fries and cheese, and serve immediately.",
+      "tags": [
+        "UnHealthy",
+        "Speciality",
+        "HangoverFood"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=UVAMAoA2_WU",
+      "ingredients": [
+        "Vegetable Oil - Dash",
+        "Beef Gravy - 1 Can",
+        "Potatoes - 5 thin cut",
+        "Cheese Curds - 2 cups"
+      ]
+    },
+    {
+      "id": "52837",
+      "titre": "Pilchard puttanesca",
+      "categorie": "Pasta",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/vvtvtr1511180578.jpg",
+      "description": "Cook the pasta following pack instructions. Heat the oil in a non-stick frying pan and cook the onion, garlic and chilli for 3-4 mins to soften. Stir in the tomato purée and cook for 1 min, then add the pilchards with their sauce. Cook, breaking up the fish with a wooden spoon, then add the olives and continue to cook for a few more mins.\r\n\r\nDrain the pasta and add to the pan with 2-3 tbsp of the cooking water. Toss everything together well, then divide between plates and serve, scattered with Parmesan.",
+      "youtube": "https://www.youtube.com/watch?v=wqZzLAPmr9k",
+      "ingredients": [
+        "Spaghetti - 300g",
+        "Olive Oil - 1 tbls",
+        "Onion - 1 finely chopped",
+        "Garlic - 2 cloves minced",
+        "Red Chilli - 1",
+        "Tomato Puree - 1 tbls",
+        "Pilchards - 425g",
+        "Black Olives - 70g",
+        "Parmesan - Shaved"
+      ]
+    },
+    {
+      "id": "52847",
+      "titre": "Pork Cassoulet",
+      "categorie": "Pork",
+      "pays": "French",
+      "image": "https://www.themealdb.com/images/media/meals/wxuvuv1511299147.jpg",
+      "description": "Heat oven to 140C/120C fan/gas 1. Put a large ovenproof pan (with a tight-fitting lid) on a high heat. Add your fat and diced meat, cook for a few mins to seal the edges, giving it a quick stir to cook evenly. Reduce the heat to low, add the sliced onion, whole garlic cloves, carrot and fennel seeds, and cook gently to soften the veg for a few mins.\r\nPour over the red wine vinegar, scraping any meaty bits off the bottom of the pan. Add the stock, tomato purée, and half the rosemary and parsley. Bring to the boil and simmer for 10 mins, then season, cover with a lid and put into the oven for 2 hrs, removing the lid for the final hour of cooking. Stir occasionally and add the beans with 30 mins to go.\r\nRemove the pan from the oven and heat the grill. Scatter the top with the remaining herbs and breadcrumbs, drizzle a little oil over the top, and return to the oven for 5-10 mins, until the breadcrumbs are golden. Serve with crusty bread and green veg.",
+      "youtube": "https://www.youtube.com/watch?v=MEdHMTD0VCA",
+      "ingredients": [
+        "Goose Fat - 4 tbsp",
+        "Pork - 350g",
+        "Onion - 1 large",
+        "Garlic - 10",
+        "Carrots - 1 thinly sliced",
+        "Fennel Seeds - 1 tsp",
+        "Red Wine Vinegar - 2 tblsp",
+        "Vegetable Stock - 600ml",
+        "Tomato Puree - 1 tblsp",
+        "Rosemary - 2 sticks",
+        "Parsley - Handful",
+        "Haricot Beans - 400g",
+        "Breadcrumbs - 2 tblsp",
+        "Oil - drizzle",
+        "Bread - to serve",
+        "Broccoli - to serve"
+      ]
+    },
+    {
+      "id": "52854",
+      "titre": "Pancakes",
+      "categorie": "Dessert",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg",
+      "description": "Put the flour, eggs, milk, 1 tbsp oil and a pinch of salt into a bowl or large jug, then whisk to a smooth batter. Set aside for 30 mins to rest if you have time, or start cooking straight away.\r\nSet a medium frying pan or crêpe pan over a medium heat and carefully wipe it with some oiled kitchen paper. When hot, cook your pancakes for 1 min on each side until golden, keeping them warm in a low oven as you go.\r\nServe with lemon wedges and sugar, or your favourite filling. Once cold, you can layer the pancakes between baking parchment, then wrap in cling film and freeze for up to 2 months.",
+      "tags": [
+        "Breakfast",
+        "Desert",
+        "Sweet",
+        "Fruity"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=LWuuCndtJr0",
+      "ingredients": [
+        "Flour - 100g",
+        "Eggs - 2 large",
+        "Milk - 300ml",
+        "Sunflower Oil - 1 tbls",
+        "Sugar - to serve",
+        "Raspberries - to serve",
+        "Blueberries - to serve"
+      ]
+    },
+    {
+      "id": "52857",
+      "titre": "Pumpkin Pie",
+      "categorie": "Dessert",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/usuqtp1511385394.jpg",
+      "description": "Place the pumpkin in a large saucepan, cover with water and bring to the boil. Cover with a lid and simmer for 15 mins or until tender. Drain pumpkin; let cool.\r\nHeat oven to 180C/160C fan/gas 4. Roll out the pastry on a lightly floured surface and use it to line a 22cm loose-bottomed tart tin. Chill for 15 mins. Line the pastry with baking parchment and baking beans, then bake for 15 mins. Remove the beans and paper, and cook for a further 10 mins until the base is pale golden and biscuity. Remove from the oven and allow to cool slightly.\r\nIncrease oven to 220C/200C fan/gas 7. Push the cooled pumpkin through a sieve into a large bowl. In a separate bowl, combine the sugar, salt, nutmeg and half the cinnamon. Mix in the beaten eggs, melted butter and milk, then add to the pumpkin purée and stir to combine. Pour into the tart shell and cook for 10 mins, then reduce the temperature to 180C/160C fan/gas 4. Continue to bake for 35-40 mins until the filling has just set.\r\nLeave to cool, then remove the pie from the tin. Mix the remaining cinnamon with the icing sugar and dust over the pie. Serve chilled.",
+      "tags": [
+        "Halloween",
+        "Pie",
+        "Desert"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=hpapqEeb36k",
+      "ingredients": [
+        "Pumpkin - 750g",
+        "Shortcrust Pastry - 350g",
+        "Plain Flour - Dusting",
+        "Caster Sugar - 140g",
+        "Salt - ½ tsp",
+        "Nutmeg - ½ tsp",
+        "Cinnamon - 1 tsp",
+        "Eggs - 2 Beaten",
+        "Butter - 25g",
+        "Milk - 175g",
+        "Icing Sugar - 1 tblsp"
+      ]
+    },
+    {
+      "id": "52861",
+      "titre": "Peanut Butter Cheesecake",
+      "categorie": "Dessert",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/qtuuys1511387068.jpg",
+      "description": "Oil and line a 20cm round loose- bottomed cake tin with cling film, making it as smooth as possible. Melt the butter in a pan. Crush the biscuits by bashing them in a bag with a rolling pin, then stir them into the butter until very well coated. Press the mixture firmly into the base of the tin and chill.\r\nSoak the gelatine in water while you make the filling. Tip the ricotta into a bowl, then beat in the peanut butter and syrup. Ricotta has a slightly grainy texture so blitz until smooth with a stick blender for a smoother texture if you prefer.\r\nTake the soaked gelatine from the water and squeeze dry. Put it into a pan with the milk and heat very gently until the gelatine dissolves. Beat into the peanut mixture, then tip onto the biscuit base. Chill until set.\r\nTo freeze, leave in the tin and as soon as it is solid, cover the surface with cling film, then wrap the tin with cling film and foil.\r\nTo defrost, thaw in the fridge overnight.\r\nTo serve, carefully remove from the tin. Whisk the cream with the sugar until it holds its shape, then spread on top of the cheesecake and scatter with the peanut brittle.",
+      "tags": [
+        "Cake",
+        "Desert",
+        "Treat",
+        "UnHealthy",
+        "Speciality"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=QSTsturcyL0",
+      "ingredients": [
+        "Butter - 50g",
+        "Peanut Cookies - 175g",
+        "Gelatine Leafs - 5",
+        "Ricotta - 500g",
+        "Peanut Butter - 175g",
+        "Golden Syrup - 175g",
+        "Milk - 150ml",
+        "Double Cream - 275ml",
+        "Light Brown Soft Sugar - 2 tblsp",
+        "Peanut Brittle - Crushed"
+      ]
+    },
+    {
+      "id": "52862",
+      "titre": "Peach & Blueberry Grunt",
+      "categorie": "Dessert",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/ssxvup1511387476.jpg",
+      "description": "Heat oven to 190C/170C fan/gas 5. Butter a wide shallow ovenproof dish. Blend the cornflour with the orange zest and juice, and put in a large pan with the sugar. Halve, stone and slice the peaches and add to the pan. Bring slowly to the boil, stirring gently until the sauce is shiny and thickened, about 3-4 mins. Remove from the heat, stir in the blueberries and tip into the prepared dish.\r\nTip the flour into a mixing bowl and add the 50g butter. Rub the butter into the flour until it resembles fine breadcrumbs, then stir in half the sugar. Mix the remaining sugar with the cinnamon and set aside.\r\nAdd the milk to the dry ingredients and mix to a soft dough. Turn out onto a lightly floured surface and knead briefly. Roll out to an oblong roughly 16 x 24cm. Brush with melted butter and sprinkle evenly with the spicy sugar. Roll up from one long side and cut into 12 slices. Arrange around the top of the dish, leaving the centre uncovered.\r\nBake for 20-25 mins, until the topping is crisp and golden. Serve warm.",
+      "tags": [
+        "Desert",
+        "Pudding",
+        "Fruity"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=SNeO28BCpsc",
+      "ingredients": [
+        "Corn Flour - 1 tsp",
+        "Orange - Juice of 2+Zest of 1",
+        "Caster Sugar - 2 tbs",
+        "Peaches - 6",
+        "Blueberries - 250g",
+        "Self-raising Flour - 200g",
+        "Butter - 50g",
+        "Muscovado Sugar - 100g",
+        "Cinnamon - 1 tsp",
+        "Milk - 6 tblsp"
+      ]
+    },
+    {
+      "id": "52902",
+      "titre": "Parkin Cake",
+      "categorie": "Dessert",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/qxuqtt1511724269.jpg",
+      "description": "Heat oven to 160C/140C fan/gas 3. Grease a deep 22cm/9in square cake tin and line with baking parchment. Beat the egg and milk together with a fork.\r\n\r\nGently melt the syrup, treacle, sugar and butter together in a large pan until the sugar has dissolved. Remove from the heat. Mix together the oatmeal, flour and ginger and stir into the syrup mixture, followed by the egg and milk.\r\n\r\nPour the mixture into the tin and bake for 50 mins - 1 hr until the cake feels firm and a little crusty on top. Cool in the tin then wrap in more parchment and foil and keep for 3-5 days before eating if you can – it’ll become softer and stickier the longer you leave it, up to 2 weeks.\r\n",
+      "tags": [
+        "Caramel"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=k1lG4vk2MQA",
+      "ingredients": [
+        "Butter - 200g",
+        "Egg - 1 large",
+        "Milk - 4 tbs",
+        "Golden Syrup - 200g",
+        "Black Treacle - 85g",
+        "Brown Sugar - 85g",
+        "Oatmeal - 100g",
+        "Self-raising Flour - 250g",
+        "Ground Ginger - 1 tbs"
+      ]
+    },
+    {
+      "id": "52916",
+      "titre": "Pear Tarte Tatin",
+      "categorie": "Dessert",
+      "pays": "French",
+      "image": "https://www.themealdb.com/images/media/meals/rxvxrr1511797671.jpg",
+      "description": "Core the pears, then peel as neatly as possible and halve. If you like, they can be prepared up to a day ahead and kept in the fridge, uncovered, so that they dry out.\r\nTip the sugar, butter, star anise, cardamom and cinnamon into an ovenproof frying pan, about 20cm wide, and place over a high heat until bubbling. Shake the pan and stir the buttery sauce until it separates and the sugar caramelises to a toffee colour.\r\nLay the pears in the pan, then cook in the sauce for 10-12 mins, tossing occasionally, until completely caramelised. Don’t worry about them burning – they won’t – but you want to caramelise them as much as possible. Splash in the brandy and let it flambé, then set the pears aside.\r\nHeat oven to 200C/fan 180C/gas 6. Roll the pastry out to the thickness of a £1 coin. Using a plate slightly larger than the top of the pan, cut out a circle, then press the edges of the circle of pastry to thin them out.\r\nWhen the pears have cooled slightly, arrange them in the pan, cut side up, in a floral shape, with the pears around the edge pointing inwards. Rest the cinnamon stick on the top in the centre, with the cardamom pods scattered around.\r\nDrape the pastry over the pears, then tuck the edges down the pan sides and under the fruit (see Gordon’s guide). Pierce the pastry a few times, then bake for 15 mins. If a lot of juice bubbles up the side of the pan, pour it off at this stage (see guide). Reduce oven to 180C/fan 160C/gas 4 and bake for 15 mins more until the pastry is golden. Leave the tart to stand for 10 mins, then invert it carefully onto a serving dish.",
+      "tags": [
+        "Tart",
+        "Glazed",
+        "Baking"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=8U1tKWKDeWA",
+      "ingredients": [
+        "Pears - 8",
+        "Caster Sugar - 100g",
+        "Butter - 100g",
+        "Star Anise - 2",
+        "Cardamom - 3 Pods",
+        "Cinnamon - 1 large",
+        "Brandy - 2 tbs",
+        "Puff Pastry - 500g"
+      ]
+    },
+    {
+      "id": "52921",
+      "titre": "Provençal Omelette Cake",
+      "categorie": "Vegetarian",
+      "pays": "French",
+      "image": "https://www.themealdb.com/images/media/meals/qwtrtp1511799242.jpg",
+      "description": "Break the eggs into two bowls, five in each. Whisk lightly and season with salt and pepper. Heat the oil in a pan, add the courgettes and spring onions, then fry gently for about 10 mins until softened. Cool, then stir into one bowl of eggs with a little salt and pepper. Add the roasted peppers to the other bowl of eggs with the garlic, chilli, salt and pepper.\r\nHeat a little oil in a 20-23cm frying pan, preferably non-stick. Pour the eggs with courgette into a measuring jug, then pourabout one-third of the mixture into the pan, swirling it to cover the base of the pan. Cook until the egg is set and lightly browned underneath, then cover the pan with a plate and invert the omelette onto it. Slide it back into the pan to cook the other side. Repeat with the remaining mix to make two more omelettes, adding a little oil to the pan each time. Stack the omelettes onto a plate. Make three omelettes in the same way with the red pepper mixture, then stack them on a separate plate.\r\nNow make the filling. Beat the cheese to soften it, then beat in the milk to make a spreadable consistency. Stir in the herbs, salt and pepper. Line a deep, 20-23cm round cake tin with cling film (use a tin the same size as the frying pan). Select the best red pepper omelette and place in the tin, prettiest side down. Spread with a thin layer of cheese filling, then cover with a courgette omelette. Repeat, alternating the layers, until all the omelettes and filling are in the tin, finishing with an omelette. Flip the cling film over the omelette, then chill for up to 24 hrs.\r\nTo serve, invert the omelette cake onto a serving plate and peel off the cling film. Pile rocket on the top and scatter over the cheese, a drizzle of olive oil and a little freshly ground black pepper. Serve cut into wedges.",
+      "tags": [
+        "Egg"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=B7isFo2uP2k",
+      "ingredients": [
+        "Eggs - 10",
+        "Olive Oil - 1 tbs",
+        "Courgettes - 2 finely chopped",
+        "Spring Onions - 3 finely chopped",
+        "Red Pepper - 4",
+        "Garlic Clove - 1 clove peeled crushed",
+        "Red Chilli - 1",
+        "Cream Cheese - 300g",
+        "Milk - 6 tblsp",
+        "Chives - 4 tbs",
+        "Basil - 2 tbs",
+        "Rocket - to serve",
+        "Parmesan - to serve"
+      ]
+    },
+    {
+      "id": "52922",
+      "titre": "Prawn & Fennel Bisque",
+      "categorie": "Side",
+      "pays": "French",
+      "image": "https://www.themealdb.com/images/media/meals/rtwwvv1511799504.jpg",
+      "description": "Shell the prawns, then fry the shells in the oil in a large pan for about 5 mins. Add the onion, fennel and carrots and cook for about 10 mins until the veg start to soften. Pour in the wine and brandy, bubble hard for about 1 min to drive off the alcohol, then add the tomatoes, stock and paprika. Cover and simmer for 30 mins. Meanwhile, chop the prawns.\r\nBlitz the soup as finely as you can with a stick blender or food processor, then press through a sieve into a bowl. Spend a bit of time really working the mixture through the sieve as this will give the soup its velvety texture.\r\nTip back into a clean pan, add the prawns and cook for 10 mins, then blitz again until smooth. You can make and chill this a day ahead or freeze it for 1 month. Thaw ovenight in the fridge. To serve, gently reheat in a pan with the cream. If garnishing, cook the 8 prawns in a little butter. Spoon into small bowls and top with the prawns and snipped fennel fronds.",
+      "tags": [
+        "Soup",
+        "Warm",
+        "Seafood",
+        "Shellfish"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=4thpMbDakgM",
+      "ingredients": [
+        "Tiger Prawns - 450g",
+        "Olive Oil - 4 tbs",
+        "Onion - 1 large",
+        "Fennel - 1 large",
+        "Carrots - 2 chopped",
+        "Dry White Wine - 150ml",
+        "Brandy - 1 tbs",
+        "Chopped Tomatoes - 400g",
+        "Fish Stock - 1L",
+        "Paprika - 2 pinches",
+        "Double Cream - 150ml",
+        "Prawns - 8"
+      ]
+    },
+    {
+      "id": "52930",
+      "titre": "Pate Chinois",
+      "categorie": "Beef",
+      "pays": "Canadian",
+      "image": "https://www.themealdb.com/images/media/meals/yyrrxr1511816289.jpg",
+      "description": "In a large pot of salted water, cook the potatoes until they are very tender. Drain.\r\nWith a masher, coarsely crush the potatoes with at least 30 ml (2 tablespoons) of butter. With an electric mixer, purée with the milk. Season with salt and pepper. Set aside.\r\nWith the rack in the middle position, preheat the oven to 190 °C (375 °F).\r\nIn a large skillet, brown the onion in the remaining butter. Add the meat and cook until golden brown. Season with salt and pepper. Remove from the heat.\r\nLightly press the meat at the bottom of a 20-cm (8-inch) square baking dish. Cover with the corn and the mashed potatoes. Sprinkle with paprika and parsley.\r\nBake for about 30 minutes. Finish cooking under the broiler. Let cool for 10 minutes.",
+      "tags": [
+        "MainMeal",
+        "Alcoholic"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=QRFqnLkEv3I",
+      "ingredients": [
+        "Potatoes - 4 cups",
+        "Butter - 60ml",
+        "Milk - ½ cup",
+        "Minced Beef - 450g",
+        "Onion - 1 finely chopped",
+        "Creamed Corn - 500ml",
+        "Paprika - to taste",
+        "Parsley - to taste",
+        "Salt - Dash",
+        "Pepper - Dash"
+      ]
+    },
+    {
+      "id": "52932",
+      "titre": "Pouding chomeur",
+      "categorie": "Dessert",
+      "pays": "Canadian",
+      "image": "https://www.themealdb.com/images/media/meals/yqqqwu1511816912.jpg",
+      "description": "In a large bowl, with an electric mixer, mix the butter and sugar till the mix is light.\r\nAdd eggs and vanilla and mix.\r\nIn another bowl, mix flour and baking powder.\r\nAlternate flour mix and milk to the butter mix.\r\nPour into a 13 inch by 9 inch greased pan.\r\nMAPLE SAUCE.\r\nIn a large casserole, bring to boil the syrup, brown sugar, cream and butter and constantly stir.\r\nReduce heat and and gently cook 2 minutes or till sauce has reduced a little bit.\r\nPour sauce gently over cake.\r\nBake at 325°f (160°c) about 35 minutes or till cake is light brown and when toothpick inserted comes out clean.",
+      "tags": [
+        "Pudding"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=WFvj71RZYPc",
+      "ingredients": [
+        "Butter - ½cup+⅓cup",
+        "Sugar - 1 cup",
+        "Eggs - 2",
+        "Vanilla Extract - 1 tsp",
+        "Flour - 2 cups",
+        "Baking Powder - 1 tsp",
+        "Milk - 1 1/4 cup",
+        "Maple Syrup - 1 1/2 cup",
+        "Brown Sugar - 1 1/2 cup",
+        "Single Cream - 1 1/2 cup"
+        ]
+    },
+    {
+      "id": "52958",
+      "titre": "Peanut Butter Cookies",
+      "categorie": "Dessert",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/1544384070.jpg",
+      "description": "Preheat oven to 350ºF (180ºC).\r\nIn a large bowl, mix together the peanut butter, sugar, and egg.\r\nScoop out a spoonful of dough and roll it into a ball. Place the cookie balls onto a nonstick baking sheet.\r\nFor extra decoration and to make them cook more evenly, flatten the cookie balls by pressing a fork down on top of them, then press it down again at a 90º angle to make a criss-cross pattern.\r\nBake for 8-10 minutes or until the bottom of the cookies are golden brown.\r\nRemove from baking sheet and cool.\r\nEnjoy!",
+      "tags": [
+        "Breakfast",
+        "UnHealthy",
+        "BBQ"
+      ],
+      "ingredients": [
+        "Peanut Butter - 1 cup",
+        "Sugar - 1/2 cup",
+        "Egg - 1"
+      ]
+    },
+    {
+      "id": "53014",
+      "titre": "Pizza Express Margherita",
+      "categorie": "Miscellaneous",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg",
+      "description": "1 Preheat the oven to 230°C.\r\n\r\n2 Add the sugar and crumble the fresh yeast into warm water.\r\n\r\n3 Allow the mixture to stand for 10 – 15 minutes in a warm place (we find a windowsill on a sunny day works best) until froth develops on the surface.\r\n\r\n4 Sift the flour and salt into a large mixing bowl, make a well in the middle and pour in the yeast mixture and olive oil.\r\n\r\n5 Lightly flour your hands, and slowly mix the ingredients together until they bind.\r\n\r\n6 Generously dust your surface with flour.\r\n\r\n7 Throw down the dough and begin kneading for 10 minutes until smooth, silky and soft.\r\n\r\n8 Place in a lightly oiled, non-stick baking tray (we use a round one, but any shape will do!)\r\n\r\n9 Spread the passata on top making sure you go to the edge.\r\n\r\n10 Evenly place the mozzarella (or other cheese) on top, season with the oregano and black pepper, then drizzle with a little olive oil.\r\n\r\n11 Cook in the oven for 10 – 12 minutes until the cheese slightly colours.\r\n\r\n12 When ready, place the basil leaf on top and tuck in!",
+      "youtube": "https://www.youtube.com/watch?v=Mt5lgUZRoUg",
+      "ingredients": [
+        "Water - 150ml",
+        "Sugar - 1 tsp",
+        "Yeast - 15g",
+        "Plain Flour - 225g",
+        "Salt - 1 1/2 tsp",
+        "Olive Oil - Drizzle",
+        "Passata - 80g",
+        "Mozzarella - 70g",
+        "Oregano - Peeled and Sliced",
+        "Basil - Leaves",
+        "Black Pepper - Pinch"
+      ]
+    },
+    {
+      "id": "53017",
+      "titre": "Paszteciki (Polish Pasties)",
+      "categorie": "Beef",
+      "pays": "Polish",
+      "image": "https://www.themealdb.com/images/media/meals/c9a3l31593261890.jpg",
+      "description": "Sift flour and salt into a large mixing bowl.\r\nUse a spoon to push the egg yolk through a fine sieve into the flour.\r\nAdd the raw egg and mix well.\r\nBeat in butter 1 tablespoon at a time.\r\nPlace dough on a floured surface and knead until smooth and elastic, then wrap in waxed paper and refrigerate until firm (at least 30 minutes).\r\nIn a heavy skillet, melt 2 tablespoons butter over medium heat; saute the onion and rutabaga until the onion is soft and transparent (5 minutes).\r\nPut the onions, rutabaga, and beef through a meat grinder twice if you have one, if not just chop them up as fine as possible.\r\nMelt the remaining 4 tablespoons butter over medium heat, and add the meat mixture.\r\nCook over low heat, stirring occasionally, until all of the liquid has evaporated and the mixture is thick enough to hold its shape.\r\nRemove from heat and let cool, then stir in 1 egg, and season with salt and pepper.\r\nPreheat oven to 350°F.\r\nOn a lightly floured surface, roll the dough out into a 13x8\" rectangle (1/8\" thick).\r\nSpoon the filling down the center of the rectangle lengthwise, leaving about an inch of space on each end.\r\nLightly brush the long sides with cold water, then fold one of the long sides over the filling and the other side over the top of that.\r\nBrush the short ends with cold water and fold them over the top, enclosing the filling.\r\nPlace pastry seam side down on a baking sheet and brush the top evenly with the remaining scrambled egg.\r\nBake in preheated oven until rich golden brown (30 minutes).\r\nSlice pastry diagonally into 1.5\" long pieces and serve as an appetizer or with soup.",
+      "youtube": "https://www.youtube.com/watch?v=qANmR6BBJpQ",
+      "ingredients": [
+        "Flour - 1 cup",
+        "Egg - 1egg+1Yolk+2Beaten",
+        "Butter - 5tbs+6tbs",
+        "Onion - 1/3 cup",
+        "Swede - 1/2 cup",
+        "Beef Brisket - 1/2 lb",
+        "Salt -¼cup+1tsp",
+        "Pepper - 1/4 tsp"
+      ]
+    },
+    {
+      "id": "53019",
+      "titre": "Pierogi (Polish Dumplings)",
+      "categorie": "Side",
+      "pays": "Polish",
+      "image": "https://www.themealdb.com/images/media/meals/45xxr21593348847.jpg",
+      "description": "To prepare the sauerkraut filling, melt the butter in a skillet over medium heat. Stir in the onion, and cook until translucent, about 5 minutes. Add the drained sauerkraut and cook for an additional 5 minutes. Season to taste with salt and pepper, then remove to a plate to cool.\r\n\r\nFor the mashed potato filling, melt the butter in a skillet over medium heat. Stir in the onion, and cook until translucent, about 5 minutes. Stir into the mashed potatoes, and season with salt and white pepper.\r\n\r\nTo make the dough, beat together the eggs and sour cream until smooth. Sift together the flour, salt, and baking powder; stir into the sour cream mixture until dough comes together. Knead the dough on a lightly floured surface until firm and smooth. Divide the dough in half, then roll out one half to 1/8 inch thickness. Cut into 3 inch rounds using a biscuit cutter.\r\n\r\nPlace a small spoonful of the mashed potato filling into the center of each round. Moisten the edges with water, fold over, and press together with a fork to seal. Repeat procedure with the remaining dough and the sauerkraut filling.\r\n\r\nBring a large pot of lightly salted water to a boil. Add perogies and cook for 3 to 5 minutes or until pierogi float to the top. Remove with a slotted spoon.",
+      "youtube": "https://www.youtube.com/watch?v=lyqDmUroZrI",
+      "ingredients": [
+        "Butter - 2tbs+3tbs",
+        "Chopped Onion - 1/3cup+1/2cup ",
+        "Sauerkraut - 1 1/2 cups",
+        "Potatoes - 2 cups",
+        "Eggs - 3",
+        "Sour Cream - 1 pot",
+        "Flour - 3 cups",
+        "Salt - 1/4 tsp",
+        "Baking Powder - 1 tbs"
+      ]
+    },
+    {
+      "id": "53022",
+      "titre": "Polskie Nalesniki (Polish Pancakes)",
+      "categorie": "Dessert",
+      "pays": "Polish",
+      "image": "https://www.themealdb.com/images/media/meals/58bkyo1593350017.jpg",
+      "description": "Add flour, eggs, milk, water, and salt in a large bowl then mix with a hand mixer until you have a smooth, lump-free batter.\r\nAt this point, mix in the butter or the vegetable oil. Alternatively, you can use them to grease the pan before frying each pancake.\r\nHeat a non-stick pan over medium heat, then pour in the batter, swirling the pan to help it spread.\r\nWhen the pancake starts pulling away a bit from the sides, and the top is no longer wet, flip it and cook shortly on the other side as well.\r\nTransfer to a plate. Cook the remaining batter until all used up.\r\nServe warm, with the filling of your choice.",
+      "youtube": "https://www.youtube.com/watch?v=EZS4ev2crHc",
+      "ingredients": [
+        "Flour - 1 cup",
+        "Eggs - 2",
+        "Milk - 1 cup",
+        "Water - 3/4 cup",
+        "Salt - Pinch",
+        "Sugar - 1 tsp",
+        "Butter - 3 tbs"
+      ]
+    },
+    {
+      "id": "53039",
+      "titre": "Piri-piri chicken and slaw",
+      "categorie": "Chicken",
+      "pays": "Portuguese",
+      "image": "https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg",
+      "description": "STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.",
+      "youtube": "https://www.youtube.com/watch?v=_RKwKjskopk",
+      "ingredients": [
+        "Chicken - 1.5kg",
+        "Red Chilli - 3 chopped",
+        "Garlic - 2 cloves",
+        "Ginger - 1 tsp",
+        "Dried Oregano - 1 tsp",
+        "Coriander - 1 tsp",
+        "Paprika - 1 tsp",
+        "Red Wine Vinegar - 2 tbs",
+        "Oil - 2 tbs",
+        "Red Onions - 1 sliced",
+        "Carrots - 2",
+        "Beetroot - 1",
+        "Cabbage - 4 leaves",
+        "Mayonnaise - 2 tbs",
+        "Greek Yogurt - 2 tbs",
+        "Cumin Seeds - 1 tsp"
+      ]
+    },
+    {
+      "id": "53042",
+      "titre": "Portuguese prego with green piri-piri",
+      "categorie": "Beef",
+      "pays": "Portuguese",
+      "image": "https://www.themealdb.com/images/media/meals/ewcikl1614348364.jpg",
+      "description": "STEP 1\r\n\r\nRub the garlic over the steaks then put in a sandwich bag and tip in the olive oil, sherry vinegar and parsley stalks. Smoosh everything together, then use a rolling pin to bash the steaks a few times. Leave for 1-2 hours.\r\n\r\nSTEP 2\r\n\r\nTo make the sauce, put all the ingredients into a blender with 1 tbsp water and whizz until as smooth as possible. This will make more than you’ll need for the recipe but will keep for a week in an airtight jar.\r\n\r\nSTEP 3\r\n\r\nHeat a griddle or frying pan to high. Brush away the garlic and parsley stalks from the steaks and season well. Sear the steaks for 2 minutes on each side then rest on a plate. Put the ciabatta halves onto the plate, toasted-side down, to soak up any juices.\r\n\r\nSTEP 4\r\n\r\nSlice the steaks then stuff into the rolls with the green sauce and rocket.",
+      "youtube": "https://www.youtube.com/watch?v=FbIKfcDEPLA",
+      "ingredients": [
+        "Garlic - 1 clove+½ clove",
+        "Beef Fillet - 2 small",
+        "Olive Oil - 2 tbs",
+        "Vinegar - 1 tbs",
+        "Parsley - Leaves",
+        "Ciabatta - 2",
+        "Rocket - 2 handfulls",
+        "Basil Leaves - Small bunch",
+        "Parsley - Small bunch",
+        "Jalapeno - 1",
+        "Spring Onions - 2 chopped",
+        "Caster Sugar - 1/2 tsp"
+      ]
+    },
+    {
+      "id": "53044",
+      "titre": "Portuguese barbecued pork (Febras assadas)",
+      "categorie": "Pork",
+      "pays": "Portuguese",
+      "image": "https://www.themealdb.com/images/media/meals/cybyue1614349443.jpg",
+      "description": "STEP 1\r\n\r\nCut the tenderloins into 5 equal-size pieces leaving the tail ends a little longer. Take a clear plastic bag and slip one of the pieces in. Bash it into an escalope the size of a side-plate with a rolling pin and repeat with the remaining pieces.\r\n\r\nSTEP 2\r\n\r\nPut the wine, paprika, some salt and pepper and the juice of ½ a lemon in a bowl and add the pork. Leave to marinate for 20-30 minutes, while you get your barbecue to the stage where the coals are glowing but there are no flames.\r\n\r\nSTEP 3\r\n\r\nTo make the chips, fill a basin with cool water and cut the potatoes into 3cm-thick chips. Soak them in the water for 5 minutes and then change the water. Leave for 5 more minutes. Drain and then pat dry on a towel or with kitchen paper.\r\n\r\nSTEP 4\r\n\r\nHeat the oil in a deep fryer or a deep heavy-based pan with a lid to 130C and lower the chips into the oil (in batches). Blanch for 8-10 minutes. Remove from the oil and drain well. Place on a tray to cool. Reheat the oil to 180C (make sure it’s hot or your chips will be soggy) and lower the basket of chips into the oil (again, do this in batches). Leave to cook for 2 minutes and then give them a little shake. Cook for another minute or so until they are well coloured and crisp to the touch. Drain well for a few minutes, tip into a bowl and sprinkle with sea salt.\r\n\r\nSTEP 5\r\n\r\nThe pork will cook quickly so do it in 2 batches. Take the pieces out of the marinade, rub them with oil, and drop them onto the barbecue (you could also use a chargrill). Cook for 1 minute on each side – they may flare up as you do so. This should really be enough time as they will keep on cooking. Take them off the barbecue and pile onto a plate. Repeat with the remaining batch.\r\n\r\nSTEP 6\r\n\r\nServe by piling a plate with chips, drop the pork on top of each pile and pouring the juices from the plate over so the chips take up the flavours. Top with a spoon of mayonnaise and a wedge of lemon.",
+      "youtube": "https://www.youtube.com/watch?v=tVpsZaejyYU",
+      "ingredients": [
+        "Pork - 2",
+        "White Wine - 200ml",
+        "Paprika - 1/2 tsp",
+        "Lemon - 2",
+        "Lemon Juice - 1/2",
+        "Olive Oil - Dash",
+        "Mayonnaise - To serve",
+        "Potatoes - 1 kg",
+        "Vegetable Oil - For frying"
+      ]
+    },
+    {
+      "id": "53045",
+      "titre": "Portuguese fish stew (Caldeirada de peixe)",
+      "categorie": "Seafood",
+      "pays": "Portuguese",
+      "image": "https://www.themealdb.com/images/media/meals/do7zps1614349775.jpg",
+      "description": "STEP 1\r\n\r\nHeat a drizzle of oil in a large, deep-sided frying pan, and fry the onion and pepper on a medium heat until softened but not browned. Finely chop the coriander stalks (keep the leaves for later), and add to the pan with the chilli and chopped garlic. Fry for another few minutes. Add the wine, saffron and bay leaf and let it simmer until reduced by half.\r\n\r\nSTEP 2\r\n\r\nAdd the potatoes, tomatoes, and 300ml water and bring to a gentle boil. Break up the tomatoes with a spoon on the side of the pan and simmer for 20-25 minutes until the potatoes are just tender, and the tomatoes have broken down.\r\n\r\nSTEP 3\r\n\r\nSeason well, then gently push the fish into the sauce, and arrange the squid, prawns, clams and mussels on the surface. Put the lid on and cook for 6-8 minutes until the mussel and clam shells have opened, the prawns are cooked and the fish is flaky. Toast the bread, rub lightly with the halved garlic clove and drizzle with olive oil. Serve the stew scatted with chopped coriander leaves, and the toasts for dunking.",
+      "youtube": "https://www.youtube.com/watch?v=utv-GpSJypk",
+      "ingredients": [
+        "Onions - 2 finely chopped",
+        "Red Pepper - 1 Diced",
+        "Coriander - Small bunch",
+        "Red Chilli - 1 small",
+        "Garlic - 3 cloves",
+        "Dry White Wine - 400ml",
+        "Saffron - Pinch",
+        "Bay Leaf - 1",
+        "Potatoes - 300g",
+        "Plum Tomatoes - 400g",
+        "Cod - 600g",
+        "Squid - 300g",
+        "Tiger Prawns - 8",
+        "Clams - 500g",
+        "Mussels - 500g",
+        "Baguette - 1 sliced"
+      ]
+    },
+    {
+      "id": "53046",
+      "titre": "Portuguese custard tarts",
+      "categorie": "Dessert",
+      "pays": "Portuguese",
+      "image": "https://www.themealdb.com/images/media/meals/vmz7gl1614350221.jpg",
+      "description": "STEP 1\r\nRoll the pastry\r\nMix the flour and icing sugar, and use this to dust the work surface. Roll the pastry out to make a 45 x 30cm rectangle. Roll up lengthways to create a long sausage shape.\r\n\r\nSTEP 2\r\nCutting pastry into rounds\r\nCut the pastry into 24 wheels, about 1-2cm thick.\r\n\r\nSTEP 3\r\nRoll out each pastry portion\r\nRoll each wheel lightly with the rolling pin to fit 2 x 12-hole non-stick fairy cake tins.\r\n\r\nSTEP 4\r\nPress pastry into the tin\r\nPress the pastry circles into the tins and mould into the tins to make thin cases. Chill until needed.\r\n\r\nSTEP 5\r\nMake the infused syrup\r\nHeat the oven to 220C/fan 200C/gas 7. Make a sugar syrup by bringing the sugar, 200ml water, lemon zest and cinnamon stick to the boil. Reduce until syrupy, allow to cool, then remove the cinnamon and lemon. Whisk the eggs, egg yolks and cornflour until smooth in another large pan.\r\n\r\nSTEP 6\r\nMaking custard\r\nHeat the milk and vanilla pod seeds in a separate pan until just below the boil. Gradually pour the hot milk over the eggs and cornflour, then cook on a low heat, continually whisking.\r\n\r\nSTEP 7\r\nAdd syrup to custard\r\nAdd the cooled sugar syrup to the custard and whisk until thickened slightly.\r\n\r\nSTEP 8\r\nPour custard into the tins\r\nPour the custard through a sieve. Pour into the pastry cases and bake for 15 minutes until the pastry is golden and the custard has darkened.\r\n\r\nSTEP 9\r\ncool and dust with icing sugar\r\nCool completely in the tins then sift over icing sugar and ground cinnamon to serve.\r\n\r\n\r\n\r\n ",
+      "youtube": "https://www.youtube.com/watch?v=lWLCxui1Mw8",
+      "ingredients": [
+        "Plain Flour - 2 tbs",
+        "Icing Sugar - 2 tbs",
+        "Puff Pastry - 375g",
+        "Caster Sugar - 250g",
+        "Lemon Zest - 2 strips",
+        "Cinnamon - 1 Stick",
+        "Eggs - 2",
+        "Egg Yolks - 4",
+        "Corn Flour - 50g",
+        "Whole Milk - 500ml",
+        "Vanilla - Pod of",
+        "Cinnamon - To serve"
+      ]
+    },
+    {
+      "id": "53081",
+      "titre": "Potato Salad (Olivier Salad)",
+      "categorie": "Vegetarian",
+      "pays": "Russian",
+      "image": "https://www.themealdb.com/images/media/meals/ebvuir1699013665.jpg",
+      "description": "Cut the potatoes and carrots into small uniform cubes.\r\nPlace them in a large pot and fill with water.\r\nAdd salt and vinegar. Bring it to a boil over medium high heat, and then reduce the heat to medium and continue to cook until the potatoes are cooked through, about 15 minutes. Drain the potatoes and let it cool to room temperature.\r\nMeanwhile, cut the sausage and pickles into small cubes, and chop the green onions.\r\nCut the hard-boiled eggs into small cubes as well.\r\nIf using fresh dill, chop them as well.\r\nIn a large bowl, combine potatoes, carrots, sausage, pickles, peas and green onions.\r\nAdd mayo and dill and mix until well combined.\r\nSalt and pepper to taste. Cover with a plastic wrap and refrigerate for at least 1 hour before serving.",
+      "tags": [
+        "Salad"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=RnsWwHcpKiY",
+      "ingredients": [
+        "Potatoes - 4",
+        "Carrots - 3",
+        "Salt - 1 tbs",
+        "White Wine Vinegar - 1/2 tbs",
+        "Eggs - 4",
+        "Sausages - 7 oz",
+        "Dill - 4 oz",
+        "Peas - 1 can",
+        "Onions - 4",
+        "Mayonnaise - 1 cup"
+      ]
+    }
+  ]
+}

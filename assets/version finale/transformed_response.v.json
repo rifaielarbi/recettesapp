@@ -1,0 +1,184 @@
+{
+  "meals": [
+    {
+      "id": "52775",
+      "titre": "Vegan Lasagna",
+      "categorie": "Vegan",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg",
+      "description": "1) Preheat oven to 180 degrees celcius. \r\n2) Boil vegetables for 5-7 minutes, until soft. Add lentils and bring to a gentle simmer, adding a stock cube if desired. Continue cooking and stirring until the lentils are soft, which should take about 20 minutes. \r\n3) Blanch spinach leaves for a few minutes in a pan, before removing and setting aside. \r\n4) Top up the pan with water and cook the lasagne sheets. When cooked, drain and set aside.\r\n5) To make the sauce, melt the butter and add the flour, then gradually add the soya milk along with the mustard and the vinegar. Cook and stir until smooth and then assemble the lasagne as desired in a baking dish. \r\n6) Bake in the preheated oven for about 25 minutes.",
+      "tags": [
+        "Vegan",
+        "Pasta"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=VU8cXvlGbvc",
+      "ingredients": [
+        "green red lentils - 1 cups",
+        "Carrots - 1",
+        "onion - 1",
+        "zucchini - 1 small",
+        "coriander - sprinking",
+        "spinach - 150g",
+        "lasagne sheets - 10",
+        "vegan butter - 35g",
+        "flour - 4 tablespoons",
+        "soya milk - 300ml",
+        "mustard - 1.5 teaspoons",
+        "vinegar - 1 teaspoon"
+      ]
+    },
+    {
+      "id": "52794",
+      "titre": "Vegan Chocolate Cake",
+      "categorie": "Vegan",
+      "pays": "American",
+      "image": "https://www.themealdb.com/images/media/meals/qxutws1486978099.jpg",
+      "description": "Simply mix all dry ingredients with wet ingredients and blend altogether. Bake for 45 min on 180 degrees. Decorate with some melted vegan chocolate ",
+      "tags": [
+        "Vegan",
+        "Chocolate",
+        "Cake"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=C3pAgB7pync",
+      "ingredients": [
+        "Self-raising Flour - 1 1/4 cup",
+        "coco sugar - 1/2 cup",
+        "cacao - 1/3 cup raw",
+        "baking powder - 1 tsp",
+        "flax eggs - 2",
+        "almond milk - 1/2 cup",
+        "vanilla - 1 tsp",
+        "water - 1/2 cup boiling"
+      ]
+    },
+    {
+      "id": "52828",
+      "titre": "Vietnamese Grilled Pork (bun-thit-nuong)",
+      "categorie": "Pork",
+      "pays": "Vietnamese",
+      "image": "https://www.themealdb.com/images/media/meals/qqwypw1504642429.jpg",
+      "description": "Slice the uncooked pork thinly, about ⅛\". It helps to slightly freeze it (optional).\r\nMince garlic and shallots. Mix in a bowl with sugar, fish sauce, thick soy sauce, pepper, and oil until sugar dissolves.\r\nMarinate the meat for 1 hour, or overnight for better results.\r\nBake the pork at 375F for 10-15 minutes or until about 80% cooked. Finish cooking by broiling in the oven until a nice golden brown color develops, flipping the pieces midway.\r\nAssemble your bowl with veggies, noodles, and garnish. Many like to mix the whole bowl up and pour the fish sauce on top, but I like to make individual bites and sauce it slowly.",
+      "youtube": "https://www.youtube.com/watch?v=Q3qcQcENzbU",
+      "ingredients": [
+        "Pork - 1.5 pounds sliced",
+        "Rice Vermicelli - 1 package thin",
+        "Egg Rolls - 4-6",
+        "Challots - 3 tablespoons minced",
+        "Garlic - 1.5 tablespoons minced garlic",
+        "Sugar - ¼ cup",
+        "Fish Sauce - 1 tablespoon",
+        "Soy sauce - ½ tablespoon thick",
+        "Pepper - ½ tablespoon",
+        "Olive Oil - 3 tablespoons",
+        "Cucumber - Sliced",
+        "Mint - Leaves",
+        "Peanuts - Crushed"
+      ]
+    },
+    {
+      "id": "52838",
+      "titre": "Venetian Duck Ragu",
+      "categorie": "Pasta",
+      "pays": "Italian",
+      "image": "https://www.themealdb.com/images/media/meals/qvrwpt1511181864.jpg",
+      "description": "Heat the oil in a large pan. Add the duck legs and brown on all sides for about 10 mins. Remove to a plate and set aside. Add the onions to the pan and cook for 5 mins until softened. Add the garlic and cook for a further 1 min, then stir in the cinnamon and flour and cook for a further min. Return the duck to the pan, add the wine, tomatoes, stock, herbs, sugar and seasoning. Bring to a simmer, then lower the heat, cover with a lid and cook for 2 hrs, stirring every now and then.\r\nCarefully lift the duck legs out of the sauce and place on a plate – they will be very tender so try not to lose any of the meat. Pull off and discard the fat, then shred the meat with 2 forks and discard the bones. Add the meat back to the sauce with the milk and simmer, uncovered, for a further 10-15 mins while you cook the pasta.\r\nCook the pasta following pack instructions, then drain, reserving a cup of the pasta water, and add the pasta to the ragu. Stir to coat all the pasta in the sauce and cook for 1 min more, adding a splash of cooking liquid if it looks dry. Serve with grated Parmesan, if you like.",
+      "youtube": "https://www.youtube.com/watch?v=oWQDVgjB_Lw",
+      "ingredients": [
+        "Olive Oil - 1 tbls",
+        "Duck Legs - 4",
+        "Onions - 2 finely chopped",
+        "Garlic - 2 cloves minced",
+        "Cinnamon - 2 tsp ground",
+        "Plain Flour - 2 tsp",
+        "Red Wine - 250ml",
+        "Chopped Tomatoes - 800g",
+        "Chicken Stock Cube - 1",
+        "Rosemary - 3 sprigs",
+        "Bay Leaves - 2",
+        "Sugar - 1 tsp",
+        "Milk - 2 tbs",
+        "Paccheri Pasta - 600g",
+        "Parmesan Cheese - Grated"
+      ]
+    },
+    {
+      "id": "52863",
+      "titre": "Vegetarian Casserole",
+      "categorie": "Vegetarian",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/vptwyt1511450962.jpg",
+      "description": "Heat the oil in a large, heavy-based pan. Add the onions and cook gently for 5 – 10 mins until softened.\r\nAdd the garlic, spices, dried thyme, carrots, celery and peppers and cook for 5 minutes.\r\nAdd the tomatoes, stock, courgettes and fresh thyme and cook for 20 - 25 minutes.\r\nTake out the thyme sprigs. Stir in the lentils and bring back to a simmer. Serve with wild and white basmati rice, mash or quinoa.",
+      "tags": [
+        "Casserole",
+        "Vegetarian"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=oHmKE9mWtWM",
+      "ingredients": [
+        "Rapeseed Oil - 1",
+        "Onion - 1",
+        "Garlic - 3 cloves",
+        "Paprika - 1 tsp",
+        "Cumin - ½ tsp",
+        "Thyme - 1tbsp+2sprigs",
+        "Carrots - 3 Medium",
+        "Celery - 2 small stalks",
+        "Red Pepper - 1",
+        "Yellow Pepper - 1",
+        "Tomato - 2 x 400g tins",
+        "Vegetable Stock Cube - 250ml",
+        "Courgettes - 2 sliced",
+        "Lentils - 250g"
+      ]
+    },
+    {
+      "id": "52867",
+      "titre": "Vegetarian Chilli",
+      "categorie": "Vegetarian",
+      "pays": "British",
+      "image": "https://www.themealdb.com/images/media/meals/wqurxy1511453156.jpg",
+      "description": "Heat oven to 200C/180C fan/ gas 6. Cook the vegetables in a casserole dish for 15 mins. Tip in the beans and tomatoes, season, and cook for another 10-15 mins until piping hot. Heat the pouch in the microwave on High for 1 min and serve with the chilli.",
+      "tags": [
+        "Chilli"
+      ],
+      "youtube": "https://www.youtube.com/watch?v=D0bFRVH_EqU",
+      "ingredients": [
+        "Roasted Vegetables - 400g",
+        "Kidney Beans - 1 can",
+        "Chopped Tomatoes - 1 can",
+        "Mixed Grain - 1 Packet"
+      ]
+    },
+    {
+      "id": "53000",
+      "titre": "Vegetable Shepherds Pie",
+      "categorie": "Beef",
+      "pays": "Irish",
+      "image": "https://www.themealdb.com/images/media/meals/w8umt11583268117.jpg",
+      "description": "Add Ingredients:\r\n\r\n12 cups chopped mixed vegetables\r\n1   cup chopped fresh mushrooms \r\n1   cup pearl onions\r\n\r\nTOPPING:\r\n\r\nPreheat oven to 450°. Bake potatoes on a foil-lined baking sheet until tender, about 45 minutes. Let cool slightly, then peel. Press potatoes through a ricer, food mill, or colander into a large bowl. Add butter; stir until well blended. Stir in milk. Season to taste with salt.\r\n\r\nFILLING:\r\n\r\nSoak dried porcini in 3 cups hot water; set aside. Combine lentils, 1 garlic clove, 1 tsp. salt, and 4 cups water in a medium saucepan. Bring to a boil; reduce heat and simmer, stirring occasionally, until lentils are tender but not mushy, 15–20 minutes. Drain lentils and discard garlic.\r\n\r\nHeat 3 Tbsp. oil in a large heavy pot over medium heat. Add onions and cook, stirring occasionally, until soft, about 12 minutes. Add chopped garlic and cook for 1 minute. Stir in tomato paste. Cook, stirring constantly, until tomato paste is caramelized, 2–3 minutes.\r\n\r\nAdd bay leaves and wine; stir, scraping up any browned bits. Stir in porcini, slowly pouring porcini soaking liquid into pan but leaving any sediment behind. Bring to a simmer and cook until liquid is reduced by half, about 10 minutes. Stir in broth and cook, stirring occasionally, until reduced by half, about 45 minutes.\r\n\r\nStrain mixture into a large saucepan and bring to a boil; discard solids in strainer. Stir cornstarch and 2 Tbsp. water in a small bowl to dissolve. Add cornstarch mixture; simmer until thickened, about 5 minutes. Whisk in miso. Season sauce with salt and pepper. Set aside.\r\n\r\nPreheat oven to 450°. Toss vegetables and pearl onions with remaining 2 Tbsp. oil, 5 garlic cloves, and rosemary sprigs in a large bowl; season with salt and pepper. Divide between 2 rimmed baking sheets. Roast, stirring once, until tender, 20–25 minutes. Transfer garlic cloves to a small bowl; mash well with a fork and stir into sauce. Discard rosemary. DO AHEAD: Lentils, sauce, and vegetables can be made 1 day ahead. Cover separately; chill.\r\nArrange lentils in an even layer in a 3-qt. baking dish; set dish on a foil-lined rimmed baking sheet. Toss roasted vegetables with fresh mushrooms and chopped herbs; layer on top of lentils. Pour sauce over vegetables. Spoon potato mixture evenly over.\r\n\r\nBake until browned and bubbly, about 30 minutes. Let stand for 15 minutes before serving.",
+      "tags": [
+        "Baking"
+      ],
+      "ingredients": [
+        "Potatoes - 3 Lbs",
+        "Small Potatoes - 3 Lbs",
+        "Salted Butter - 1/2 cup",
+        "Mushrooms - 1 oz",
+        "Brown Lentils - 3/4 cup",
+        "Garlic - 6 cloves",
+        "Kosher Salt - 1 tsp",
+        "Onion - 3 cups",
+        "Tomato Puree - 2 tbsp",
+        "Bay Leaves - 2 leaves",
+        "Olive Oil - 5Tbsp (3Tbsp for sautéing onions and garlic in the filling, 2Tbsp for tossing vegetables before roasting)",
+        "Dry White Wine - 2 cups",
+        "Vegetable Stock - 8 cups",
+        "Cornstarch - 2 tbsp",
+        "Soy Sauce - 2 tsp",
+        "Rosemary - 2 sprigs",
+        "Parsley - 2tbsp",
+        "Sage - 1tbsp",
+        "Chives - 2 tbsp"
+      ]
+    }
+  ]
+}
