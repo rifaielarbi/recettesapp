@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import '../services/ai_service.dart';
+import '../services/recette_service.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -25,10 +27,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _loadRecipes() async {
     try {
-      final raw = await rootBundle.loadString('assets/recipes.json');
-      final List<dynamic> jsonList = jsonDecode(raw) as List<dynamic>;
+      final recettes = await RecetteService.getRecettes();
       setState(() {
-        _recipes = jsonList.map((e) => _Recette.fromJson(e as Map<String, dynamic>)).toList();
+        _recipes = recettes.map((r) => _Recette(
+          id: r.id,
+          titre: r.titre,
+          pays: r.pays,
+          image: r.image,
+          description: r.description,
+          ingredients: r.ingredients,
+        )).toList();
       });
     } catch (_) {
       // ignore

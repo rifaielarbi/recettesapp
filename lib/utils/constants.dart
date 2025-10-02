@@ -9,9 +9,9 @@ class AppColors {
 
 class AppAssets {
   static const String logo = 'assets/images/logo.png';
-  static const String pasta = 'assets/images/pasta.png';
-  static const String tacos = 'assets/images/tacos.png';
-  static const String soup = 'assets/images/soup.png';
+  static const String pasta = 'assets/images/logo.png';
+  static const String tacos = 'assets/images/logo.png';
+  static const String soup = 'assets/images/logo.png';
 }
 
 class AppTextStyles {

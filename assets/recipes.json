@@ -3,7 +3,7 @@
     "id": "1",
     "titre": "Pasta Primavera",
     "pays": "Italie",
-    "image": "assets/images/pasta.png",
+    "image": "assets/images/logo.png",
     "description": "Un plat de pâtes aux légumes de saison avec une sauce légère à base d'huile d'olive.",
     "ingredients": ["200 g de pâtes", "1 brocoli", "1 carotte", "huile d'olive", "parmesan"]
   },
@@ -11,8 +11,72 @@
     "id": "2",
     "titre": "Tacos Al Pastor",
     "pays": "Mexico",
-    "image": "assets/images/tacos.png",
+    "image": "assets/images/logo.png",
     "description": "Tacos savoureux avec porc mariné, ananas et coriandre.",
     "ingredients": ["tortillas", "porc", "ananas", "coriandre", "oignon"]
+  },
+  {
+    "id": "3",
+    "titre": "Boeuf Bourguignon",
+    "pays": "France",
+    "image": "assets/images/logo.png",
+    "description": "Plat traditionnel français mijoté au vin rouge avec des légumes.",
+    "ingredients": ["1 kg de bœuf", "vin rouge", "carottes", "oignons", "champignons", "lardons"]
+  },
+  {
+    "id": "4",
+    "titre": "Sushi Maki",
+    "pays": "Japon",
+    "image": "assets/images/logo.png",
+    "description": "Rouleaux de riz vinaigré avec poisson cru et légumes.",
+    "ingredients": ["riz sushi", "saumon", "concombre", "avocat", "algue nori", "wasabi"]
+  },
+  {
+    "id": "5",
+    "titre": "Paella Valenciana",
+    "pays": "Espagne",
+    "image": "assets/images/logo.png",
+    "description": "Riz safrané avec fruits de mer, poulet et légumes.",
+    "ingredients": ["riz bomba", "safran", "moules", "crevettes", "poulet", "poivrons"]
+  },
+  {
+    "id": "6",
+    "titre": "Curry de Poulet",
+    "pays": "Inde",
+    "image": "assets/images/logo.png",
+    "description": "Poulet mijoté dans une sauce épicée au curry et lait de coco.",
+    "ingredients": ["poulet", "lait de coco", "curry", "oignons", "tomates", "gingembre"]
+  },
+  {
+    "id": "7",
+    "titre": "Fish and Chips",
+    "pays": "Angleterre",
+    "image": "assets/images/logo.png",
+    "description": "Poisson pané servi avec des frites croustillantes.",
+    "ingredients": ["cabillaud", "farine", "bière", "pommes de terre", "huile", "vinaigre"]
+  },
+  {
+    "id": "8",
+    "titre": "Couscous Royal",
+    "pays": "Maroc",
+    "image": "assets/images/logo.png",
+    "description": "Semoule de blé avec légumes, viandes et bouillon parfumé.",
+    "ingredients": ["couscous", "agneau", "poulet", "carottes", "courgettes", "pois chiches"]
+  },
+  {
+    "id": "9",
+    "titre": "Goulash Hongrois",
+    "pays": "Hongrie",
+    "image": "assets/images/logo.png",
+    "description": "Ragoût de bœuf épicé au paprika avec des légumes.",
+    "ingredients": ["bœuf", "paprika", "oignons", "tomates", "poivrons", "pommes de terre"]
+  },
+  {
+    "id": "10",
+    "titre": "Pad Thai",
+    "pays": "Thaïlande",
+    "image": "assets/images/logo.png",
+    "description": "Nouilles de riz sautées avec crevettes, tofu et légumes.",
+    "ingredients": ["nouilles de riz", "crevettes", "tofu", "germes de soja", "cacahuètes", "sauce de poisson"]
   }
 ]
