@@ -13,7 +13,10 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final List<_Message> _messages = <_Message>[
-    _Message(role: 'assistant', text: 'Bonjour! Posez une question sur une recette.'),
+    _Message(
+      role: 'assistant',
+      text: 'Bonjour! Posez une question sur une recette.',
+    ),
   ];
   final TextEditingController _controller = TextEditingController();
   bool _sending = false;
@@ -29,14 +32,19 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final recettes = await RecetteService.getRecettes();
       setState(() {
-        _recipes = recettes.map((r) => _Recette(
-          id: r.id,
-          titre: r.titre,
-          pays: r.pays,
-          image: r.image,
-          description: r.description,
-          ingredients: r.ingredients,
-        )).toList();
+        _recipes =
+            recettes
+                .map(
+                  (r) => _Recette(
+                    id: r.id,
+                    titre: r.titre,
+                    pays: r.pays,
+                    image: r.image,
+                    description: r.description,
+                    ingredients: r.ingredients,
+                  ),
+                )
+                .toList();
       });
     } catch (_) {
       // ignore
@@ -65,19 +73,27 @@ class _ChatScreenState extends State<ChatScreen> {
                 final m = _messages[index];
                 final isUser = m.role == 'user';
                 return Align(
-                  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment:
+                      isUser ? Alignment.centerRight : Alignment.centerLeft,
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.78),
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.78,
+                    ),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: isUser ? cs.primary : cs.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
                         child: Text(
                           m.text,
-                          style: TextStyle(color: isUser ? cs.onPrimary : cs.onSurface),
+                          style: TextStyle(
+                            color: isUser ? cs.onPrimary : cs.onSurface,
+                          ),
                         ),
                       ),
                     ),
@@ -95,15 +111,22 @@ class _ChatScreenState extends State<ChatScreen> {
                     controller: _controller,
                     minLines: 1,
                     maxLines: 4,
-                    decoration: const InputDecoration(hintText: 'Posez votre question... '),
+                    decoration: const InputDecoration(
+                      hintText: 'Posez votre question... ',
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),
                 IconButton.filled(
                   onPressed: _sending ? null : _onSend,
-                  icon: _sending
-                      ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Icon(Icons.send),
+                  icon:
+                      _sending
+                          ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                          : const Icon(Icons.send),
                 ),
               ],
             ),
@@ -133,7 +156,9 @@ class _ChatScreenState extends State<ChatScreen> {
     final query = q.toLowerCase();
     // Si l'utilisateur dit bonjour, répondre et lister les ingrédients de chaque recette
     if (query.contains('bonjour')) {
-      final buf = StringBuffer('Bonjour! Voici les ingrédients de vos recettes:\n');
+      final buf = StringBuffer(
+        'Bonjour! Voici les ingrédients de vos recettes:\n',
+      );
       for (final r in _recipes) {
         buf.writeln('\n${r.titre} (${r.pays})');
         for (final ing in r.ingredients) {
@@ -150,9 +175,13 @@ class _ChatScreenState extends State<ChatScreen> {
     _Recette? best;
     int bestScore = -1;
     for (final r in _recipes) {
-      final hay = (r.titre + ' ' + r.description + ' ' + r.ingredients.join(' ')).toLowerCase();
+      final hay =
+          (r.titre + ' ' + r.description + ' ' + r.ingredients.join(' '))
+              .toLowerCase();
       int score = 0;
-      for (final token in query.split(RegExp(r'[^a-zA-Zà-ÿ0-9]+')).where((t) => t.isNotEmpty)) {
+      for (final token in query
+          .split(RegExp(r'[^a-zA-Zà-ÿ0-9]+'))
+          .where((t) => t.isNotEmpty)) {
         if (hay.contains(token)) score++;
       }
       if (score > bestScore) {
@@ -165,9 +194,10 @@ class _ChatScreenState extends State<ChatScreen> {
       return "Je n'ai pas trouvé de recette correspondante. Essayez un nom (ex: Pasta, Tacos).";
     }
 
-    final buf = StringBuffer()
-      ..writeln('Recette: ${best.titre} (${best.pays})')
-      ..writeln('Ingrédients:');
+    final buf =
+        StringBuffer()
+          ..writeln('Recette: ${best.titre} (${best.pays})')
+          ..writeln('Ingrédients:');
     for (final ing in best.ingredients) {
       buf.writeln('- $ing');
     }
@@ -199,11 +229,12 @@ class _Recette {
   });
 
   factory _Recette.fromJson(Map<String, dynamic> json) => _Recette(
-        id: json['id'] as String,
-        titre: json['titre'] as String,
-        pays: json['pays'] as String,
-        image: json['image'] as String? ?? '',
-        description: json['description'] as String? ?? '',
-        ingredients: (json['ingredients'] as List<dynamic>).map((e) => e as String).toList(),
-      );
+    id: json['id'] as String,
+    titre: json['titre'] as String,
+    pays: json['pays'] as String,
+    image: json['image'] as String? ?? '',
+    description: json['description'] as String? ?? '',
+    ingredients:
+        (json['ingredients'] as List<dynamic>).map((e) => e as String).toList(),
+  );
 }

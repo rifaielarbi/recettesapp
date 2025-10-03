@@ -16,7 +16,7 @@ class CompactRecipeCard extends StatelessWidget {
       case 'Italian':
       case 'Italie':
         return '🇮🇹 Italien';
-      case 'Maroccan':
+      case 'Moroccan':
       case 'Maroc':
         return '🇲🇦 Marocain';
       case 'British':
