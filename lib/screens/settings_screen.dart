@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../app_localizations.dart';
 import '../edit_profile_screen.dart';
@@ -24,6 +26,63 @@ class SettingsScreen extends StatelessWidget {
     final loc = AppLocalizations.of(context);
 
     final fb_auth.User? currentUser = fb_auth.FirebaseAuth.instance.currentUser;
+
+    // --- Ouvre la page d'aide/support (ou email) ---
+    Future<void> _openHelp() async {
+      // remplace '' par un url
+      const supportUrl = '';
+      final uri = Uri.parse(supportUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        // fallback: tenter mailto
+        final mailto = Uri(
+          scheme: 'mailto',
+          path: 'support@example.com',
+          queryParameters: {'subject': 'Support Recettes Mondiales'},
+        );
+        if (await canLaunchUrl(mailto)) {
+          await launchUrl(mailto);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Impossible d’ouvrir la page de support'),
+            ),
+          );
+        }
+      }
+    }
+
+    // --- Partager l'application ---
+    void _shareApp() {
+      // Remplace par ton message et lien réel (Play Store / App Store)
+      const message =
+          'Découvre Recettes Mondiales — des recettes du monde entier !\n\n'
+          'Télécharge : https://example.com/app';
+      Share.share(message, subject: 'Recettes Mondiales');
+    }
+
+    // --- Vider le cache (SharedPreferences + image cache) ---
+    Future<void> _clearCache() async {
+      try {
+        // Clear shared prefs keys used by app (ou clear all)
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+
+        // Clear Flutter image cache
+        PaintingBinding.instance.imageCache.clear();
+        PaintingBinding.instance.imageCache.clearLiveImages();
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Cache vidé avec succès')));
+      } catch (e) {
+        debugPrint('Erreur clear cache: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossible de vider le cache')),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
@@ -60,17 +119,23 @@ class SettingsScreen extends StatelessWidget {
                         ],
                       ),
                       child: ClipOval(
-                        child: currentUser?.photoURL != null
-                            ? Image.network(
-                                currentUser!.photoURL!,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => const Icon(
+                        child:
+                            currentUser?.photoURL != null
+                                ? Image.network(
+                                  currentUser!.photoURL!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder:
+                                      (_, __, ___) => const Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      ),
+                                )
+                                : const Icon(
                                   Icons.person,
                                   size: 50,
                                   color: Colors.grey,
                                 ),
-                              )
-                            : const Icon(Icons.person, size: 50, color: Colors.grey),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -96,7 +161,9 @@ class SettingsScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+                          MaterialPageRoute(
+                            builder: (_) => const EditProfileScreen(),
+                          ),
                         );
                       },
                       icon: const Icon(Icons.edit, size: 18),
@@ -104,7 +171,10 @@ class SettingsScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: AppColors.green,
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -121,7 +191,7 @@ class SettingsScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   const SizedBox(height: 8),
-                  
+
                   // Section Notifications
                   _ModernSettingsCard(
                     icon: Icons.notifications_rounded,
@@ -136,9 +206,9 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Section Apparence
                   _ModernSettingsCard(
                     icon: Icons.palette_rounded,
@@ -154,14 +224,21 @@ class SettingsScreen extends StatelessWidget {
                       _ModernListTile(
                         icon: Icons.language_rounded,
                         title: loc.language,
-                        subtitle: _getLocaleName(localeProvider.locale.languageCode),
-                        onTap: () => _showLanguageDialog(context, localeProvider, loc),
+                        subtitle: _getLocaleName(
+                          localeProvider.locale.languageCode,
+                        ),
+                        onTap:
+                            () => _showLanguageDialog(
+                              context,
+                              localeProvider,
+                              loc,
+                            ),
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Section Sécurité
                   _ModernSettingsCard(
                     icon: Icons.security_rounded,
@@ -173,15 +250,15 @@ class SettingsScreen extends StatelessWidget {
                         title: loc.changePassword,
                         subtitle: 'Modifier votre mot de passe',
                         onTap: () {
-                          // TODO: Ajouter logique
+                          // TODO: Ajouter logique de changement de mot de passe
                         },
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
-                  // Section À propos
+
+                  // Section À propos (avec Help / Share / Clear Cache)
                   _ModernSettingsCard(
                     icon: Icons.info_rounded,
                     iconColor: Colors.blue,
@@ -194,28 +271,54 @@ class SettingsScreen extends StatelessWidget {
                         onTap: null,
                       ),
                       _ModernListTile(
-                        icon: Icons.help_rounded,
+                        icon: Icons.help_outline,
                         title: loc.helpSupport,
-                        subtitle: 'Centre d\'aide',
-                        onTap: () {},
+                        subtitle: 'Centre d\'aide & contact',
+                        onTap: _openHelp,
                       ),
                       _ModernListTile(
                         icon: Icons.share_rounded,
                         title: loc.shareApp,
                         subtitle: 'Partager avec vos amis',
-                        onTap: () {},
+                        onTap: _shareApp,
                       ),
                       _ModernListTile(
                         icon: Icons.cleaning_services_rounded,
                         title: loc.clearCache,
-                        subtitle: 'Libérer de l\'espace',
-                        onTap: () {},
+                        subtitle: 'Libérer de l\'espace local',
+                        onTap: () async {
+                          // confirmation dialog
+                          final confirm = await showDialog<bool>(
+                            context: context,
+                            builder:
+                                (ctx) => AlertDialog(
+                                  title: const Text('Vider le cache'),
+                                  content: const Text(
+                                    'Voulez-vous vraiment vider le cache et les préférences locales ?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () => Navigator.pop(ctx, false),
+                                      child: const Text('Annuler'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(ctx, true),
+                                      child: const Text('Confirmer'),
+                                    ),
+                                  ],
+                                ),
+                          );
+                          if (confirm == true) {
+                            await _clearCache();
+                          }
+                        },
                       ),
                     ],
                   ),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Bouton Déconnexion
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -228,14 +331,18 @@ class SettingsScreen extends StatelessWidget {
 
                           if (context.mounted) {
                             Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(builder: (_) => const LoginScreen()),
+                              MaterialPageRoute(
+                                builder: (_) => const LoginScreen(),
+                              ),
                               (route) => false,
                             );
                           }
                         } catch (e) {
                           debugPrint("Erreur lors de la déconnexion : $e");
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Impossible de se déconnecter")),
+                            const SnackBar(
+                              content: Text("Impossible de se déconnecter"),
+                            ),
                           );
                         }
                       },
@@ -252,7 +359,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 80),
                 ]),
               ),
@@ -286,50 +393,51 @@ class SettingsScreen extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (ctx) => Container(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              loc.language,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+      builder:
+          (ctx) => Container(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  loc.language,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                _LanguageOption(
+                  flag: '🇫🇷',
+                  language: 'Français',
+                  selected: localeProvider.locale.languageCode == 'fr',
+                  onTap: () {
+                    localeProvider.setLocale('fr');
+                    Navigator.pop(ctx);
+                  },
+                ),
+                _LanguageOption(
+                  flag: '🇬🇧',
+                  language: 'English',
+                  selected: localeProvider.locale.languageCode == 'en',
+                  onTap: () {
+                    localeProvider.setLocale('en');
+                    Navigator.pop(ctx);
+                  },
+                ),
+                _LanguageOption(
+                  flag: '🇸🇦',
+                  language: 'العربية',
+                  selected: localeProvider.locale.languageCode == 'ar',
+                  onTap: () {
+                    localeProvider.setLocale('ar');
+                    Navigator.pop(ctx);
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            _LanguageOption(
-              flag: '🇫🇷',
-              language: 'Français',
-              selected: localeProvider.locale.languageCode == 'fr',
-              onTap: () {
-                localeProvider.setLocale('fr');
-                Navigator.pop(ctx);
-              },
-            ),
-            _LanguageOption(
-              flag: '🇬🇧',
-              language: 'English',
-              selected: localeProvider.locale.languageCode == 'en',
-              onTap: () {
-                localeProvider.setLocale('en');
-                Navigator.pop(ctx);
-              },
-            ),
-            _LanguageOption(
-              flag: '🇸🇦',
-              language: 'العربية',
-              selected: localeProvider.locale.languageCode == 'ar',
-              onTap: () {
-                localeProvider.setLocale('ar');
-                Navigator.pop(ctx);
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }
@@ -414,19 +522,22 @@ class _ModernListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: Colors.grey.shade700, size: 24),
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.w500),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle!,
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-            )
-          : null,
-      trailing: onTap != null
-          ? Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400)
-          : null,
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+      subtitle:
+          subtitle != null
+              ? Text(
+                subtitle!,
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+              )
+              : null,
+      trailing:
+          onTap != null
+              ? Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Colors.grey.shade400,
+              )
+              : null,
       onTap: onTap,
     );
   }
@@ -449,16 +560,14 @@ class _ModernSwitchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.w500),
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle!,
-              style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-            )
-          : null,
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+      subtitle:
+          subtitle != null
+              ? Text(
+                subtitle!,
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+              )
+              : null,
       value: value,
       onChanged: onChanged,
       activeColor: AppColors.green,
@@ -489,7 +598,8 @@ class _LanguageOption extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
-          color: selected ? AppColors.green.withOpacity(0.1) : Colors.transparent,
+          color:
+              selected ? AppColors.green.withOpacity(0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: selected ? AppColors.green : Colors.grey.shade200,
@@ -509,8 +619,7 @@ class _LanguageOption extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            if (selected)
-              Icon(Icons.check_circle, color: AppColors.green),
+            if (selected) Icon(Icons.check_circle, color: AppColors.green),
           ],
         ),
       ),
