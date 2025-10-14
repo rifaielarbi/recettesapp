@@ -37,7 +37,27 @@
   "darkMode": "Dark Mode",
   "logout": "Log Out",
   "shareApp": "Share App",
-  "clearCache": "Clear Cache"
+  "clearCache": "Clear Cache",
+  "filterByCountry": "Filter by country",
+  "world": "World",
+  "country": "Country",
+  "gamification_title": "Learn by Cooking!",
+  "gamification_subtitle": "Make cooking fun and motivating",
+  "recipe_explorer_title": "Recipe Explorer",
+  "recipe_explorer_desc": "Unlock new countries and cuisines by completing cooking challenges",
+  "points_badges_title": "Points & Badges",
+  "points_badges_desc": "Earn points by trying recipes and rating them",
+  "leaderboard_title": "Leaderboard",
+  "leaderboard_desc": "Compare points with friends for 'Global Chef' recognition",
+  "daily_challenges_title": "Daily Challenges",
+  "daily_challenges_desc": "Cook a recipe from a featured country each day",
+  "photo_sharing_title": "Photo Sharing",
+  "photo_sharing_desc": "Upload your dish to earn points and unlock badges",
+  "meal_streaks_title": "Meal Streaks",
+  "meal_streaks_desc": "Earn streaks by logging meals or trying healthy recipes",
+  "get_started": "Get Started Now",
+  "swipe_to_explore": "Swipe to explore features",
+  "learn_more": "Learn More"
 }
 
 

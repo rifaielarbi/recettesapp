@@ -39,6 +39,25 @@
   "darkMode": "Mode sombre",
   "logout": "Se déconnecter",
   "shareApp": "Partager l'application",
-  "clearCache": "Vider le cache"
-
+  "clearCache": "Vider le cache",
+  "filterByCountry": "Filtrer par pays",
+  "world": "Mondiales",
+  "country": "Pays",
+  "gamification_title": "Apprenez en cuisinant !",
+  "gamification_subtitle": "Rendez la cuisine amusante et motivante",
+  "recipe_explorer_title": "Explorateur de Recettes",
+  "recipe_explorer_desc": "Débloquez de nouveaux pays et cuisines en relevant des défis culinaires",
+  "points_badges_title": "Points & Badges",
+  "points_badges_desc": "Gagnez des points en essayant des recettes et en les notant",
+  "leaderboard_title": "Classement",
+  "leaderboard_desc": "Comparez vos points avec vos amis pour le titre de 'Chef Mondial'",
+  "daily_challenges_title": "Défis Quotidiens",
+  "daily_challenges_desc": "Cuisinez une recette d'un pays mis en avant chaque jour",
+  "photo_sharing_title": "Partage de Photos",
+  "photo_sharing_desc": "Téléchargez vos plats pour gagner des points et débloquer des badges",
+  "meal_streaks_title": "Séries de Repas",
+  "meal_streaks_desc": "Gagnez des séries en enregistrant vos repas ou en essayant des recettes saines",
+  "get_started": "Commencer maintenant",
+  "swipe_to_explore": "Glissez pour explorer les fonctionnalités",
+  "learn_more": "En savoir plus"
 }

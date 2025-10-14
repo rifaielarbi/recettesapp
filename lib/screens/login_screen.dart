@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 
 import '../services/auth_service.dart';
+import '../widgets/gamification_carousel.dart';
 import 'login_with_email_screen.dart';
 import 'register_screen.dart';
 import 'liste_recettes.dart';
@@ -243,7 +244,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
+
+                // --- Gamification Features Carousel ---
+                const GamificationCarousel(),
+
+                const SizedBox(height: 20),
 
                 // --- Créer un compte ---
                 Center(

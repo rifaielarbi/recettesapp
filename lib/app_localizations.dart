@@ -82,6 +82,25 @@ class AppLocalizations {
   String get filterByCountry => translate('filterByCountry');
   String get world => translate('world');
   String get country => translate('country');
+
+  // --- Gamification ---
+  String get gamificationTitle => translate('gamification_title');
+  String get gamificationSubtitle => translate('gamification_subtitle');
+  String get recipeExplorerTitle => translate('recipe_explorer_title');
+  String get recipeExplorerDesc => translate('recipe_explorer_desc');
+  String get pointsBadgesTitle => translate('points_badges_title');
+  String get pointsBadgesDesc => translate('points_badges_desc');
+  String get leaderboardTitle => translate('leaderboard_title');
+  String get leaderboardDesc => translate('leaderboard_desc');
+  String get dailyChallengesTitle => translate('daily_challenges_title');
+  String get dailyChallengesDesc => translate('daily_challenges_desc');
+  String get photoSharingTitle => translate('photo_sharing_title');
+  String get photoSharingDesc => translate('photo_sharing_desc');
+  String get mealStreaksTitle => translate('meal_streaks_title');
+  String get mealStreaksDesc => translate('meal_streaks_desc');
+  String get getStarted => translate('get_started');
+  String get swipeToExplore => translate('swipe_to_explore');
+  String get learnMore => translate('learn_more');
 }
 
 class _AppLocalizationsDelegate

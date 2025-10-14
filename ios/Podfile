@@ -51,7 +51,16 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['SWIFT_VERSION'] = '5.0'
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+      # Disable ALL Swift concurrency checking to fix local_auth_darwin compilation
       config.build_settings['SWIFT_STRICT_CONCURRENCY'] = 'minimal'
+      config.build_settings['SWIFT_UPCOMING_FEATURE_CONCURRENCY_CHECKING'] = 'NO'
+      config.build_settings['SWIFT_TREAT_WARNINGS_AS_ERRORS'] = 'NO'
+      
+      # For local_auth_darwin specifically, disable even more checks
+      if target.name == 'local_auth_darwin'
+        config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = 'YES'
+        config.build_settings['SWIFT_SUPPRESS_WARNINGS'] = 'YES'
+      end
     end
   end
 end
