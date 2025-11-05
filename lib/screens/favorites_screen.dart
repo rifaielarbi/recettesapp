@@ -23,7 +23,7 @@ class FavoritesScreen extends StatelessWidget {
     final String savedLabel = count > 1 ? 's' : '';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,14 +34,20 @@ class FavoritesScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Mes Favoris',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     '$count $recipeLabel sauvegardée$savedLabel',
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.8)),
                   ),
                 ],
               ),
@@ -58,23 +64,21 @@ class FavoritesScreen extends StatelessWidget {
                             Icon(
                               Icons.favorite_border,
                               size: 80,
-                              color: Colors.grey.shade300,
+                              color: Theme.of(context).iconTheme.color?.withOpacity(0.25),
                             ),
                             const SizedBox(height: 16),
                             Text(
                               'Aucun favori pour le moment',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey.shade600,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge,
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Ajoutez des recettes à vos favoris',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey.shade500,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall,
                             ),
                           ],
                         ),

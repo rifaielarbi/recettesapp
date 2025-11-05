@@ -23,7 +23,7 @@ android {
     defaultConfig {
         applicationId = "com.example.recettes_app"
 
-        minSdk = 23  // Required by Firebase Auth 23.2.1
+        minSdk = flutter.minSdkVersion  // Required by Firebase Auth 23.2.1
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

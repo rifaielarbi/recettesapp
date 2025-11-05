@@ -10,6 +10,7 @@ import 'providers/locale_provider.dart';
 import 'providers/notification_provider.dart';
 import 'providers/favorites_provider.dart';
 import 'utils/constants.dart';
+import 'utils/constant.dart';
 import 'screens/liste_recettes.dart';
 import 'screens/login_screen.dart';
 import 'screens/settings_screen.dart';
@@ -54,19 +55,8 @@ class RecettesApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFFDFDFD),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.green,
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFF121212),
-        colorScheme: ColorScheme.dark(primary: AppColors.green),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
 
       // 🔹 Home dynamique selon l’état de connexion

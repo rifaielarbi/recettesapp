@@ -85,7 +85,7 @@ class SettingsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -169,7 +169,9 @@ class SettingsScreen extends StatelessWidget {
                       icon: const Icon(Icons.edit, size: 18),
                       label: const Text('Modifier le profil'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).brightness == Brightness.dark 
+                            ? Colors.white.withOpacity(0.15)
+                            : Colors.white,
                         foregroundColor: AppColors.green,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 24,
@@ -219,7 +221,7 @@ class SettingsScreen extends StatelessWidget {
                         title: loc.darkMode,
                         subtitle: 'Mode sombre',
                         value: themeProvider.isDark,
-                        onChanged: (_) => themeProvider.toggle(),
+                        onChanged: (value) => themeProvider.setDark(value),
                       ),
                       _ModernListTile(
                         icon: Icons.language_rounded,
@@ -349,7 +351,9 @@ class SettingsScreen extends StatelessWidget {
                       icon: const Icon(Icons.logout_rounded),
                       label: Text(loc.logout),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.shade50,
+                        backgroundColor: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.red.withOpacity(0.2)
+                            : Colors.red.shade50,
                         foregroundColor: Colors.red,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -458,13 +462,14 @@ class _ModernSettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -488,9 +493,10 @@ class _ModernSettingsCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.titleLarge?.color,
                   ),
                 ),
               ],
@@ -520,14 +526,15 @@ class _ModernListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
-      leading: Icon(icon, color: Colors.grey.shade700, size: 24),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+      leading: Icon(icon, color: theme.iconTheme.color, size: 24),
+      title: Text(title, style: TextStyle(fontWeight: FontWeight.w500, color: theme.textTheme.titleMedium?.color)),
       subtitle:
           subtitle != null
               ? Text(
                 subtitle!,
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                style: TextStyle(color: theme.textTheme.bodySmall?.color, fontSize: 12),
               )
               : null,
       trailing:
@@ -535,7 +542,7 @@ class _ModernListTile extends StatelessWidget {
               ? Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Colors.grey.shade400,
+                color: theme.iconTheme.color?.withOpacity(0.6),
               )
               : null,
       onTap: onTap,
@@ -615,7 +622,9 @@ class _LanguageOption extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                color: selected ? AppColors.green : Colors.black87,
+                color: selected 
+                    ? AppColors.green 
+                    : Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black87,
               ),
             ),
             const Spacer(),

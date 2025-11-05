@@ -67,8 +67,10 @@ class AuthService {
   Future<User?> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null;
-
+      if (googleUser == null) {
+        print("Connexion Google annulée par l'utilisateur.");
+        return null;
+      }
       final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -84,31 +86,46 @@ class AuthService {
 
       print("Connexion Google réussie pour ${userCred.user!.email}");
       return userCred.user;
-    } catch (e) {
-      print("Erreur Google Sign-In: $e");
-      return null;
-    }
+    }on FirebaseAuthException catch (e) {
+    print("Erreur Firebase lors de la connexion Google: ${e.message}");
+    return null;
+  } catch (e) {
+    print("Erreur inattendue lors de la connexion Google: $e");
+    return null;
   }
+  }
+  
 
   // -------------------
   // Connexion Facebook
   // -------------------
   Future<User?> signInWithFacebook() async {
     try {
-      final LoginResult result = await FacebookAuth.instance.login();
+      // Configuration Facebook avec permissions
+      final LoginResult result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+      );
+
       if (result.status != LoginStatus.success) {
         print("Connexion Facebook annulée ou échouée: ${result.status}");
         return null;
       }
 
+      // Créer les credentials Facebook
       final OAuthCredential credential = FacebookAuthProvider.credential(
-        result.accessToken!.token, // Utilise le bon getter pour l'accessToken
+        result.accessToken!.token,
       );
 
+      // Se connecter avec Firebase
       final userCred = await _auth.signInWithCredential(credential);
 
+      // Sauvegarder les informations utilisateur dans Firestore
       await _firestore.collection("users").doc(userCred.user!.uid).set({
         "email": userCred.user!.email,
+        "displayName": userCred.user!.displayName,
+        "photoURL": userCred.user!.photoURL,
+        "provider": "facebook",
+        "facebookId": result.accessToken!.userId,
         "createdAt": FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 

@@ -262,7 +262,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final chosen = await showModalBottomSheet<String>(
       context: context,
       showDragHandle: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       builder:
           (context) => SafeArea(
             child: Padding(
@@ -270,12 +270,12 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     'Filtrer par pays',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Theme.of(context).textTheme.titleLarge?.color,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -289,15 +289,15 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                                   (c) => ListTile(
                                     title: Text(
                                       _flagForCountry(c),
-                                      style: const TextStyle(
-                                        color: Colors.black87,
+                                      style: TextStyle(
+                                        color: Theme.of(context).textTheme.bodyLarge?.color,
                                       ),
                                     ),
                                     trailing:
                                         _country == c
                                             ? const Icon(
                                               Icons.check,
-                                              color: Colors.green,
+                                              color: AppColors.green,
                                             )
                                             : null,
                                     onTap: () => Navigator.pop(context, c),
@@ -329,12 +329,12 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 // Bonjour + Recherche
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F6EE),
+                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.35),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Row(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,18 +344,18 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.black87,
+                                color: Theme.of(context).textTheme.titleMedium?.color,
                               ),
                             ),
-                            SizedBox(height: 6),
+                            const SizedBox(height: 6),
                             Text(
                               'Que Préparez-Vous Aujourd\'hui ?',
-                              style: TextStyle(color: Colors.black54),
+                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
                             ),
                           ],
                         ),
                       ),
-                      Icon(Icons.notifications_none, color: Colors.black87),
+                      Icon(Icons.notifications_none, color: Theme.of(context).iconTheme.color),
                     ],
                   ),
                 ),
@@ -368,8 +368,8 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                   decoration: InputDecoration(
                     hintText: AppLocalizations.of(context).searchRecipe,
                     hintStyle: TextStyle(color: _withAlpha(textColor, 0.5)),
-                    filled: true,
-                    fillColor: Colors.grey[200],
+                    filled: Theme.of(context).inputDecorationTheme.filled,
+                    fillColor: Theme.of(context).inputDecorationTheme.fillColor,
                     prefixIcon: Icon(Icons.search, color: textColor),
                     suffixIcon:
                         _search.isEmpty
@@ -378,10 +378,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                               icon: Icon(Icons.clear, color: textColor),
                               onPressed: () => _searchCtrl.clear(),
                             ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
+                    border: Theme.of(context).inputDecorationTheme.border,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -389,7 +386,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                 // Catégories + filtre
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'Catégorie',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -400,13 +397,13 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
                     InkWell(
                       onTap: _openCountryFilter,
                       child: Row(
-                        children: const [
-                          Icon(Icons.tune, size: 18, color: Colors.green),
-                          SizedBox(width: 6),
-                          Text(
+                        children: [
+                          Icon(Icons.tune, size: 18, color: AppColors.green),
+                          const SizedBox(width: 6),
+                          const Text(
                             'Filtrer',
                             style: TextStyle(
-                              color: Colors.green,
+                              color: AppColors.green,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -512,7 +509,7 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
     final textColor = theme.textTheme.bodyLarge?.color;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: IndexedStack(
           index: _currentIndex,
@@ -542,10 +539,10 @@ class _ListeRecettesScreenState extends State<ListeRecettesScreen> {
       bottomNavigationBar: Container(
         height: 70,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.bottomNavigationBarTheme.backgroundColor ?? theme.cardColor,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withOpacity(theme.brightness == Brightness.dark ? 0.35 : 0.08),
               blurRadius: 30,
               offset: const Offset(0, -5),
             ),
@@ -599,13 +596,17 @@ class _CategoryChip extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: selected ? AppColors.green : Colors.grey[200],
+            color: selected
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).chipTheme.backgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             label,
             style: TextStyle(
-              color: selected ? Colors.white : Colors.black87,
+              color: selected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).textTheme.bodyMedium?.color,
               fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
@@ -643,7 +644,9 @@ class _UltraModernNavItem extends StatelessWidget {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: selected ? AppColors.green : Colors.transparent,
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -651,16 +654,18 @@ class _UltraModernNavItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: selected ? Colors.white : Colors.grey.shade600,
+              color: selected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).iconTheme.color?.withOpacity(0.7),
               size: 24,
             ),
             if (selected) ...[
               const SizedBox(width: 8),
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
