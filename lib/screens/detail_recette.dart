@@ -79,14 +79,15 @@ class DetailRecetteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Recettes Mondiales',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        iconTheme: const IconThemeData(color: Colors.black87),
+        elevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -109,24 +110,29 @@ class DetailRecetteScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // --- Titre ---
-          Text(recette.titre, style: AppTextStyles.titleXL),
+          Text(
+            recette.titre,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(fontWeight: FontWeight.w800),
+          ),
           const SizedBox(height: 8),
 
           // --- Drapeau + Nom du pays ---
           Text(
             _flagForCountry(recette.pays),
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 16),
 
           // --- Description ---
           Card(
             elevation: 0,
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -134,14 +140,20 @@ class DetailRecetteScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Text(
                 recette.description,
-                style: const TextStyle(fontSize: 16, color: Colors.black87),
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
           ),
           const SizedBox(height: 16),
 
           // --- Ingrédients ---
-          Text('Ingrédients', style: AppTextStyles.sectionTitle),
+          Text(
+            'Ingrédients',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 8),
           ...recette.ingredients.map(
             (e) => Padding(
@@ -149,15 +161,20 @@ class DetailRecetteScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.circle, size: 8, color: Colors.black54),
+                  Icon(
+                    Icons.circle,
+                    size: 8,
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.color
+                        ?.withOpacity(0.6),
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       e,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ],

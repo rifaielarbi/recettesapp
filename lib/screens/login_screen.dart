@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -21,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
   final LocalAuthentication _localAuth = LocalAuthentication();
   List<String> _savedAccounts = [];
+  String _biometryLabel = "Connexion biométrique";
 
   late TapGestureRecognizer _termsRecognizer;
   late TapGestureRecognizer _privacyRecognizer;
@@ -37,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         TapGestureRecognizer()
           ..onTap = () => debugPrint("Politique de confidentialité cliquée");
     _loadSavedAccounts();
+    _initBiometryLabel();
   }
 
   @override
@@ -64,12 +67,37 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _authenticateWithFaceID() async {
     try {
-      if (!await _localAuth.canCheckBiometrics) return;
+      final canCheck = await _localAuth.canCheckBiometrics;
+      final supported = await _localAuth.isDeviceSupported();
+      if (!canCheck || !supported) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              "La biométrie n'est pas disponible sur cet appareil.",
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.red[700],
+          ),
+        );
+        return;
+      }
+
       final available = await _localAuth.getAvailableBiometrics();
-      if (!available.contains(BiometricType.face)) return;
+      if (!available.contains(BiometricType.face)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              "Aucune donnée biométrique n'est configurée.",
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.orange[800],
+          ),
+        );
+        
+      }
 
       final success = await _localAuth.authenticate(
-        localizedReason: _faceIDText,
+        localizedReason: _biometryLabel,
         options: const AuthenticationOptions(
           biometricOnly: true,
           stickyAuth: true,
@@ -81,10 +109,47 @@ class _LoginScreenState extends State<LoginScreen> {
           context,
           MaterialPageRoute(builder: (_) => const ListeRecettesScreen()),
         );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              "Authentification Face ID annulée.",
+              textAlign: TextAlign.center,
+            ),
+            backgroundColor: Colors.grey[700],
+          ),
+        );
       }
     } catch (e) {
       debugPrint("Erreur Face ID : $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Erreur Face ID : ${e.toString()}",
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: Colors.red[700],
+        ),
+      );
     }
+  }
+
+  Future<void> _initBiometryLabel() async {
+    try {
+      final canCheck = await _localAuth.canCheckBiometrics;
+      final supported = await _localAuth.isDeviceSupported();
+      if (!canCheck || !supported) return;
+      final available = await _localAuth.getAvailableBiometrics();
+      String label = "Connexion biométrique";
+      if (available.contains(BiometricType.face)) {
+        label = "Connectez-vous avec Face ID";
+      } else if (available.contains(BiometricType.fingerprint)) {
+        label = "Connectez-vous avec empreinte";
+      } else if (available.contains(BiometricType.iris)) {
+        label = "Connectez-vous avec iris";
+      }
+      if (mounted) setState(() => _biometryLabel = label);
+    } catch (_) {}
   }
 
   Widget _socialButton({
@@ -92,14 +157,15 @@ class _LoginScreenState extends State<LoginScreen> {
     required String text,
     required VoidCallback onPressed,
   }) {
+    final theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: theme.cardColor,
+          foregroundColor: theme.textTheme.bodyLarge?.color,
           minimumSize: const Size.fromHeight(50),
-          side: const BorderSide(color: Colors.grey),
+          side: BorderSide(color: theme.dividerColor.withOpacity(0.4)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -118,10 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: Text(
                 text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
           ],
@@ -210,6 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -232,13 +297,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         fit: BoxFit.contain,
                       ),
                       const SizedBox(height: 4),
-                      const Text(
+                      Text(
                         "Bienvenue !",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -256,14 +317,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                      style: TextStyle(fontSize: 14, color: theme.textTheme.bodySmall?.color),
                       children: [
                         const TextSpan(text: "Vous n'avez pas de compte ? "),
                         TextSpan(
                           text: "Créer un compte",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent,
+                            color: colorScheme.primary,
                             decoration: TextDecoration.underline,
                             fontSize: 14,
                           ),
@@ -288,7 +349,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // --- Bouton Face ID ---
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[800],
+                    backgroundColor: colorScheme.primary,
                     minimumSize: const Size.fromHeight(50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -297,11 +358,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _authenticateWithFaceID,
                   child: Text(
                     _faceIDText,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: theme.textTheme.labelLarge?.copyWith(color: colorScheme.onPrimary),
                   ),
                 ),
 
@@ -311,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
-                    side: const BorderSide(color: Colors.grey),
+                    side: BorderSide(color: theme.dividerColor.withOpacity(0.4)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -323,13 +380,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (_) => const LoginWithEmailScreen(),
                         ),
                       ),
-                  child: const Text(
+                  child: Text(
                     "S’identifier",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
 
@@ -339,19 +392,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
-                    side: const BorderSide(color: Colors.grey),
+                    side: BorderSide(color: theme.dividerColor.withOpacity(0.4)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed: _showChangeAccountDialog,
-                  child: const Text(
+                  child: Text(
                     "Changer de compte",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
 
@@ -359,24 +408,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // --- OU Divider ---
                 Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
-                        color: Colors.black,
+                        color: theme.dividerColor,
                         thickness: 1,
                         endIndent: 8,
                       ),
                     ),
                     Text(
                       "OU",
-                      style: TextStyle(
+                      style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Colors.black,
+                        color: theme.dividerColor,
                         thickness: 1,
                         indent: 8,
                       ),
@@ -386,21 +435,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 12),
 
-                // --- Boutons sociaux ---
-                _socialButton(
-                  logo: const Icon(Icons.apple, color: Colors.black, size: 24),
-                  text: "Se connecter avec Apple",
-                  onPressed: () async {
-                    final user = await _auth.signInWithApple();
-                    if (user != null) {
-                      await _saveAccount(user.email ?? "");
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const ListeRecettesScreen(),
-                        ),
-                      );
-                    }
+                // --- Bouton Apple (affiché uniquement si disponible) ---
+                FutureBuilder<bool>(
+                  future: SignInWithApple.isAvailable(),
+                  builder: (context, snapshot) {
+                    final available = snapshot.data ?? false;
+                    if (!available) return const SizedBox.shrink();
+                    return _socialButton(
+                      logo: Icon(Icons.apple, color: theme.iconTheme.color, size: 24),
+                      text: "Se connecter avec Apple",
+                      onPressed: () async {
+                        final user = await _auth.signInWithApple();
+                        if (user != null) {
+                          await _saveAccount(user.email ?? "");
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ListeRecettesScreen(),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text(
+                                "Connexion Apple impossible sur cet appareil.",
+                                textAlign: TextAlign.center,
+                              ),
+                              backgroundColor: Colors.red[700],
+                            ),
+                          );
+                        }
+                      },
+                    );
                   },
                 ),
                 const SizedBox(height: 8),

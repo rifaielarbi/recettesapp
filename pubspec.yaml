@@ -48,12 +48,15 @@ dependencies:
 
   # Splash screen
   flutter_native_splash: ^2.4.6
+ 
+  # Icône application
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.2
-  flutter_launcher_icons: ^0.13.1
+  
 
 flutter:
   uses-material-design: true
@@ -68,19 +71,24 @@ flutter:
     - assets/data/recettes_a_to_z.json
 
 #  Icône application
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path_android: "assets/AppIcons/playstore.png"
   image_path_ios: "assets/AppIcons/appstore.png"
   remove_alpha_ios: true
+  adaptive_icon_background: "#fcfbf5" 
 
 #  Splash screen
 flutter_native_splash:
   color: "#fcfbf5"
   image: assets/images/logo.png
+  color_dark: "#0F1115"
+  image_dark: assets/images/logo.png
   android: true
   ios: true
   android_12:
     image: assets/images/logo.png
+    image_dark: assets/images/logo.png
     icon_background_color: "#fcfbf5"
+    icon_background_color_dark: "#0F1115"

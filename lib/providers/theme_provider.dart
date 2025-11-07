@@ -14,9 +14,16 @@ class ThemeProvider with ChangeNotifier {
 
   // Charger le thème depuis SharedPreferences
   Future<void> _loadTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    _isDark = prefs.getBool('isDark') ?? false;
-    notifyListeners(); // Notifie uniquement après le chargement
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _isDark = prefs.getBool('isDark') ?? false;
+      notifyListeners(); // Notifie après le chargement
+    } catch (e) {
+      // ignore: avoid_print
+      print('Erreur lors du chargement du thème: $e');
+      _isDark = false;
+      notifyListeners();
+    }
   }
 
   // Basculer le thème et sauvegarder

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../app_localizations.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -13,6 +15,107 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String _name = '';
   String _email = '';
   String _photoUrl = '';
+
+  fb_auth.User? _currentUser;
+
+  void _showNiceSnack({
+    required String message,
+    required Color background,
+    IconData icon = Icons.check_circle_rounded,
+  }) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(icon, color: Colors.white, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: background,
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        elevation: 2,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final user = fb_auth.FirebaseAuth.instance.currentUser;
+    setState(() {
+      _currentUser = user;
+      _name = user?.displayName ?? '';
+      _email = user?.email ?? '';
+      _photoUrl = user?.photoURL ?? '';
+    });
+  }
+
+  Future<void> _saveProfile() async {
+    if (_currentUser == null) return;
+    try {
+      if (_name != (_currentUser!.displayName ?? '')) {
+        await _currentUser!.updateDisplayName(_name);
+      }
+      if (_email.isNotEmpty && _email != (_currentUser!.email ?? '')) {
+        await _currentUser!.verifyBeforeUpdateEmail(_email);
+        if (mounted) {
+          _showNiceSnack(
+            message:
+                'Email de vérification envoyé. Validez pour finaliser la mise à jour.',
+            background: Colors.blueGrey.shade700,
+            icon: Icons.email_rounded,
+          );
+        }
+      }
+      try {
+        final uid = _currentUser!.uid;
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'displayName': _name,
+          'email': _email,
+          'photoURL': _photoUrl,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      } catch (_) {
+      }
+
+      await _currentUser!.reload();
+      _currentUser = fb_auth.FirebaseAuth.instance.currentUser;
+
+      if (mounted) {
+        _showNiceSnack(
+          message: 'Profil mis à jour',
+          background: Colors.green.shade700,
+          icon: Icons.check_circle_rounded,
+        );
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        _showNiceSnack(
+          message: 'Erreur : $e',
+          background: Colors.red.shade700,
+          icon: Icons.error_outline_rounded,
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +173,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   if (value == null || value.isEmpty) {
                     return '${loc.email} est requis';
                   }
-                  if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                  if (!RegExp(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$').hasMatch(value)) {
                     return 'Email invalide';
                   }
                   return null;
@@ -81,13 +184,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
               // Bouton Sauvegarder
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    // TODO: Ajouter la logique pour sauvegarder les données
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Profil mis à jour')),
-                    );
+                    await _saveProfile();
                   }
                 },
                 child: Text('Sauvegarder'),

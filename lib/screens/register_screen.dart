@@ -144,19 +144,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required bool obscureText,
     required VoidCallback toggleVisibility,
   }) {
+    final theme = Theme.of(context);
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: label,
-        filled: true,
-        fillColor: Colors.grey[100],
+        filled: theme.inputDecorationTheme.filled,
+        fillColor: theme.inputDecorationTheme.fillColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
         suffixIcon: IconButton(
-          icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+          icon: Icon(
+            obscureText ? Icons.visibility_off : Icons.visibility,
+            color: theme.iconTheme.color?.withOpacity(0.7),
+          ),
           onPressed: toggleVisibility,
         ),
       ),
@@ -165,6 +169,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -185,23 +191,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
 
               // Titre
-              const Center(
+              Center(
                 child: Text(
                   'Créer un compte',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 8),
 
               // Description
-              const Center(
+              Center(
                 child: Text(
                   'Rejoignez-nous et explorez nos fonctionnalités !',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: theme.textTheme.bodySmall,
                 ),
               ),
               const SizedBox(height: 32),
@@ -217,8 +219,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        filled: true,
-                        fillColor: Colors.grey[100],
+                        filled: theme.inputDecorationTheme.filled,
+                        fillColor: theme.inputDecorationTheme.fillColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
@@ -293,14 +295,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onPressed: _register,
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size.fromHeight(50),
-                            backgroundColor: Colors.green[800],
+                            backgroundColor: colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Créer un compte',
-                            style: TextStyle(fontSize: 16, color: Colors.white),
+                            style: theme.textTheme.labelLarge?.copyWith(color: colorScheme.onPrimary),
                           ),
                         ),
                     const SizedBox(height: 16),
@@ -308,13 +310,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // Déjà un compte ?
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: const Text(
+                      child: Text(
                         'Déjà un compte ? Connectez-vous',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blueGrey,
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           decoration: TextDecoration.underline,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),

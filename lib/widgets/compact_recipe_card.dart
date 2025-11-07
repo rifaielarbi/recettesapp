@@ -79,6 +79,7 @@ class CompactRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -110,10 +111,11 @@ class CompactRecipeCard extends StatelessWidget {
                                           ),
                               errorBuilder:
                                   (_, __, ___) => Container(
-                                    color: Colors.grey[300],
-                                    child: const Icon(
+                                    color: theme.colorScheme.surface,
+                                    child: Icon(
                                       Icons.broken_image,
                                       size: 40,
+                                      color: theme.iconTheme.color?.withOpacity(0.6),
                                     ),
                                   ),
                             )
@@ -136,7 +138,7 @@ class CompactRecipeCard extends StatelessWidget {
                     recette.titre,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                     ),
@@ -144,7 +146,10 @@ class CompactRecipeCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     _flagForCountry(recette.pays),
-                    style: const TextStyle(fontSize: 12, color: Colors.black54),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontSize: 12,
+                      color: theme.textTheme.bodySmall?.color?.withOpacity(0.75),
+                    ),
                   ),
                 ],
               ),

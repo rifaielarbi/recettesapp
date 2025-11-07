@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../services/auth_service.dart';
@@ -60,6 +61,21 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
   bool isPhoneNumber(String input) {
     final phoneRegex = RegExp(r'^\+?\d{8,15}$');
     return phoneRegex.hasMatch(input);
+  }
+
+  bool isValidEmail(String input) {
+    final emailRegex = RegExp(
+      r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$',
+    );
+    return emailRegex.hasMatch(input);
+  }
+
+  bool isStrongPassword(String input) {
+    if (input.length < 8 || input.length > 64) return false;
+    if (input.contains(RegExp(r'\s'))) return false; // no spaces
+    final hasLetter = input.contains(RegExp(r'[A-Za-z]'));
+    final hasDigit = input.contains(RegExp(r'\d'));
+    return hasLetter && hasDigit;
   }
 
   Future<void> loginWithPhone(String phoneNumber) async {
@@ -141,15 +157,24 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
       return;
     }
 
-    if (_pwdCtrl.text.trim().length < 8) {
-      setState(() => _passwordError = "Mot de passe invalide, réessayez.");
+    if (!isValidEmail(input)) {
+      setState(() => _emailError = "Email invalide. Exemple: nom@domaine.com");
+      return;
+    }
+
+    final pwd = _pwdCtrl.text.trim();
+    if (!isStrongPassword(pwd)) {
+      setState(
+        () => _passwordError =
+            "Mot de passe faible: 8+ caractères, au moins 1 lettre et 1 chiffre, sans espace.",
+      );
       return;
     }
 
     setState(() => _loading = true);
 
     try {
-      final success = await _auth.login(input, _pwdCtrl.text.trim());
+      final success = await _auth.login(input, pwd);
       if (success && mounted) {
         await _saveAccount(input);
         Navigator.pushAndRemoveUntil(
@@ -234,13 +259,14 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
   }
 
   Widget _buildPasswordField() {
+    final theme = Theme.of(context);
     return TextFormField(
       controller: _pwdCtrl,
       obscureText: _obscurePassword,
       decoration: InputDecoration(
         labelText: "Mot de passe",
-        filled: true,
-        fillColor: Colors.grey[100],
+        filled: theme.inputDecorationTheme.filled,
+        fillColor: theme.inputDecorationTheme.fillColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
@@ -248,7 +274,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
         suffixIcon: IconButton(
           icon: Icon(
             _obscurePassword ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
+            color: theme.iconTheme.color?.withOpacity(0.7),
           ),
           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
         ),
@@ -262,14 +288,15 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
     required VoidCallback onPressed,
     TextStyle? textStyle,
   }) {
+    final theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: theme.cardColor,
+          foregroundColor: theme.textTheme.bodyLarge?.color,
           minimumSize: const Size.fromHeight(50),
-          side: const BorderSide(color: Colors.grey),
+          side: BorderSide(color: theme.dividerColor.withOpacity(0.4)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -288,7 +315,7 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
             Center(
               child: Text(
                 text,
-                style: textStyle ?? const TextStyle(fontSize: 14),
+                style: textStyle ?? theme.textTheme.bodyLarge,
               ),
             ),
           ],
@@ -299,8 +326,10 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -315,32 +344,27 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                         context,
                         MaterialPageRoute(builder: (_) => const LoginScreen()),
                       ),
-                  child: const Text(
+                  child: Text(
                     "Annuler",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 14,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              const Center(
+              Center(
                 child: Text(
                   "Connectez-vous",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 8),
-              const Center(
+              Center(
                 child: Text(
                   "Saisissez votre email ou numéro de téléphone pour commencer.",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  style: theme.textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -354,8 +378,8 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         labelText: "Email ou numéro",
-                        filled: true,
-                        fillColor: Colors.grey[100],
+                        filled: theme.inputDecorationTheme.filled,
+                        fillColor: theme.inputDecorationTheme.fillColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
@@ -410,33 +434,33 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                     onPressed: _submit,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Colors.green[800],
+                      backgroundColor: colorScheme.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Se connecter",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: theme.textTheme.labelLarge?.copyWith(color: colorScheme.onPrimary),
                     ),
                   ),
               const SizedBox(height: 24),
               Row(
-                children: const [
+                children: [
                   Expanded(
                     child: Divider(
-                      color: Colors.black,
+                      color: theme.dividerColor,
                       thickness: 1,
                       endIndent: 8,
                     ),
                   ),
                   Text(
                     "OU",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   Expanded(
                     child: Divider(
-                      color: Colors.black,
+                      color: theme.dividerColor,
                       thickness: 1,
                       indent: 8,
                     ),
@@ -444,25 +468,42 @@ class _LoginWithEmailScreenState extends State<LoginWithEmailScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-              _socialButton(
-                logo: const Icon(Icons.apple, color: Colors.black, size: 24),
-                text: "Se connecter avec Apple",
-                onPressed: () async {
-                  final user = await _auth.signInWithApple();
-                  if (user != null) {
-                    await _saveAccount(user.email ?? "");
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const ListeRecettesScreen(),
-                      ),
-                    );
-                  }
+              FutureBuilder<bool>(
+                future: SignInWithApple.isAvailable(),
+                builder: (context, snapshot) {
+                  final available = snapshot.data ?? false;
+                  if (!available) return const SizedBox.shrink();
+                  return _socialButton(
+                    logo: Icon(Icons.apple, color: theme.iconTheme.color, size: 24),
+                    text: "Se connecter avec Apple",
+                    onPressed: () async {
+                      final user = await _auth.signInWithApple();
+                      if (user != null) {
+                        await _saveAccount(user.email ?? "");
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ListeRecettesScreen(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              "Connexion Apple impossible sur cet appareil.",
+                              textAlign: TextAlign.center,
+                            ),
+                            backgroundColor: Colors.red[700],
+                          ),
+                        );
+                      }
+                    },
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  );
                 },
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
               ),
               const SizedBox(height: 8),
               _socialButton(

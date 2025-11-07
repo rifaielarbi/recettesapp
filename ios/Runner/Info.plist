@@ -47,5 +47,19 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSFaceIDUsageDescription</key>
+		<string>Nous utilisons Face ID pour vous connecter rapidement et en toute sécurité.</string>
+		<!-- Apple Sign In Configuration -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLName</key>
+				<string>apple-signin</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.example.recettes_app</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>

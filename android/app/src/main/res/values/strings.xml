@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Recettes Mondiales</string>
+    
+    <!-- Facebook Configuration -->
+    <!-- Remplacez ces valeurs par vos vraies clés Facebook -->
+    <string name="facebook_app_id">YOUR_FACEBOOK_APP_ID</string>
+    <string name="facebook_client_token">YOUR_FACEBOOK_CLIENT_TOKEN</string>
+    <string name="fb_login_protocol_scheme">fbYOUR_FACEBOOK_APP_ID</string>
+    
+    <!-- Google Configuration -->
+    <!-- Ces valeurs sont généralement dans google-services.json -->
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID</string>
+</resources>
+

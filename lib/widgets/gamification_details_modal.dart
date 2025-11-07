@@ -23,10 +23,11 @@ class GamificationDetailsModal extends StatelessWidget {
       minChildSize: 0.5,
       maxChildSize: 0.95,
       builder: (context, scrollController) {
+        final theme = Theme.of(context);
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: theme.cardColor,
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
             ),
@@ -55,19 +56,12 @@ class GamificationDetailsModal extends StatelessWidget {
                         children: [
                           Text(
                             loc.gamificationTitle,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textDark,
-                            ),
+                            style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             loc.gamificationSubtitle,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[600],
-                            ),
+                            style: theme.textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -89,6 +83,7 @@ class GamificationDetailsModal extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   children: [
                     _buildFeatureSection(
+                      context,
                       icon: Icons.explore,
                       iconColor: const Color(0xFF2BB673),
                       title: loc.recipeExplorerTitle,
@@ -102,6 +97,7 @@ class GamificationDetailsModal extends StatelessWidget {
                     ),
                     
                     _buildFeatureSection(
+                      context,
                       icon: Icons.emoji_events,
                       iconColor: const Color(0xFFFFB800),
                       title: loc.pointsBadgesTitle,
@@ -115,6 +111,7 @@ class GamificationDetailsModal extends StatelessWidget {
                     ),
                     
                     _buildFeatureSection(
+                      context,
                       icon: Icons.leaderboard,
                       iconColor: const Color(0xFF6C63FF),
                       title: loc.leaderboardTitle,
@@ -128,6 +125,7 @@ class GamificationDetailsModal extends StatelessWidget {
                     ),
                     
                     _buildFeatureSection(
+                      context,
                       icon: Icons.calendar_today,
                       iconColor: const Color(0xFFFF6584),
                       title: loc.dailyChallengesTitle,
@@ -141,6 +139,7 @@ class GamificationDetailsModal extends StatelessWidget {
                     ),
                     
                     _buildFeatureSection(
+                      context,
                       icon: Icons.photo_camera,
                       iconColor: const Color(0xFF00C9FF),
                       title: loc.photoSharingTitle,
@@ -154,6 +153,7 @@ class GamificationDetailsModal extends StatelessWidget {
                     ),
                     
                     _buildFeatureSection(
+                      context,
                       icon: Icons.local_fire_department,
                       iconColor: const Color(0xFFFF7A00),
                       title: loc.mealStreaksTitle,
@@ -202,7 +202,8 @@ class GamificationDetailsModal extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureSection({
+  Widget _buildFeatureSection(
+  BuildContext context, {
     required IconData icon,
     required Color iconColor,
     required String title,
@@ -213,9 +214,9 @@ class GamificationDetailsModal extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(color: Theme.of(context).dividerColor.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,11 +239,7 @@ class GamificationDetailsModal extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textDark,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
             ],
@@ -250,11 +247,7 @@ class GamificationDetailsModal extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             description,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[700],
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5),
           ),
           const SizedBox(height: 12),
           ...benefits.map((benefit) => Padding(
@@ -270,11 +263,7 @@ class GamificationDetailsModal extends StatelessWidget {
                 Expanded(
                   child: Text(
                     benefit.substring(2).trim(),
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[800],
-                      height: 1.4,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.4),
                   ),
                 ),
               ],
