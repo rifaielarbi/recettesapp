@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   # Plugins principaux
-  url_launcher: ^6.1.10
+  url_launcher: ^6.3.0
   share_plus: ^7.0.2   
   cached_network_image: ^3.4.1
 

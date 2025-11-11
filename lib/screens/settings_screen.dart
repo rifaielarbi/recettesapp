@@ -14,6 +14,7 @@ import '../providers/theme_provider.dart';
 import '../providers/notification_provider.dart';
 import '../utils/constants.dart';
 import 'login_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -43,6 +44,7 @@ class SettingsScreen extends StatelessWidget {
       Share.share(message, subject: 'Recettes Mondiales');
     }
 
+
     // --- Vider le cache (SharedPreferences + image cache) ---
     Future<void> _clearCache() async {
       try {
@@ -61,6 +63,19 @@ class SettingsScreen extends StatelessWidget {
         debugPrint('Erreur clear cache: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Impossible de vider le cache')),
+        );
+      }
+    }
+    Future<void> _makeDonation() async {
+      final Uri url = Uri.parse('https://www.google.com/');//faisant le sho store
+      if (await canLaunchUrl(url)) {
+        await launchUrl(
+          url,
+          mode: LaunchMode.platformDefault,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Impossible d’ouvrir la page de don')),
         );
       }
     }
@@ -236,10 +251,12 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // --- Section Donation ---
+                  _DonationCard(onDonate: _makeDonation),
 
                   const SizedBox(height: 16),
 
-                  // Section À propos (avec Help / Share / Clear Cache)
+
                   _ModernSettingsCard(
                     icon: Icons.info_rounded,
                     iconColor: Colors.blue,
@@ -422,6 +439,130 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
+class _DonationCard extends StatelessWidget {
+  final VoidCallback onDonate;
+  final int coinBalance;
+
+  const _DonationCard({
+    required this.onDonate,
+    this.coinBalance = 320,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 12),
+          child: ElevatedButton.icon(
+            onPressed: onDonate,
+            icon: const Icon(Icons.card_giftcard, color: Colors.black87),
+            label: const Text(
+              'Make a Donation',
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFFFE4B5),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              elevation: 0,
+            ),
+          ),
+        ),
+
+
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFF0F5), // rose clair
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.pinkAccent.shade100, width: 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '💰Coin Store',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Unlock premium recipes and bonuses with your coins.',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.pinkAccent.shade100, width: 1),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.monetization_on, color: Colors.orange, size: 20),
+                        const SizedBox(width: 6),
+                        Text(
+                          'My balance: $coinBalance',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Coin Shop coming soon!')),
+                        );
+                      },
+                      icon: const Icon(Icons.store, color: Colors.white, size: 18),
+                      label: const Text('Coin Shop'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 // Widget Carte de paramètres moderne
 class _ModernSettingsCard extends StatelessWidget {
