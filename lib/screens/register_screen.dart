@@ -40,7 +40,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (email.isEmpty) {
       setState(() => _emailError = "Veuillez saisir votre adresse e-mail.");
       return;
-    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$').hasMatch(email)) {
+    } else if (!RegExp(r'^[A-Za-z][\w\.-]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+        .hasMatch(email)) {
       setState(() => _emailError = "L’adresse e-mail saisie n’est pas valide.");
       return;
     }
@@ -50,44 +51,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() => _passwordError = "Veuillez saisir un mot de passe.");
       return;
     } else if (password.length < 8) {
-      setState(
-        () =>
-            _passwordError =
-                "Le mot de passe doit contenir au moins 8 caractères.",
-      );
+      setState(() =>
+      _passwordError = "Le mot de passe doit contenir au moins 8 caractères.");
+      return;
+    } else if (!RegExp(r'[A-Z]').hasMatch(password)) {
+      setState(() =>
+      _passwordError = "Le mot de passe doit contenir au moins une majuscule.");
+      return;
+    } else if (!RegExp(r'[a-z]').hasMatch(password)) {
+      setState(() =>
+      _passwordError = "Le mot de passe doit contenir au moins une minuscule.");
       return;
     } else if (!RegExp(r'\d').hasMatch(password)) {
-      setState(
-        () =>
-            _passwordError =
-                "Le mot de passe doit contenir au moins un chiffre.",
-      );
+      setState(() =>
+      _passwordError = "Le mot de passe doit contenir au moins un chiffre.");
       return;
-    } else if (!RegExp(r'[^A-Za-z0-9]').hasMatch(password)) {
-      setState(
-        () =>
-            _passwordError =
-                "Le mot de passe doit contenir au moins un symbole spécial.",
-      );
+    } else if (!RegExp(r'[!@#\$&*~^%_+=-]').hasMatch(password)) {
+      setState(() =>
+      _passwordError = "Le mot de passe doit contenir au moins un symbole spécial.");
       return;
     }
 
     // --------- Validation Confirmation mot de passe -----
     if (confirmPassword.isEmpty) {
-      setState(
-        () => _confirmPasswordError = "Veuillez confirmer votre mot de passe.",
-      );
+      setState(() =>
+      _confirmPasswordError = "Veuillez confirmer votre mot de passe.");
       return;
     } else if (password != confirmPassword) {
-      setState(() {
-        _passwordError = "Les mots de passe ne correspondent pas.";
-        _confirmPasswordError = "Les mots de passe ne correspondent pas.";
-      });
+      setState(() =>
+      _confirmPasswordError = "Les mots de passe ne correspondent pas.");
       return;
     }
 
     // --------------- Création du compte ----------------
     setState(() => _loading = true);
+
     try {
       UserCredential userCred = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -95,9 +93,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       await FirebaseFirestore.instance
           .collection("users")
           .doc(userCred.user!.uid)
-          .set({"email": email, "createdAt": FieldValue.serverTimestamp()});
+          .set({
+        "email": email,
+        "createdAt": FieldValue.serverTimestamp(),
+      });
 
-      // Navigation vers LoginScreen et SnackBar
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -125,19 +125,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     } on FirebaseAuthException catch (e) {
       String message = e.message ?? "Erreur lors de la création du compte";
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Erreur inattendue: $e")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Erreur inattendue: $e")));
     } finally {
       setState(() => _loading = false);
     }
   }
 
-  /// Widget champ mot de passe avec œil pour montrer/cacher
+  /// Champ mot de passe avec œil
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
@@ -171,6 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -194,7 +193,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Center(
                 child: Text(
                   'Créer un compte',
-                  style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 8),
@@ -227,17 +227,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
+
                     if (_emailError != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           _emailError!,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
+                          style: const TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
+
                     const SizedBox(height: 16),
 
                     // Mot de passe
@@ -245,22 +244,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _passwordController,
                       label: 'Mot de passe',
                       obscureText: _obscurePassword,
-                      toggleVisibility:
-                          () => setState(
-                            () => _obscurePassword = !_obscurePassword,
-                          ),
+                      toggleVisibility: () => setState(
+                              () => _obscurePassword = !_obscurePassword),
                     ),
+
                     if (_passwordError != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           _passwordError!,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
+                          style: const TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
+
                     const SizedBox(height: 16),
 
                     // Confirmation mot de passe
@@ -268,51 +264,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: _confirmPasswordController,
                       label: 'Retaper le mot de passe',
                       obscureText: _obscureConfirmPassword,
-                      toggleVisibility:
-                          () => setState(
-                            () =>
-                                _obscureConfirmPassword =
-                                    !_obscureConfirmPassword,
-                          ),
+                      toggleVisibility: () => setState(() =>
+                      _obscureConfirmPassword = !_obscureConfirmPassword),
                     ),
+
                     if (_confirmPasswordError != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
                           _confirmPasswordError!,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
+                          style: const TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
+
                     const SizedBox(height: 24),
 
                     // Bouton créer compte
                     _loading
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
-                          onPressed: _register,
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size.fromHeight(50),
-                            backgroundColor: colorScheme.primary,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          child: Text(
-                            'Créer un compte',
-                            style: theme.textTheme.labelLarge?.copyWith(color: colorScheme.onPrimary),
-                          ),
+                      onPressed: _register,
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        backgroundColor: colorScheme.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
                         ),
+                      ),
+                      child: Text(
+                        'Créer un compte',
+                        style: theme.textTheme.labelLarge
+                            ?.copyWith(color: colorScheme.onPrimary),
+                      ),
+                    ),
+
                     const SizedBox(height: 16),
 
-                    // Déjà un compte ?
+                    // Lien retour
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text(
                         'Déjà un compte ? Connectez-vous',
-                        textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           decoration: TextDecoration.underline,
                           color: colorScheme.primary,
