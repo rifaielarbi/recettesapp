@@ -1,19 +1,19 @@
 // settings_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../app_localizations.dart';
 import '../edit_profile_screen.dart';
-import '../providers/auth_provider.dart';
 import '../providers/locale_provider.dart';
 import '../providers/theme_provider.dart';
 import '../providers/notification_provider.dart';
 import '../utils/constants.dart';
 import 'login_screen.dart';
+
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -25,63 +25,72 @@ class SettingsScreen extends StatelessWidget {
     final notifProvider = context.watch<NotificationProvider>();
     final loc = AppLocalizations.of(context);
 
-    final fb_auth.User? currentUser = fb_auth.FirebaseAuth.instance.currentUser;
+    final fb_auth.User? currentUser =
+        fb_auth.FirebaseAuth.instance.currentUser;
 
-    // --- Ouvre la page d'aide/support (ou email) ---
+    // ---------- HELP ----------
     Future<void> _openHelp() async {
-      // remplace '' par un url
-      const supportUrl = '';
-      final uri = Uri.parse(supportUrl);
+      final uri = Uri.parse("https://example.com/support");
+
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        // fallback: tenter mailto
-        final mailto = Uri(
-          scheme: 'mailto',
-          path: 'support@example.com',
-          queryParameters: {'subject': 'Support Recettes Mondiales'},
-        );
-        if (await canLaunchUrl(mailto)) {
-          await launchUrl(mailto);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Impossible d’ouvrir la page de support'),
-            ),
-          );
-        }
+        await launchUrl(uri);
+        return;
       }
+
+      // fallback email
+      final mail = Uri(
+        scheme: "mailto",
+        path: "support@example.com",
+      );
+
+      if (await canLaunchUrl(mail)) {
+        await launchUrl(mail);
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Impossible d’ouvrir l’aide")),
+      );
     }
 
-    // --- Partager l'application ---
+    // ---------- SHARE ----------
     void _shareApp() {
-      // Remplace par ton message et lien réel (Play Store / App Store)
-      const message =
-          'Découvre Recettes Mondiales — des recettes du monde entier !\n\n'
-          'Télécharge : https://example.com/app';
-      Share.share(message, subject: 'Recettes Mondiales');
+      Share.share(
+        "Découvrez l’application Recettes Mondiales !\nhttps://example.com",
+        subject: "Recettes Mondiales",
+      );
     }
 
-    // --- Vider le cache (SharedPreferences + image cache) ---
+    // ---------- CLEAR CACHE ----------
     Future<void> _clearCache() async {
       try {
-        // Clear shared prefs keys used by app (ou clear all)
         final prefs = await SharedPreferences.getInstance();
         await prefs.clear();
 
-        // Clear Flutter image cache
         PaintingBinding.instance.imageCache.clear();
         PaintingBinding.instance.imageCache.clearLiveImages();
 
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Cache vidé avec succès')));
-      } catch (e) {
-        debugPrint('Erreur clear cache: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Impossible de vider le cache')),
+          const SnackBar(content: Text("Cache vidé")),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Erreur lors du nettoyage")),
         );
       }
+    }
+
+    // ---------- DONATION ----------
+    Future<void> _makeDonation() async {
+      final url = Uri.parse("https://google.com");
+
+      if (await canLaunchUrl(url)) {
+        return ;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Impossible d’ouvrir la page")),
+      );
     }
 
     return Scaffold(
@@ -89,112 +98,19 @@ class SettingsScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            // Header avec photo de profil
+            // HEADER PROFIL
             SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [AppColors.green, AppColors.green.withOpacity(0.8)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        border: Border.all(color: Colors.white, width: 4),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-                      child: ClipOval(
-                        child:
-                            currentUser?.photoURL != null
-                                ? Image.network(
-                                  currentUser!.photoURL!,
-                                  fit: BoxFit.cover,
-                                  errorBuilder:
-                                      (_, __, ___) => const Icon(
-                                        Icons.person,
-                                        size: 50,
-                                        color: Colors.grey,
-                                      ),
-                                )
-                                : const Icon(
-                                  Icons.person,
-                                  size: 50,
-                                  color: Colors.grey,
-                                ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      currentUser?.displayName ?? 'Arabi',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      currentUser?.email ?? 'email@example.com',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.9),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Bouton Éditer profil
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const EditProfileScreen(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.edit, size: 18),
-                      label: const Text('Modifier le profil'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).brightness == Brightness.dark 
-                            ? Colors.white.withOpacity(0.15)
-                            : Colors.white,
-                        foregroundColor: AppColors.green,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: _buildHeader(context, currentUser),
             ),
 
-            // Contenu des paramètres
+            // CONTENU
             SliverPadding(
               padding: const EdgeInsets.all(16),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                   const SizedBox(height: 8),
 
-                  // Section Notifications
+                  // NOTIFICATIONS
                   _ModernSettingsCard(
                     icon: Icons.notifications_rounded,
                     iconColor: Colors.orange,
@@ -202,7 +118,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       _ModernSwitchTile(
                         title: loc.enableNotifications,
-                        subtitle: 'Recevoir les alertes',
+                        subtitle: "Recevoir les alertes",
                         value: notifProvider.enabled,
                         onChanged: notifProvider.toggle,
                       ),
@@ -211,7 +127,7 @@ class SettingsScreen extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  // Section Apparence
+                  // APPARENCE
                   _ModernSettingsCard(
                     icon: Icons.palette_rounded,
                     iconColor: Colors.purple,
@@ -219,29 +135,24 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       _ModernSwitchTile(
                         title: loc.darkMode,
-                        subtitle: 'Mode sombre',
+                        subtitle: "Mode sombre",
                         value: themeProvider.isDark,
-                        onChanged: (value) => themeProvider.setDark(value),
+                        onChanged: themeProvider.setDark,
                       ),
                       _ModernListTile(
-                        icon: Icons.language_rounded,
+                        icon: Icons.language,
                         title: loc.language,
-                        subtitle: _getLocaleName(
-                          localeProvider.locale.languageCode,
-                        ),
-                        onTap:
-                            () => _showLanguageDialog(
-                              context,
-                              localeProvider,
-                              loc,
-                            ),
+                        subtitle:
+                        _getLocaleName(localeProvider.locale.languageCode),
+                        onTap: () => _showLanguageDialog(
+                            context, localeProvider, loc),
                       ),
                     ],
                   ),
 
                   const SizedBox(height: 16),
 
-                  // Section Sécurité
+                  // SÉCURITÉ
                   _ModernSettingsCard(
                     icon: Icons.security_rounded,
                     iconColor: Colors.red,
@@ -250,70 +161,67 @@ class SettingsScreen extends StatelessWidget {
                       _ModernListTile(
                         icon: Icons.lock_rounded,
                         title: loc.changePassword,
-                        subtitle: 'Modifier votre mot de passe',
-                        onTap: () {
-                          // TODO: Ajouter logique de changement de mot de passe
-                        },
+                        subtitle: "Changer votre mot de passe",
+                        onTap: () {},
                       ),
                     ],
                   ),
 
                   const SizedBox(height: 16),
 
-                  // Section À propos (avec Help / Share / Clear Cache)
+                  // DONATION + COINS
+                  _DonationCard(onDonate: _makeDonation),
+
+                  const SizedBox(height: 16),
+
+                  // ABOUT
                   _ModernSettingsCard(
                     icon: Icons.info_rounded,
                     iconColor: Colors.blue,
                     title: loc.about,
                     children: [
                       _ModernListTile(
-                        icon: Icons.verified_rounded,
+                        icon: Icons.verified,
                         title: loc.version,
-                        subtitle: '1.0.0',
-                        onTap: null,
+                        subtitle: "1.0.0",
                       ),
                       _ModernListTile(
-                        icon: Icons.help_outline,
+                        icon: Icons.help,
                         title: loc.helpSupport,
-                        subtitle: 'Centre d\'aide & contact',
+                        subtitle: "Centre d'aide & contact",
                         onTap: _openHelp,
                       ),
                       _ModernListTile(
-                        icon: Icons.share_rounded,
+                        icon: Icons.share,
                         title: loc.shareApp,
-                        subtitle: 'Partager avec vos amis',
+                        subtitle: "Partager l'application",
                         onTap: _shareApp,
                       ),
                       _ModernListTile(
-                        icon: Icons.cleaning_services_rounded,
+                        icon: Icons.cleaning_services,
                         title: loc.clearCache,
-                        subtitle: 'Libérer de l\'espace local',
+                        subtitle: "Vider le cache",
                         onTap: () async {
-                          // confirmation dialog
-                          final confirm = await showDialog<bool>(
+                          final ok = await showDialog(
                             context: context,
-                            builder:
-                                (ctx) => AlertDialog(
-                                  title: const Text('Vider le cache'),
-                                  content: const Text(
-                                    'Voulez-vous vraiment vider le cache et les préférences locales ?',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed:
-                                          () => Navigator.pop(ctx, false),
-                                      child: const Text('Annuler'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(ctx, true),
-                                      child: const Text('Confirmer'),
-                                    ),
-                                  ],
+                            builder: (ctx) => AlertDialog(
+                              title: const Text("Vider le cache ?"),
+                              content: const Text(
+                                  "Voulez-vous vraiment vider le cache ?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(ctx, false),
+                                  child: const Text("Annuler"),
                                 ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(ctx, true),
+                                  child: const Text("Confirmer"),
+                                ),
+                              ],
+                            ),
                           );
-                          if (confirm == true) {
-                            await _clearCache();
-                          }
+
+                          if (ok == true) _clearCache();
                         },
                       ),
                     ],
@@ -321,132 +229,172 @@ class SettingsScreen extends StatelessWidget {
 
                   const SizedBox(height: 24),
 
-                  // Bouton Déconnexion
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: ElevatedButton.icon(
-                      onPressed: () async {
-                        try {
-                          await fb_auth.FirebaseAuth.instance.signOut();
-                          final prefs = await SharedPreferences.getInstance();
-                          await prefs.remove('currentUser');
-
-                          if (context.mounted) {
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (_) => const LoginScreen(),
-                              ),
-                              (route) => false,
-                            );
-                          }
-                        } catch (e) {
-                          debugPrint("Erreur lors de la déconnexion : $e");
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Impossible de se déconnecter"),
-                            ),
-                          );
-                        }
-                      },
-                      icon: const Icon(Icons.logout_rounded),
-                      label: Text(loc.logout),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.red.withOpacity(0.2)
-                            : Colors.red.shade50,
-                        foregroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        elevation: 0,
-                      ),
-                    ),
-                  ),
+                  // LOGOUT
+                  _buildLogoutButton(context, loc),
 
                   const SizedBox(height: 80),
                 ]),
               ),
-            ),
+            )
           ],
         ),
       ),
     );
   }
 
+  // ========= HEADER =========
+  Widget _buildHeader(BuildContext context, fb_auth.User? user) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.green, AppColors.green.withOpacity(0.8)],
+        ),
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+
+          // PHOTO
+          CircleAvatar(
+            radius: 50,
+            backgroundImage:
+            user?.photoURL != null ? NetworkImage(user!.photoURL!) : null,
+            child: user?.photoURL == null
+                ? const Icon(Icons.person, size: 50)
+                : null,
+          ),
+
+          const SizedBox(height: 16),
+
+          Text(
+            user?.displayName ?? "Arabi",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          Text(
+            user?.email ?? "email@example.com",
+            style: TextStyle(color: Colors.white.withOpacity(.9)),
+          ),
+
+          const SizedBox(height: 16),
+
+          ElevatedButton.icon(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const EditProfileScreen()),
+            ),
+            icon: const Icon(Icons.edit),
+            label: const Text("Modifier le profil"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ========= LOGOUT BUTTON =========
+  Widget _buildLogoutButton(BuildContext context, AppLocalizations loc) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final background =
+        isDark ? theme.colorScheme.errorContainer.withOpacity(0.3) : Colors.red.shade50;
+    final foreground = isDark ? theme.colorScheme.error : Colors.red;
+
+    return ElevatedButton.icon(
+      onPressed: () async {
+        await fb_auth.FirebaseAuth.instance.signOut();
+        final prefs = await SharedPreferences.getInstance();
+        prefs.remove("currentUser");
+
+        if (!context.mounted) return;
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+              (_) => false,
+        );
+      },
+      icon: Icon(Icons.logout, color: foreground),
+      label: Text(
+        loc.logout,
+        style: theme.textTheme.titleMedium?.copyWith(color: foreground),
+      ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: background,
+        foregroundColor: foreground,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+    );
+  }
+
+  // ========= LANGUES =========
   String _getLocaleName(String code) {
     switch (code) {
-      case 'fr':
-        return 'Français';
-      case 'en':
-        return 'English';
-      case 'ar':
-        return 'العربية';
+      case "fr":
+        return "Français";
+      case "en":
+        return "English";
+      case "ar":
+        return "العربية";
       default:
         return code;
     }
   }
 
   void _showLanguageDialog(
-    BuildContext context,
-    LocaleProvider localeProvider,
-    AppLocalizations loc,
-  ) {
+      BuildContext context, LocaleProvider provider, AppLocalizations loc) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder:
-          (ctx) => Container(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  loc.language,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _LanguageOption(
-                  flag: '🇫🇷',
-                  language: 'Français',
-                  selected: localeProvider.locale.languageCode == 'fr',
-                  onTap: () {
-                    localeProvider.setLocale('fr');
-                    Navigator.pop(ctx);
-                  },
-                ),
-                _LanguageOption(
-                  flag: '🇬🇧',
-                  language: 'English',
-                  selected: localeProvider.locale.languageCode == 'en',
-                  onTap: () {
-                    localeProvider.setLocale('en');
-                    Navigator.pop(ctx);
-                  },
-                ),
-                _LanguageOption(
-                  flag: '🇸🇦',
-                  language: 'العربية',
-                  selected: localeProvider.locale.languageCode == 'ar',
-                  onTap: () {
-                    localeProvider.setLocale('ar');
-                    Navigator.pop(ctx);
-                  },
-                ),
-              ],
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _LanguageOption(
+              flag: "🇫🇷",
+              language: "Français",
+              selected: provider.locale.languageCode == "fr",
+              onTap: () {
+                provider.setLocale("fr");
+                Navigator.pop(ctx);
+              },
             ),
-          ),
+            _LanguageOption(
+              flag: "🇬🇧",
+              language: "English",
+              selected: provider.locale.languageCode == "en",
+              onTap: () {
+                provider.setLocale("en");
+                Navigator.pop(ctx);
+              },
+            ),
+            _LanguageOption(
+              flag: "🇸🇦",
+              language: "العربية",
+              selected: provider.locale.languageCode == "ar",
+              onTap: () {
+                provider.setLocale("ar");
+                Navigator.pop(ctx);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-// Widget Carte de paramètres moderne
+// --------------------------------------------------------------------------
+// ============================= WIDGETS CUSTOM ==============================
+// --------------------------------------------------------------------------
+
 class _ModernSettingsCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -463,43 +411,42 @@ class _ModernSettingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final titleColor = theme.textTheme.titleMedium?.color;
+
     return Container(
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(theme.brightness == Brightness.dark ? 0.3 : 0.05),
+            color:
+            Colors.black.withOpacity(theme.brightness == Brightness.dark
+                ? 0.25
+                : 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(icon, color: iconColor, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.titleLarge?.color,
-                  ),
-                ),
-              ],
+          ListTile(
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: iconColor.withOpacity(.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: iconColor),
+            ),
+            title: Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: titleColor,
+              ),
             ),
           ),
           const Divider(height: 1),
@@ -510,7 +457,6 @@ class _ModernSettingsCard extends StatelessWidget {
   }
 }
 
-// Widget ListTile moderne
 class _ModernListTile extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -527,30 +473,27 @@ class _ModernListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final iconColor = theme.iconTheme.color ?? theme.colorScheme.primary;
+    final titleStyle = theme.textTheme.titleMedium?.copyWith(
+      fontWeight: FontWeight.w500,
+    );
+    final subtitleStyle = theme.textTheme.bodySmall?.copyWith(
+      color: (theme.textTheme.bodySmall?.color ?? Colors.grey).withOpacity(0.8),
+    );
+    final trailingColor = iconColor.withOpacity(0.6);
+
     return ListTile(
-      leading: Icon(icon, color: theme.iconTheme.color, size: 24),
-      title: Text(title, style: TextStyle(fontWeight: FontWeight.w500, color: theme.textTheme.titleMedium?.color)),
-      subtitle:
-          subtitle != null
-              ? Text(
-                subtitle!,
-                style: TextStyle(color: theme.textTheme.bodySmall?.color, fontSize: 12),
-              )
-              : null,
-      trailing:
-          onTap != null
-              ? Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: theme.iconTheme.color?.withOpacity(0.6),
-              )
-              : null,
+      leading: Icon(icon, color: iconColor, size: 24),
+      title: Text(title, style: titleStyle),
+      subtitle: subtitle != null ? Text(subtitle!, style: subtitleStyle) : null,
+      trailing: onTap != null
+          ? Icon(Icons.arrow_forward_ios, size: 16, color: trailingColor)
+          : null,
       onTap: onTap,
     );
   }
 }
 
-// Widget Switch moderne
 class _ModernSwitchTile extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -566,23 +509,28 @@ class _ModernSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final subtitleStyle = theme.textTheme.bodySmall?.copyWith(
+      color: (theme.textTheme.bodySmall?.color ?? Colors.grey).withOpacity(0.8),
+    );
+
     return SwitchListTile(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-      subtitle:
-          subtitle != null
-              ? Text(
-                subtitle!,
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-              )
-              : null,
+      title: Text(
+        title,
+        style: theme.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: subtitle != null ? Text(subtitle!, style: subtitleStyle) : null,
       value: value,
       onChanged: onChanged,
       activeColor: AppColors.green,
+      inactiveThumbColor: theme.disabledColor,
+      inactiveTrackColor: theme.disabledColor.withOpacity(0.3),
     );
   }
 }
 
-// Widget Option de langue
 class _LanguageOption extends StatelessWidget {
   final String flag;
   final String language;
@@ -598,20 +546,26 @@ class _LanguageOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final baseBorder = theme.dividerColor.withOpacity(isDark ? 0.6 : 0.3);
+    final backgroundColor = selected
+        ? AppColors.green.withOpacity(isDark ? 0.2 : 0.1)
+        : (isDark ? theme.colorScheme.surface.withOpacity(0.4) : null);
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
-          color:
-              selected ? AppColors.green.withOpacity(0.1) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: selected ? AppColors.green : Colors.grey.shade200,
+            color: selected ? AppColors.green : baseBorder,
             width: 2,
           ),
+          borderRadius: BorderRadius.circular(12),
+          color: backgroundColor,
         ),
         child: Row(
           children: [
@@ -619,12 +573,11 @@ class _LanguageOption extends StatelessWidget {
             const SizedBox(width: 16),
             Text(
               language,
-              style: TextStyle(
-                fontSize: 16,
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                color: selected 
-                    ? AppColors.green 
-                    : Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black87,
+                color: selected
+                    ? AppColors.green
+                    : theme.textTheme.bodyLarge?.color,
               ),
             ),
             const Spacer(),
@@ -632,6 +585,135 @@ class _LanguageOption extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _DonationCard extends StatelessWidget {
+  final VoidCallback onDonate;
+  final int coinBalance;
+
+  const _DonationCard({
+    required this.onDonate,
+    this.coinBalance = 320,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final donationBg = isDark
+        ? theme.colorScheme.primaryContainer.withOpacity(0.35)
+        : const Color(0xFFFFE4B5);
+    final donationFg = isDark
+        ? theme.colorScheme.onPrimaryContainer
+        : Colors.black87;
+    final storeBg = isDark
+        ? theme.colorScheme.surfaceVariant.withOpacity(0.4)
+        : const Color(0xFFFFF0F5);
+    final storeBorder = isDark
+        ? theme.colorScheme.outline.withOpacity(0.5)
+        : Colors.pinkAccent;
+    final balanceBg = theme.cardColor;
+    final textColor = theme.textTheme.bodyLarge?.color ?? Colors.black87;
+
+    return Column(
+      children: [
+        // BOUTON DONATION
+        ElevatedButton.icon(
+          onPressed: onDonate,
+          icon: Icon(Icons.card_giftcard, color: donationFg),
+          label: Text(
+            "Make a Donation",
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: donationFg,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: donationBg,
+            foregroundColor: donationFg,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        // COIN STORE
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: storeBg,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: storeBorder),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "💰 Coin Store",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
+              ),
+              const SizedBox(height: 6),
+
+              // Balance
+              Container(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: balanceBg,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.monetization_on,
+                      color: theme.colorScheme.secondary,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "My balance: $coinBalance",
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: textColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Spacer(),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text("Coin Shop coming soon !")),
+                        );
+                      },
+                      icon: const Icon(Icons.store, size: 18),
+                      label: const Text("Coin Shop"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.green,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

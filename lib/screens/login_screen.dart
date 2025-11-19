@@ -32,12 +32,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _termsRecognizer =
-        TapGestureRecognizer()
-          ..onTap = () => debugPrint("Conditions générales cliquées");
-    _privacyRecognizer =
-        TapGestureRecognizer()
-          ..onTap = () => debugPrint("Politique de confidentialité cliquée");
+    _termsRecognizer = TapGestureRecognizer()
+      ..onTap = () => debugPrint("Conditions générales cliquées");
+    _privacyRecognizer = TapGestureRecognizer()
+      ..onTap = () => debugPrint("Politique de confidentialité cliquée");
     _loadSavedAccounts();
     _initBiometryLabel();
   }
@@ -93,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.orange[800],
           ),
         );
-        
       }
 
       final success = await _localAuth.authenticate(
@@ -139,8 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
       final canCheck = await _localAuth.canCheckBiometrics;
       final supported = await _localAuth.isDeviceSupported();
       if (!canCheck || !supported) return;
+
       final available = await _localAuth.getAvailableBiometrics();
       String label = "Connexion biométrique";
+
       if (available.contains(BiometricType.face)) {
         label = "Connectez-vous avec Face ID";
       } else if (available.contains(BiometricType.fingerprint)) {
@@ -148,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else if (available.contains(BiometricType.iris)) {
         label = "Connectez-vous avec iris";
       }
+
       if (mounted) setState(() => _biometryLabel = label);
     } catch (_) {}
   }
@@ -184,7 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: Text(
                 text,
-                style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+                style:
+                theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
           ],
@@ -196,78 +197,71 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showChangeAccountDialog() {
     showDialog(
       context: context,
-      builder:
-          (context) => StatefulBuilder(
-            builder:
-                (context, setStateDialog) => AlertDialog(
-                  title: const Center(child: Text("Choisir un compte")),
-                  content: SizedBox(
-                    width: double.maxFinite,
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        ..._savedAccounts.map(
-                          (email) => Card(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            child: ListTile(
-                              leading: const Icon(Icons.person),
-                              title: Text(
-                                email,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              trailing: IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  _savedAccounts.remove(email);
-                                  await prefs.setStringList(
-                                    'savedAccounts',
-                                    _savedAccounts,
-                                  );
-                                  setState(() {});
-                                  setStateDialog(() {});
-                                },
-                              ),
-                              onTap: () async {
-                                await FirebaseAuth.instance.signOut();
-                                await _saveAccount(email);
-                                Navigator.pop(context);
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const ListeRecettesScreen(),
-                                  ),
-                                );
-                              },
-                            ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setStateDialog) => AlertDialog(
+          title: const Center(child: Text("Choisir un compte")),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                ..._savedAccounts.map(
+                      (email) => Card(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      leading: const Icon(Icons.person),
+                      title: Text(
+                        email,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          _savedAccounts.remove(email);
+                          await prefs.setStringList(
+                              'savedAccounts', _savedAccounts);
+                          setState(() {});
+                          setStateDialog(() {});
+                        },
+                      ),
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        await _saveAccount(email);
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const ListeRecettesScreen(),
                           ),
-                        ),
-                        const Divider(),
-                        Card(
-                          color: Colors.grey[100],
-                          child: ListTile(
-                            leading: const Icon(Icons.add),
-                            title: const Text("Ajouter un compte"),
-                            onTap: () {
-                              Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const LoginWithEmailScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ),
+                const Divider(),
+                Card(
+                  color: Colors.grey[100],
+                  child: ListTile(
+                    leading: const Icon(Icons.add),
+                    title: const Text("Ajouter un compte"),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const LoginWithEmailScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
+        ),
+      ),
     );
   }
 
@@ -275,72 +269,63 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 14),
-
-                // --- Logo + Bienvenue ---
                 Center(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
                         'assets/images/logo_Aceuil.png',
                         width: 220,
                         height: 220,
-                        fit: BoxFit.contain,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         "Bienvenue !",
-                        style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                        style: theme.textTheme.titleLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                 ),
 
                 const SizedBox(height: 20),
-
-                // --- Gamification Features Carousel ---
                 const GamificationCarousel(),
-
                 const SizedBox(height: 20),
 
                 // --- Créer un compte ---
-                Center(
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: TextStyle(fontSize: 14, color: theme.textTheme.bodySmall?.color),
-                      children: [
-                        const TextSpan(text: "Vous n'avez pas de compte ? "),
-                        TextSpan(
-                          text: "Créer un compte",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.primary,
-                            decoration: TextDecoration.underline,
-                            fontSize: 14,
-                          ),
-                          recognizer:
-                              TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const RegisterScreen(),
-                                    ),
-                                  );
-                                },
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: TextStyle(
+                        fontSize: 14, color: theme.textTheme.bodySmall?.color),
+                    children: [
+                      const TextSpan(text: "Vous n'avez pas de compte ? "),
+                      TextSpan(
+                        text: "Créer un compte",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.primary,
+                          decoration: TextDecoration.underline,
                         ),
-                      ],
-                    ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RegisterScreen(),
+                              ),
+                            );
+                          },
+                      ),
+                    ],
                   ),
                 ),
 
@@ -357,8 +342,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   onPressed: _authenticateWithFaceID,
                   child: Text(
-                    _faceIDText,
-                    style: theme.textTheme.labelLarge?.copyWith(color: colorScheme.onPrimary),
+                    _biometryLabel,
+                    style: theme.textTheme.labelLarge
+                        ?.copyWith(color: colorScheme.onPrimary),
                   ),
                 ),
 
@@ -373,16 +359,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  onPressed:
-                      () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const LoginWithEmailScreen(),
-                        ),
-                      ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const LoginWithEmailScreen()),
+                    );
+                  },
                   child: Text(
                     "S’identifier",
-                    style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+                    style: theme.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
 
@@ -400,13 +387,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _showChangeAccountDialog,
                   child: Text(
                     "Changer de compte",
-                    style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500),
+                    style: theme.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
 
                 const SizedBox(height: 24),
 
-                // --- OU Divider ---
+                // --- OU ---
                 Row(
                   children: [
                     Expanded(
@@ -435,14 +423,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 12),
 
-                // --- Bouton Apple (affiché uniquement si disponible) ---
+                // --- Apple ---
                 FutureBuilder<bool>(
                   future: SignInWithApple.isAvailable(),
                   builder: (context, snapshot) {
                     final available = snapshot.data ?? false;
                     if (!available) return const SizedBox.shrink();
                     return _socialButton(
-                      logo: Icon(Icons.apple, color: theme.iconTheme.color, size: 24),
+                      logo: Icon(Icons.apple,
+                          color: theme.iconTheme.color, size: 24),
                       text: "Se connecter avec Apple",
                       onPressed: () async {
                         final user = await _auth.signInWithApple();
@@ -454,22 +443,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               builder: (_) => const ListeRecettesScreen(),
                             ),
                           );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text(
-                                "Connexion Apple impossible sur cet appareil.",
-                                textAlign: TextAlign.center,
-                              ),
-                              backgroundColor: Colors.red[700],
-                            ),
-                          );
                         }
                       },
                     );
                   },
                 ),
+
                 const SizedBox(height: 8),
+
+                // --- Google ---
                 _socialButton(
                   logo: Image.asset(
                     'assets/images/google_logo.png',
@@ -490,13 +472,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                 ),
+
                 const SizedBox(height: 8),
+
+                // --- Facebook ---
                 _socialButton(
-                  logo: const Icon(
-                    Icons.facebook,
-                    color: Colors.blue,
-                    size: 24,
-                  ),
+                  logo: const Icon(Icons.facebook,
+                      color: Colors.blue, size: 24),
                   text: "Se connecter avec Facebook",
                   onPressed: () async {
                     final user = await _auth.signInWithFacebook();
@@ -520,18 +502,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RichText(
                     textAlign: TextAlign.left,
                     text: TextSpan(
-                      style: const TextStyle(color: Colors.grey, fontSize: 14),
+                      style: const TextStyle(
+                          color: Colors.grey, fontSize: 14),
                       children: [
                         const TextSpan(
                           text:
-                              "En cliquant sur « Continuer », vous reconnaissez avoir lu et accepté nos ",
+                          "En cliquant sur « Continuer », vous reconnaissez avoir lu et accepté nos ",
                         ),
                         TextSpan(
                           text: "conditions générales",
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
-                            fontSize: 14,
                           ),
                           recognizer: _termsRecognizer,
                         ),
@@ -541,7 +523,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
-                            fontSize: 14,
                           ),
                           recognizer: _privacyRecognizer,
                         ),
